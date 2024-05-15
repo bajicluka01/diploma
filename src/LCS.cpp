@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <iostream>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
 
 int sequentialLCS (int** arr, string str1, string str2, int row, int column) {
@@ -38,7 +40,12 @@ int main(int argc, char* argv[]){
         }
     }
 
-    cout << sequentialLCS(arr, str1, str2, row, column);
+    auto start = high_resolution_clock::now();
+    cout << sequentialLCS(arr, str1, str2, row, column) << "\n";
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    cout << duration.count();
 
     //deallocate
     for(int i = 0; i < row; i++)
