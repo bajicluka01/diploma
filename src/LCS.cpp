@@ -90,9 +90,20 @@ int parallelLCS (string str1, string str2, int row, int column) {
 }
 
 
+string randomStringGenerator (int len) {
+    string str = "";
+    for(int i = 0; i < len; i++)
+        str += 'a' + rand()%26;
+    return str;
+}
+
+
 int main(int argc, char* argv[]){
     string str1 = "abcde";
     string str2 = "axbxcx";
+
+    str1 = randomStringGenerator(10000);
+    str2 = randomStringGenerator(10000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
