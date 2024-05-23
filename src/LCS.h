@@ -88,11 +88,3 @@ int parallelLCS (string str1, string str2, int row, int column) {
     return ret;
 
 }
-
-
-string randomStringGenerator (int len) {
-    string str = "";
-    for(int i = 0; i < len; i++)
-        str += 'a' + rand()%26;
-    return str;
-}

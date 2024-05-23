@@ -3,8 +3,16 @@
 #include <chrono>
 #include <omp.h>
 #include "LCS.h"
+#include "levenshtein.h"
 using namespace std;
 using namespace std::chrono;
+
+string randomStringGenerator (int len) {
+    string str = "";
+    for(int i = 0; i < len; i++)
+        str += 'a' + rand()%26;
+    return str;
+}
 
 int main(int argc, char* argv[]){
     string str1 = "abcde";
