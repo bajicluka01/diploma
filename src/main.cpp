@@ -18,8 +18,8 @@ int main(int argc, char* argv[]){
     string str1 = "abcde";
     string str2 = "axbxcx";
 
-    str1 = randomStringGenerator(1000);
-    str2 = randomStringGenerator(500);
+    str1 = randomStringGenerator(100000);
+    str2 = randomStringGenerator(50000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;

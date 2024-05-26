@@ -55,7 +55,9 @@ int parallelLCS (string str1, string str2, int row, int column) {
         }
     }
 
-    for (int i = 0, j = 0; i <= str2.length() && j <= str2.length(); j++) {
+    int i = 0;
+    int j = 0;
+    while(i <= str1.length() && j <= str2.length()) {
 
         int antidiag = min(j, (int)str1.length()-i);
 
@@ -76,6 +78,8 @@ int parallelLCS (string str1, string str2, int row, int column) {
             j = str2.length() - 1;
             i++;
         }
+        else
+            j++;
 
     }
 
