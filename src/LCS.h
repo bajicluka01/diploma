@@ -57,9 +57,9 @@ int parallelLCS (string str1, string str2, int row, int column) {
 
     int i = 0;
     int j = 0;
-    while(i <= str1.length() && j <= str2.length()) {
+    while(i <= row-1 && j <= column-1) {
 
-        int antidiag = min(j, (int)str1.length()-i);
+        int antidiag = min(j, row-i-1);
 
         #pragma omp parallel for
         for (int k = 0; k <= antidiag; ++k){
@@ -74,8 +74,8 @@ int parallelLCS (string str1, string str2, int row, int column) {
                 arr[a][b] = max (arr[a-1][b], arr[a][b-1]);
         }
         
-        if(j >= str2.length()) {
-            j = str2.length() - 1;
+        if(j >= (column-1)) {
+            j = column - 2  ;
             i++;
         }
         else

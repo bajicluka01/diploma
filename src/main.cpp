@@ -18,8 +18,8 @@ int main(int argc, char* argv[]){
     string str1 = "abcde";
     string str2 = "axbxcx";
 
-    str1 = randomStringGenerator(100000);
-    str2 = randomStringGenerator(50000);
+    str1 = randomStringGenerator(1000);
+    str2 = randomStringGenerator(5000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -39,9 +39,12 @@ int main(int argc, char* argv[]){
 
     cout << "Parallel LCS duration: " << duration.count() << "\n";
 
-
     str1 = "delete";
     str2 = "replace";
+
+    str1 = randomStringGenerator(1000);
+    str2 = randomStringGenerator(5000);
+
     row = str1.length()+1;
     column = str2.length()+1;
 
