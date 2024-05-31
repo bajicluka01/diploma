@@ -7,6 +7,7 @@
 using namespace std;
 using namespace std::chrono;
 
+
 string randomStringGenerator (int len) {
     string str = "";
     for(int i = 0; i < len; i++)
@@ -14,7 +15,33 @@ string randomStringGenerator (int len) {
     return str;
 }
 
-int main(int argc, char* argv[]){
+long long avgExecutionTime (int function, int n, string str1, string str2) {
+    microseconds total = microseconds::zero();
+
+    int row = str1.length()+1;
+    int column = str2.length()+1;
+
+    for(int i = 0; i < n; i++) {
+        auto start = high_resolution_clock::now();
+
+        switch(function) {
+            case 1: sequentialLCS(str1, str2, row, column); break;
+            case 2: parallelLCS(str1, str2, row, column); break;
+            case 3: sequentialLevenshtein(str1, str2, row, column); break;
+            case 4: parallelLevenshtein(str1, str2, row, column); break;
+            default: return 0;
+        }
+
+        auto finish = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(finish - start);
+
+        total += duration;
+    }
+
+    return total.count()/n;
+}
+
+int main (int argc, char* argv[]) {
     string str1 = "abcde";
     string str2 = "axbxcx";
 
@@ -24,6 +51,7 @@ int main(int argc, char* argv[]){
     int row = str1.length()+1;
     int column = str2.length()+1;
 
+    /*
     //Longest Common Subsequence
     auto start = high_resolution_clock::now();
     cout << "Sequential LCS solution: " << sequentialLCS(str1, str2, row, column) << "\n";
@@ -62,6 +90,12 @@ int main(int argc, char* argv[]){
     duration = duration_cast<microseconds>(finish - start);
 
     cout << "Parallel Levenshtein duration: " << duration.count() << "\n";
-    
+    */
+
+
+   cout << "Sequential LCS average: " << avgExecutionTime(1, 5, str1, str2) << "\n";
+   cout << "Parallel LCS average: " << avgExecutionTime(2, 5, str1, str2) << "\n";
+
+
     return 0;
 }
