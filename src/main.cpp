@@ -45,8 +45,8 @@ int main (int argc, char* argv[]) {
     string str1 = "abcde";
     string str2 = "axbxcx";
 
-    str1 = randomStringGenerator(50000);
-    str2 = randomStringGenerator(50000);
+    str1 = randomStringGenerator(30000);
+    str2 = randomStringGenerator(30000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -93,8 +93,8 @@ int main (int argc, char* argv[]) {
     */
 
 
-   cout << "Sequential LCS average: " << avgExecutionTime(1, 5, str1, str2) << "\n";
-   cout << "Parallel LCS average: " << avgExecutionTime(2, 5, str1, str2) << "\n";
+   cout << "Sequential LCS average: " << avgExecutionTime(1, 10, str1, str2) << "\n";
+   cout << "Parallel LCS average: " << avgExecutionTime(2, 10, str1, str2) << "\n";
 
 
     return 0;
