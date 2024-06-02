@@ -42,11 +42,11 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
 }
 
 int main (int argc, char* argv[]) {
-    string str1 = "abcde";
-    string str2 = "axbxcx";
+    string str1 = "delete";
+    string str2 = "replaca";
 
-    str1 = randomStringGenerator(30000);
-    str2 = randomStringGenerator(30000);
+    //str1 = randomStringGenerator(10000);
+    //str2 = randomStringGenerator(10000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -93,8 +93,10 @@ int main (int argc, char* argv[]) {
     */
 
 
-   cout << "Sequential LCS average: " << avgExecutionTime(1, 10, str1, str2) << "\n";
-   cout << "Parallel LCS average: " << avgExecutionTime(2, 10, str1, str2) << "\n";
+   //cout << "Sequential LCS average: " << avgExecutionTime(1, 10, str1, str2) << "\n";
+   //cout << "Parallel LCS average: " << avgExecutionTime(2, 10, str1, str2) << "\n";
+
+   fb_levenshtein(str1, str2, row, column);
 
 
     return 0;
