@@ -131,6 +131,7 @@ void topHalf(args& a) {
     }
 }
 
+//doesn't work yet
 void bottomHalf(args& a) {
     int nrows = a.s1.length();
     for(int i = nrows; i > a.row; i--) {
@@ -152,8 +153,6 @@ void bottomHalf(args& a) {
 
 //TODO: FIX - DOESN'T WORK IF FIRST TWO (OR LAST TWO) CHARS ARE EQUAL
 int fb_levenshtein (string str1, string str2, int row, int column) {
-
-    cout << row << " " << column << "\n";
 
     //allocate
     arr = new int*[row];
@@ -180,13 +179,15 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     t1.join();
     t2.join();
 
-    for (int i = 0; i < row; i++){
+    /*for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }
+    }*/
 
-    return 0;
+
+    //TODO: check if this is always correct!!
+    return max(arr[h][0], arr[h][column]);
 
 }
