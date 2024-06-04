@@ -49,7 +49,7 @@ sorting=nty,
 \newcommand{\tsubject}{\ttitle}
 \newcommand{\tsubjectEn}{\ttitleEn}
 \newcommand{\tauthor}{Luka Bajić}
-\newcommand{\tkeywords}{računalnik, računalnik, računalnik}
+\newcommand{\tkeywords}{vzporedni algoritmi, večnitnost, Levenshteinova razdalja, LCS}
 \newcommand{\tkeywordsEn}{computer, computer, computer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -273,7 +273,7 @@ Besedilo je oblikovano z urejevalnikom besedil \LaTeX.}
 V diplomski nalogi je študent preizkusil različne tehnike za povzporejanje algoritma za izračun DTW (dynamic time warping) razdalje, ki sem jih nato še dopolnil. Predvidevam, da bi enake tehnike bile uporabne tudi za nekatere druge probleme, kot je razdalja LCS (longest common subsequence) ali Levenshteinova razdalja. V nalogi je torej treba te tehnike sprogramirati za omenjena problema (lahko le en problem, če bo veliko dela), nato pa jih smiselno eksperimentalno ovrednotiti.
 
 \bigskip
-\noindent\textbf{Title:} Naslov diplomskega dela v angleščini
+\noindent\textbf{Title:} Parallel algorithm engineering
 
 \bigskip
 \noindent\textbf{Description:}\\
@@ -324,7 +324,7 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 
 \noindent\begin{tabular}{p{0.11\textwidth}|p{.39\textwidth}|p{.39\textwidth}}    % po potrebi razširi prvo kolono tabele na račun drugih dveh!
   {\bf kratica} & {\bf angleško}                              & {\bf slovensko} \\ \hline
-  {\bf CA}      & classification accuracy               & klasifikacijska točnost \\
+  {\bf LCS}      & longest common subsequence               & najdaljša skušna podsekvenca \\
   {\bf DBMS} & database management system & sistem za upravljanje podatkovnih baz \\
   {\bf SVM}   & support vector machine              & metoda podpornih vektorjev \\
 %  \dots & \dots & \dots \\
@@ -386,17 +386,46 @@ A proper abstract should contain around 100 words which makes this one way too s
 
 \chapter{Uvod}
 
-\chapter{Metode}
+V diplomskem delu so opisani različni pristopi za optimizacijo algoritmov za računanje Levenshteinove razdalje in najdaljše skupne podsekvence (??) (LCS - longest common subsequence) z uporabo vzporednega procesiranja. 
+
+\section{Motivacija}
+
+
+
+\section{Struktura}
+
+Drugo poglavje opiše algoritma, njuno praktično uporabnost in njuno implementacijo z uporabo dinamičnega programiranja. Tretje poglavje predstavi dva glavna pristopa paralelizacije - diagonalni in naprej-nazaj. V četrtem poglavju so prikazani rezultati meritev na različnih velikostih vhodnih podatkov. V petem poglavju sledijo še sklepi in ideje za nadalnji razvoj. 
+
+\chapter{Osnovna implementacija}
+
+V tem poglavju je predstavljena implementacija algoritma za računanje Levenshteinove razdalje in LCS razdalje z uporabo dinamičnega programiranja. V tem kontekstu je namenjena predvsem za časovno primerjavo med sekvenčnim in vzporednim algoritmom. 
 
 \section{LCS}
 
-\section{Levenshtein}
+\section{Levenshteinova razdalja}
 
-\chapter{Podatki}
 
-\chapter{Paralelizacija}
-Test
+
+
+\chapter{Vzporedni algoritmi}
+
+Osnovna struktura vzporednega algoritma za oba problema je enaka kot njuna rešitev iz prejšnjega poglavja - še vedno uporabljamo dvodimenzionalno tabelo za hranjenje vmesnih vrednosti, torej je prostorska zahtevnost enaka - O(n*m). Razlika je samo v tem, da vrednosti, ki niso medsebojno odvisne, lahko računamo vzporedno z uporabo koncepta večnitnosti (angl. multithreading). Za to obstajata dva glavna pristopa - diagonalni in naprej-nazaj. 
+
+\section{Pristop naprej-nazaj}
+
+V prejšnjem poglavju smo po tabeli iterirali od leve proti desni, ter od vrha navzdol, torej za i = 0, 1, ..., n in j = 0, 1, ..., m, nakar smo prišli do končne rešitve na poziciji (i, j). Brez težav lahko počnemo ravno obratno - iteriramo od i = n, n-1, ... 0 in j = m, m-1, ..., 0 in v tem primeru dobimo rešitev na poziciji (0, 0). Izkaže se, da lahko z uporabo dveh niti poženemo oba načina istočasno. Tabelo v abstraktnem smislu prepolovimo na dva dela - ena nit računa zgornjo polovico, druga pa spodnjo. Na ta način, vsaj teoretično, dosežemo dvakratno pohitritev. 
+
+\section{Diagonalni pristop}
+
+Težava pristopa naprej-nazaj je, da dejansko uporablja samo dve niti, oziroma ga je težko dodatno paralelizirati, ker se morajo niti v tem primeru medseboj čakati in ne dosežemo maksimalne optimalnosti, oziroma se čas morda celo poslabša zaradi prevelikega overheada. 
+
+Zato če želimo uporabiti več kot dve niti, raje koristimo diagonalni pristop, ki nam teoretično omogoča hkratno uporabo do k niti (k = dolžina diagonale = dolžina krajšega izmed dveh nizov). Ta pristop deluje, ker se izkaže, da so elementi na diagonalah vedno medsebojno neodvisni, algoritem namreč dostopa samo do podatkov v celicah (i, j-1), (i-1, j) in (i-1, j-1), paziti moramo samo, da se diagonale računajo v pravem vrstnem redu, torej da začnemo s celico (0, 0) in končamo s celico (n, m). To najlažje dosežemo tako, da z zunanjo zanko iteriramo po diagonalah (teh je vedno n+m-1) in nato v vsaki iteraciji vzporedno računamo vse celice na posamezni diagonali. 
+
+[slikovni prikaz]
+
 \chapter{Rezultati}
+
+\section{Podatki}
 
 \chapter{Zaključki}
 
@@ -404,7 +433,7 @@ Test
 
 \section{Nadalnji razvoj}
 
-
+Kot je razvidno iz poglavja 4., smo z vzporednimi algoritmi dosegli občutno pohitritev že na običajnih osebnih računalnikih. V nadalnje bi bilo zanimivo preveriti ali je čas izvajanja morda še krajši na zmogljivejših sistemih z ogromno kolilčino jeder, oziroma ali je mogoče algoritme še dodatno prilagoditi za tovrstne sisteme. 
 
 
 %\cleardoublepage
