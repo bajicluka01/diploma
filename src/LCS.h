@@ -2,8 +2,18 @@
 #include <iostream>
 #include <chrono>
 #include <omp.h>
+#include <thread>
 using namespace std;
 using namespace std::chrono;
+
+struct args {
+    string s1;
+    string s2;
+    int row;
+    int col;
+};
+
+int** arr;
 
 //dynamic programming solution
 int sequentialLCS (string str1, string str2, int row, int column) {
@@ -90,5 +100,81 @@ int parallelLCS (string str1, string str2, int row, int column) {
         delete[] arr[i];
 
     return ret;
+
+}
+
+
+void topHalfLCS (args& a) {
+    for(int i = 0; i <= a.row; i++) {
+        for(int j = 0; j < a.col; j++) {
+            if (i == 0 || j == 0)
+                arr[i][j] = 0;
+            
+            if (i != 0 && j != 0) {
+                if(a.s1[i-1] == a.s2[j-1])
+                    arr[i][j] = 1 + arr[i-1][j-1];
+                else
+                    arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
+            }
+        }
+    }
+}
+
+//doesn't work yet
+void bottomHalfLCS (args& a) {
+    int nrows = a.s1.length();
+    for(int i = nrows; i > a.row; i--) {
+        for(int j = a.col-1; j >= 0; j--) {
+            if (i == nrows ||j == a.col-1)
+                arr[i][j] = 0;
+            
+            if (i != nrows && j != a.col-1) {
+                if(a.s1[i+1] == a.s2[j+1])
+                    arr[i][j] = 1 + arr[i+1][j+1];
+                else
+                    arr[i][j] = max(arr[i][j+1], arr[i+1][j]);
+            }
+        }
+    }
+}
+
+//TODO: FIX - DOESN'T WORK IF FIRST TWO (OR LAST TWO) CHARS ARE EQUAL
+int fb_LCS (string str1, string str2, int row, int column) {
+
+    //allocate
+    arr = new int*[row];
+    for(int i = 0; i < row; i++)
+        arr[i] = new int[column];
+
+    //initialize zeros
+    for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            arr[i][j] = 0;
+        }
+    }
+
+    int h = row / 2;
+    struct args a; 
+    a.s1 = str1;
+    a.s2 = str2;
+    a.row = h;
+    a.col = column;
+
+    thread t1(topHalfLCS, ref(a));
+    thread t2(bottomHalfLCS, ref(a));
+    
+    t1.join();
+    t2.join();
+
+    /*for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << "\n";
+    }*/
+
+
+    //TODO: check if this is always correct!!
+    return max(arr[h][column], arr[h+1][0]);
 
 }

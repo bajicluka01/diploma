@@ -6,15 +6,6 @@
 using namespace std;
 using namespace std::chrono;
 
-struct args {
-    string s1;
-    string s2;
-    int row;
-    int col;
-};
-
-int** arr;
-
 //dynamic programming solution
 int sequentialLevenshtein (string str1, string str2, int row, int column) {
     //allocate

@@ -7,7 +7,6 @@
 using namespace std;
 using namespace std::chrono;
 
-
 string randomStringGenerator (int len) {
     string str = "";
     for(int i = 0; i < len; i++)
@@ -59,7 +58,7 @@ int main (int argc, char* argv[]) {
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << fb_levenshtein(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << fb_LCS(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
