@@ -105,17 +105,19 @@ int parallelLCS (string str1, string str2, int row, int column) {
 
 
 void topHalfLCS (args& a) {
+    
+    //first row (half) and column
     for(int i = 0; i <= a.row; i++) {
-        for(int j = 0; j < a.col; j++) {
-            if (i == 0 || j == 0)
-                arr[i][j] = 0;
-            
-            if (i != 0 && j != 0) {
+        arr[i][0] = 0;
+        arr[0][i] = 0;
+    }
+
+    for(int i = 1; i <= a.row; i++) {
+        for(int j = 1; j < a.col; j++) {          
                 if(a.s1[i-1] == a.s2[j-1])
                     arr[i][j] = 1 + arr[i-1][j-1];
                 else
                     arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
-            }
         }
     }
 }
