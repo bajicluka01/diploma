@@ -127,21 +127,71 @@ void topHalf(args& a) {
 //doesn't work yet
 void bottomHalf(args& a) {
     int nrows = a.s1.length();
+
     for(int i = nrows; i > a.row; i--) {
-        for(int j = a.col-1; j >= 0; j--) {
+        for (int j = a.col; j >= 0; j--) {
             if (i == nrows)
                 arr[i][j] = j;
-            if (j == a.col-1)
-                arr[i][j] = i;
-            
-            if (i != nrows && j != a.col-1) {
-                if(a.s1[i+1] == a.s2[j+1])
-                    arr[i][j] = arr[i+1][j+1];
+            if (j == a.col)
+                arr[i][j] == i;
+        }
+    }
+
+    for(int i = nrows-1; i > a.row; i--) {
+        for(int j = a.col-1; j >= 0; j--) {
+            if(a.s1[i+1] == a.s2[j+1])
+                arr[i][j] = arr[i+1][j+1];
+            else
+                arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
+        }
+    }
+}
+
+int backward (string str1, string str2, int row, int column) {
+    //allocate
+    int** arr = new int*[row];
+    for(int i = 0; i < row; i++)
+        arr[i] = new int[column];
+
+    //initialize zeros and first & last row and column
+    for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            arr[i][j] = 0;
+            if(i == row-1) {
+                if(str1[i] == str2[j])
+                    arr[i][j] == 0;
                 else
-                    arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
+                    arr[i][j] == column-j-1;
+            }
+            if(j == column-1) {
+                if(str1[i] == str2[j])
+                    arr[i][j] == 0;
+                else
+                    arr[i][j] == row-i-1;
             }
         }
     }
+
+    for(int i = row-2; i >= 0; i--) {
+        for (int j = column-2; j >= 0; j--) {          
+            if (str1[i+1] == str2[j+1])
+                arr[i][j] = arr[i+1][j+1];
+            else 
+                arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
+        }
+    }
+
+    cout << "\n";
+    for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    int ret = arr[row-1][column-1];
+
+    return ret;
 }
 
 //TODO: FIX - DOESN'T WORK IF FIRST TWO (OR LAST TWO) CHARS ARE EQUAL
@@ -159,7 +209,9 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    int h = row / 2;
+    int h = 0;
+
+    /*int h = row / 2;
     struct args a; 
     a.s1 = str1;
     a.s2 = str2;
@@ -170,14 +222,17 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     thread t2(bottomHalf, ref(a));
     
     t1.join();
-    t2.join();
+    t2.join();*/
 
-    /*for (int i = 0; i < row; i++){
+    backward(str1, str2, row, column);
+
+    cout << "\n";
+    for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }*/
+    }
 
 
     //TODO: check if this is always correct!!
