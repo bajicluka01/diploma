@@ -147,27 +147,35 @@ void bottomHalf(args& a) {
     }
 }
 
+//just for testing stuff
 int backward (string str1, string str2, int row, int column) {
     //allocate
     int** arr = new int*[row];
     for(int i = 0; i < row; i++)
         arr[i] = new int[column];
 
-    //initialize zeros and first & last row and column
+    //initialize zeros
     for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            arr[i][j] = 0;
+        }
+    }
+
+    //initialize zeros and first & last row and column
+    /*for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             arr[i][j] = 0;
             if(i == row-1) {
                 if(str1[i] == str2[j])
                     arr[i][j] == 0;
                 else
-                    arr[i][j] == column-j-1;
+                    arr[i][j] == column-j+1;
             }
             if(j == column-1) {
                 if(str1[i] == str2[j])
                     arr[i][j] == 0;
                 else
-                    arr[i][j] == row-i-1;
+                    arr[i][j] == row-i+1;
             }
         }
     }
@@ -179,7 +187,35 @@ int backward (string str1, string str2, int row, int column) {
             else 
                 arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
         }
+    }*/
+
+   //test if first characters match for the purposes of calculating first row and column more efficiently
+   bool firstChar = str1[0] == str2[0];
+
+    //first row and column (can probably be further optimized)
+    for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            if (i == 0 && j == 0)
+                arr[i][j] = firstChar ? 0 : 1;
+            else {
+                if(i == 0) 
+                    arr[i][j] = firstChar ? 0 : j+1;
+                if(j == 0) 
+                    arr[i][j] = firstChar ? 0 : i+1;
+            }
+        }
     }
+
+    //rest of table
+    for(int i = 1; i < row; i++) {
+        for (int j = 1; j < column; j++) {          
+            if (str1[i] == str2[j])
+                arr[i][j] = arr[i-1][j-1];
+            else 
+                arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
+        }
+    }
+
 
     cout << "\n";
     for (int i = 0; i < row; i++){
@@ -226,13 +262,13 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
 
     backward(str1, str2, row, column);
 
-    cout << "\n";
+    /*cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }
+    }*/
 
 
     //TODO: check if this is always correct!!

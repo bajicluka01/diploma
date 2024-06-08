@@ -42,13 +42,13 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
 
 int main (int argc, char* argv[]) {
     string str1 = "delete";
-    string str2 = "replaca";
+    string str2 = "replace";
 
     //str1 = randomStringGenerator(10000);
     //str2 = randomStringGenerator(10000);
 
-    int row = str1.length()+1;
-    int column = str2.length()+1;
+    int row = str1.length();
+    int column = str2.length();
    
     auto start = high_resolution_clock::now();
     cout << "Sequential Levenshtein solution: " << sequentialLevenshtein(str1, str2, row, column) << "\n";
