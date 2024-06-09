@@ -20,29 +20,43 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    for(int i = 0; i < row; i++) {
+    //test if first characters match for the purposes of calculating first row and column more efficiently
+   bool firstChar = str1[0] == str2[0];
+
+    //first row and column (can probably be further optimized)
+    for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
-            //first row and column (basically empty string)
-            if (i == 0)
-                arr[i][j] = j;
-            if (j == 0)
-                arr[i][j] = i;
-            
-            //the rest of the table
-            if(i != 0 && j != 0) {
-                if (str1[i-1] == str2[j-1])
-                    arr[i][j] = arr[i-1][j-1];
-                else
-                    arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
+            if (i == 0 && j == 0)
+                arr[i][j] = firstChar ? 0 : 1;
+            else {
+                if(i == 0) 
+                    arr[i][j] = firstChar ? 0 : j+1;
+                if(j == 0) 
+                    arr[i][j] = firstChar ? 0 : i+1;
             }
         }
     }
 
-    int ret = arr[row-1][column-1];
+    //rest of table
+    for(int i = 1; i < row; i++) {
+        for (int j = 1; j < column; j++) {          
+            if (str1[i] == str2[j])
+                arr[i][j] = arr[i-1][j-1];
+            else 
+                arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
+        }
+    }
 
-    //deallocate
-    for(int i = 0; i < row; i++)
-        delete[] arr[i];
+
+    cout << "\n";
+    for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    int ret = arr[row-1][column-1];
 
     return ret;
 }
