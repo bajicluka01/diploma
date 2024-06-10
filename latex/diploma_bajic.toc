@@ -18,3 +18,4 @@
 \contentsline {chapter}{\numberline {5}Zaključki}{9}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Sklep}{9}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Nadalnji razvoj}{9}{section.5.2}%
+\contentsline {chapter}{Literatura}{11}{chapter*.7}%

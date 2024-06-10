@@ -44,7 +44,8 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>diploma_bajic.bcf</file>
+      <file>diploma_bajic.aux</file>
+      <file>diploma_bajic-blx.bib</file>
     </provides>
     <requires type="dynamic">
       <file>diploma_bajic.bbl</file>
@@ -52,6 +53,7 @@
     <requires type="static">
       <file>blx-dm.def</file>
       <file>blx-compat.def</file>
+      <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>standard.bbx</file>
       <file>numeric.bbx</file>
@@ -62,13 +64,14 @@
     </requires>
   </internal>
   <external package="biblatex" priority="5" active="0">
-    <generic>biber</generic>
+    <generic>bibtex</generic>
     <cmdline>
-      <binary>biber</binary>
+      <binary>bibtex</binary>
+      <option>-min-crossrefs 2</option>
       <infile>diploma_bajic</infile>
     </cmdline>
     <input>
-      <file>diploma_bajic.bcf</file>
+      <file>diploma_bajic.aux</file>
     </input>
     <output>
       <file>diploma_bajic.bbl</file>
@@ -77,10 +80,14 @@
       <file>diploma_bajic.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>diploma_bajic.bcf</file>
+      <file>diploma_bajic.aux</file>
+      <file>diploma_bajic-blx.bib</file>
     </requires>
     <requires type="editable">
       <file>literatura.bib</file>
+    </requires>
+    <requires type="static">
+      <file>biblatex.bst</file>
     </requires>
   </external>
 </requests>

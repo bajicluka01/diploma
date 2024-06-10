@@ -1,0 +1,51 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{documentsimilarity}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=CP}{%
+         family={Coates},
+         familyi={C\bibinitperiod},
+         given={Peter},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=BF}{%
+         family={Breitinger},
+         familyi={B\bibinitperiod},
+         given={Frank},
+         giveni={F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CPBF1}
+    \strng{fullhash}{CPBF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{booktitle}{Proceedings of the Digital Forensics Research Conference
+  Europe (DFRWS EU)}
+    \verb{doi}
+    \verb 10.48550/arXiv.2307.11496
+    \endverb
+    \field{title}{Identifying document similarity using a fast estimation of
+  the Levenshtein Distance based on compression and signatures}
+    \field{year}{2022}
+  \endentry
+\enddatalist
+\endinput
