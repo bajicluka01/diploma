@@ -21,7 +21,7 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
     }
 
     //test if first characters match for the purposes of calculating first row and column more efficiently
-   bool firstChar = str1[0] == str2[0];
+    bool firstChar = str1[0] == str2[0];
 
     //first row and column (can probably be further optimized)
     for (int i = 0; i < row; i++){
@@ -119,39 +119,55 @@ int parallelLevenshtein (string str1, string str2, int row, int column) {
 }
 
 void topHalf(args& a) {
-    for(int i = 0; i < a.row; i++) {
-        for(int j = 0; j < a.col; j++) { 
-            if (i == 0)
-                arr[i][j] = j;
-            if (j == 0)
-                arr[i][j] = i;
+    //test if first characters match for the purposes of calculating first row and column more efficiently
+    bool firstChar = a.s1[0] == a.s2[0];
+
+    //first row and column (can probably be further optimized)
+    for (int i = 0; i < a.row; i++){
+        for (int j = 0; j < a.col; j++) {
+            if (i == 0 && j == 0)
+                arr[i][j] = firstChar ? 0 : 1;
+            else {
+                if(i == 0) 
+                    arr[i][j] = firstChar ? arr[i][j-1]+1 : j+1;
+                if(j == 0) 
+                    arr[i][j] = firstChar ? arr[i-1][j]+1 : i+1;
+            }
         }
     }
 
-    for(int i = 1; i <= a.row; i++) {
-        for(int j = 1; j < a.col; j++) {
-                if(a.s1[i-1] == a.s2[j-1])
-                    arr[i][j] = arr[i-1][j-1];
-                else
-                    arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
+    //rest of table
+    for(int i = 1; i < a.row; i++) {
+        for (int j = 1; j < a.col; j++) {          
+            if (a.s1[i] == a.s2[j])
+                arr[i][j] = arr[i-1][j-1];
+            else 
+                arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
         }
     }
 }
 
-//doesn't work yet
+//TODO fix odd/even h
 void bottomHalf(args& a) {
-    int nrows = a.s1.length();
+    int nrows = a.s1.length()-1;
 
-    for(int i = nrows; i > a.row; i--) {
+    bool lastChar = a.s1[a.s1.length()-1] == a.s2[a.s2.length()-1];
+
+    //first row and column (can probably be further optimized)
+    for (int i = nrows; i >= a.row; i--){
         for (int j = a.col; j >= 0; j--) {
-            if (i == nrows)
-                arr[i][j] = j;
-            if (j == a.col)
-                arr[i][j] == i;
+            if (i == nrows && j == a.col) 
+                arr[i][j] = lastChar ? 0 : 1; //somehow doesn't work for equal last chars yet
+            else {
+                if(i == nrows) 
+                    arr[i][j] = lastChar ? arr[i][j+1]+1 : a.col-j+1;
+                if(j == a.col) 
+                    arr[i][j] = lastChar ? arr[i+1][j]+1 : nrows-i+1;
+            }
         }
     }
 
-    for(int i = nrows-1; i > a.row; i--) {
+    for(int i = nrows-1; i >= a.row; i--) {
         for(int j = a.col-1; j >= 0; j--) {
             if(a.s1[i+1] == a.s2[j+1])
                 arr[i][j] = arr[i+1][j+1];
@@ -259,9 +275,7 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    int h = 0;
-
-    /*int h = row / 2;
+    int h = row / 2;
     struct args a; 
     a.s1 = str1;
     a.s2 = str2;
@@ -272,20 +286,18 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     thread t2(bottomHalf, ref(a));
     
     t1.join();
-    t2.join();*/
+    t2.join();
 
-    backward(str1, str2, row, column);
-
-    /*cout << "\n";
+    cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }*/
+    }
 
 
     //TODO: check if this is always correct!!
-    return max(arr[h][0], arr[h][column]);
+    return max(arr[h+1][0], arr[h][column]);
 
 }
