@@ -154,22 +154,22 @@ void bottomHalf(args& a) {
     bool lastChar = a.s1[a.s1.length()-1] == a.s2[a.s2.length()-1];
 
     //first row and column (can probably be further optimized)
-    for (int i = nrows; i >= a.row; i--){
-        for (int j = a.col; j >= 0; j--) {
-            if (i == nrows && j == a.col) 
-                arr[i][j] = lastChar ? 0 : 1; //somehow doesn't work for equal last chars yet
+    for (int i = nrows; i >= a.row; i--) {
+        for (int j = a.col-1; j >= 0; j--) {
+            if (i == nrows && j == a.col-1) 
+                arr[i][j] = lastChar ? 0 : 1;
             else {
                 if(i == nrows) 
-                    arr[i][j] = lastChar ? arr[i][j+1]+1 : a.col-j+1;
-                if(j == a.col) 
+                    arr[i][j] = lastChar ? arr[i][j+1]+1 : a.col-j;
+                if(j == a.col-1) 
                     arr[i][j] = lastChar ? arr[i+1][j]+1 : nrows-i+1;
             }
         }
     }
 
     for(int i = nrows-1; i >= a.row; i--) {
-        for(int j = a.col-1; j >= 0; j--) {
-            if(a.s1[i+1] == a.s2[j+1])
+        for(int j = a.col-2; j >= 0; j--) {
+            if(a.s1[i] == a.s2[j])
                 arr[i][j] = arr[i+1][j+1];
             else
                 arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
@@ -177,104 +177,17 @@ void bottomHalf(args& a) {
     }
 }
 
-//just for testing stuff
-int backward (string str1, string str2, int row, int column) {
-    //allocate
-    int** arr = new int*[row];
-    for(int i = 0; i < row; i++)
-        arr[i] = new int[column];
-
-    //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            arr[i][j] = 0;
-        }
-    }
-
-    //initialize zeros and first & last row and column
-    /*for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            arr[i][j] = 0;
-            if(i == row-1) {
-                if(str1[i] == str2[j])
-                    arr[i][j] == 0;
-                else
-                    arr[i][j] == column-j+1;
-            }
-            if(j == column-1) {
-                if(str1[i] == str2[j])
-                    arr[i][j] == 0;
-                else
-                    arr[i][j] == row-i+1;
-            }
-        }
-    }
-
-    for(int i = row-2; i >= 0; i--) {
-        for (int j = column-2; j >= 0; j--) {          
-            if (str1[i+1] == str2[j+1])
-                arr[i][j] = arr[i+1][j+1];
-            else 
-                arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
-        }
-    }*/
-
-   //test if first characters match for the purposes of calculating first row and column more efficiently
-   bool firstChar = str1[0] == str2[0];
-
-    //first row and column (can probably be further optimized)
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            if (i == 0 && j == 0)
-                arr[i][j] = firstChar ? 0 : 1;
-            else {
-                if(i == 0) 
-                    arr[i][j] = firstChar ? 0 : j+1;
-                if(j == 0) 
-                    arr[i][j] = firstChar ? 0 : i+1;
-            }
-        }
-    }
-
-    //rest of table
-    for(int i = 1; i < row; i++) {
-        for (int j = 1; j < column; j++) {          
-            if (str1[i] == str2[j])
-                arr[i][j] = arr[i-1][j-1];
-            else 
-                arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
-        }
-    }
-
-
-    cout << "\n";
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }
-
-    int ret = arr[row-1][column-1];
-
-    return ret;
-}
-
-//TODO: FIX - DOESN'T WORK IF FIRST TWO (OR LAST TWO) CHARS ARE EQUAL
 int fb_levenshtein (string str1, string str2, int row, int column) {
-
     //allocate
     arr = new int*[row];
     for(int i = 0; i < row; i++)
         arr[i] = new int[column];
 
     //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-        }
-    }
-
+        
     int h = row / 2;
     struct args a; 
     a.s1 = str1;
@@ -295,7 +208,6 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
         }
         cout << "\n";
     }
-
 
     //TODO: check if this is always correct!!
     return max(arr[h+1][0], arr[h][column]);
