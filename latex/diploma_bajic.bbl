@@ -47,5 +47,29 @@
   the Levenshtein Distance based on compression and signatures}
     \field{year}{2022}
   \endentry
+
+  \entry{diplomaPremk}{report}{}
+    \name{author}{1}{}{%
+      {{hash=PL}{%
+         family={Premk},
+         familyi={P\bibinitperiod},
+         given={Leon},
+         giveni={L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PL1}
+    \strng{fullhash}{PL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{title}{Algoritmi za izračun razdalje med časovnimi vrstami z
+  dinamičnim prilagajanjem časa}
+    \list{institution}{1}{%
+      {Fakulteta za računalništvo in informatiko, Univerza v Ljubljani}%
+    }
+    \field{type}{Diplomska naloga}
+    \field{year}{2020}
+  \endentry
 \enddatalist
 \endinput

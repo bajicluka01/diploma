@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  10 JUN 2024 22:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  13 JUN 2024 20:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -807,16 +807,11 @@ th page group included in a single page
 pdfTeX warning: pdflatex (file ./cc_sa_30.pdf): PDF inclusion: multiple pdfs wi
 th page group included in a single page
 >]
-Underfull \hbox (badness 10000) in paragraph at lines 263--270
-
- []
-
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.289 \clearemptydoublepage
+l.280 \clearemptydoublepage
                             [3
 
 ]
@@ -824,7 +819,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.289 \clearemptydoublepage
+l.280 \clearemptydoublepage
                             [4
 
 ]
@@ -832,13 +827,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.298 \clearemptydoublepage
+l.289 \clearemptydoublepage
                             [5]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.298 \clearemptydoublepage
+l.289 \clearemptydoublepage
                             [6
 
 ]
@@ -846,13 +841,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.307 \clearemptydoublepage
+l.298 \clearemptydoublepage
                             [7]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.307 \clearemptydoublepage
+l.298 \clearemptydoublepage
                             [8
 
 ] (diploma_bajic.toc)
@@ -864,7 +859,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.318 \clearemptydoublepage
+l.309 \clearemptydoublepage
                             [9
 
 ]
@@ -872,7 +867,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.318 \clearemptydoublepage
+l.309 \clearemptydoublepage
                             [10
 
 ]
@@ -880,7 +875,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.335 \clearemptydoublepage
+l.326 \clearemptydoublepage
                             [11
 
 ]
@@ -888,7 +883,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.335 \clearemptydoublepage
+l.326 \clearemptydoublepage
                             [12
 
 ]
@@ -896,7 +891,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.357 \clearemptydoublepage
+l.348 \clearemptydoublepage
                             [13
 
 ]
@@ -904,7 +899,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.357 \clearemptydoublepage
+l.348 \clearemptydoublepage
                             [14
 
 ]
@@ -912,7 +907,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.380 \clearemptydoublepage
+l.371 \clearemptydoublepage
                             [15
 
 ]
@@ -920,7 +915,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.380 \clearemptydoublepage
+l.371 \clearemptydoublepage
                             [16
 
 ]
@@ -969,10 +964,10 @@ Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 20067 strings out of 474486
- 351844 string characters out of 5743755
+ 20074 strings out of 474486
+ 352071 string characters out of 5743755
  1932542 words of memory out of 5000000
- 42052 multiletter control sequences out of 15000+600000
+ 42058 multiletter control sequences out of 15000+600000
  569334 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,81p,1861b,1962s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -990,9 +985,9 @@ pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users
 ti8.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmtt10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/publ
 ic/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (27 pages, 222158 bytes).
+Output written on diploma_bajic.pdf (27 pages, 222932 bytes).
 PDF statistics:
- 275 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
+ 277 PDF objects out of 1000 (max. 8388607)
+ 36 named destinations out of 1000 (max. 500000)
  156 words of extra memory for PDF output out of 10000 (max. 10000000)
 
