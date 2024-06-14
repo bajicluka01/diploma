@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  13 JUN 2024 20:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  14 JUN 2024 22:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -766,17 +766,17 @@ Package biblatex Info: Reference segment=0 on input line 182.
 
 
 {C:/Users/bajic/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-<cc_cc_30.pdf, id=81, 25.27844pt x 25.27844pt>
+<cc_cc_30.pdf, id=85, 25.27844pt x 25.27844pt>
 File: cc_cc_30.pdf Graphic file (type pdf)
 <use cc_cc_30.pdf>
 Package pdftex.def Info: cc_cc_30.pdf  used on input line 235.
 (pdftex.def)             Requested size: 18.74585pt x 18.74585pt.
-<cc_by_30.pdf, id=82, 18.74034pt x 18.73953pt>
+<cc_by_30.pdf, id=86, 18.74034pt x 18.73953pt>
 File: cc_by_30.pdf Graphic file (type pdf)
 <use cc_by_30.pdf>
 Package pdftex.def Info: cc_by_30.pdf  used on input line 235.
 (pdftex.def)             Requested size: 18.74028pt x 18.73947pt.
-<cc_sa_30.pdf, id=83, 18.73955pt x 18.73994pt>
+<cc_sa_30.pdf, id=87, 18.73955pt x 18.73994pt>
 File: cc_sa_30.pdf Graphic file (type pdf)
 <use cc_sa_30.pdf>
 Package pdftex.def Info: cc_sa_30.pdf  used on input line 235.
@@ -811,7 +811,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.280 \clearemptydoublepage
+l.278 \clearemptydoublepage
                             [3
 
 ]
@@ -819,7 +819,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.280 \clearemptydoublepage
+l.278 \clearemptydoublepage
                             [4
 
 ]
@@ -827,13 +827,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.289 \clearemptydoublepage
+l.287 \clearemptydoublepage
                             [5]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.289 \clearemptydoublepage
+l.287 \clearemptydoublepage
                             [6
 
 ]
@@ -841,13 +841,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.298 \clearemptydoublepage
+l.296 \clearemptydoublepage
                             [7]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.298 \clearemptydoublepage
+l.296 \clearemptydoublepage
                             [8
 
 ] (diploma_bajic.toc)
@@ -859,7 +859,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.309 \clearemptydoublepage
+l.307 \clearemptydoublepage
                             [9
 
 ]
@@ -867,7 +867,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.309 \clearemptydoublepage
+l.307 \clearemptydoublepage
                             [10
 
 ]
@@ -875,7 +875,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.326 \clearemptydoublepage
+l.324 \clearemptydoublepage
                             [11
 
 ]
@@ -883,7 +883,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.326 \clearemptydoublepage
+l.324 \clearemptydoublepage
                             [12
 
 ]
@@ -891,7 +891,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.348 \clearemptydoublepage
+l.346 \clearemptydoublepage
                             [13
 
 ]
@@ -899,7 +899,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.348 \clearemptydoublepage
+l.346 \clearemptydoublepage
                             [14
 
 ]
@@ -907,7 +907,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.371 \clearemptydoublepage
+l.369 \clearemptydoublepage
                             [15
 
 ]
@@ -915,7 +915,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.371 \clearemptydoublepage
+l.369 \clearemptydoublepage
                             [16
 
 ]
@@ -958,16 +958,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `diploma_bajic.out' has not changed.
-(rerunfilecheck)             Checksum: 2D7E73EEA89956AC5187ACD098DB0F34;1857.
+(rerunfilecheck)             Checksum: C4C8A0D82374614E045B1AC769DEB32C;2021.
 Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 \openout1 = `diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 20074 strings out of 474486
- 352071 string characters out of 5743755
+ 20076 strings out of 474486
+ 352095 string characters out of 5743755
  1932542 words of memory out of 5000000
- 42058 multiletter control sequences out of 15000+600000
+ 42059 multiletter control sequences out of 15000+600000
  569334 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,81p,1861b,1962s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -985,9 +985,9 @@ pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users
 ti8.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmtt10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/publ
 ic/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (27 pages, 222932 bytes).
+Output written on diploma_bajic.pdf (27 pages, 223914 bytes).
 PDF statistics:
- 277 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 156 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 285 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
+ 164 words of extra memory for PDF output out of 10000 (max. 10000000)
 
