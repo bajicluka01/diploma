@@ -8,6 +8,7 @@ using namespace std::chrono;
 
 //dynamic programming solution
 int sequentialLevenshtein (string str1, string str2, int row, int column) {
+
     //allocate
     int** arr = new int*[row];
     for(int i = 0; i < row; i++)
@@ -47,7 +48,6 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-
     cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
@@ -69,12 +69,10 @@ int parallelLevenshtein (string str1, string str2, int row, int column) {
         arr[i] = new int[column];
 
     //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-        }
-    }
-
+        
     int i = 0;
     int j = 0;
     while(i <= row-1 && j <= column-1) {
@@ -137,14 +135,12 @@ void topHalf(args& a) {
     }
 
     //rest of table
-    for(int i = 1; i < a.row; i++) {
-        for (int j = 1; j < a.col; j++) {          
+    for(int i = 1; i < a.row; i++) 
+        for (int j = 1; j < a.col; j++)       
             if (a.s1[i] == a.s2[j])
                 arr[i][j] = arr[i-1][j-1];
             else 
                 arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
-        }
-    }
 }
 
 //TODO fix odd/even h
@@ -167,14 +163,12 @@ void bottomHalf(args& a) {
         }
     }
 
-    for(int i = nrows-1; i >= a.row; i--) {
-        for(int j = a.col-2; j >= 0; j--) {
+    for(int i = nrows-1; i >= a.row; i--) 
+        for(int j = a.col-2; j >= 0; j--) 
             if(a.s1[i] == a.s2[j])
                 arr[i][j] = arr[i+1][j+1];
             else
                 arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
-        }
-    }
 }
 
 int fb_levenshtein (string str1, string str2, int row, int column) {
@@ -209,7 +203,7 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
         cout << "\n";
     }
 
-    //TODO: check if this is always correct!!
+    //TODO: find the correct function for merging results (if it even exists)
     return max(arr[h+1][0], arr[h][column]);
 
 }

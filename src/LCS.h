@@ -24,22 +24,18 @@ int sequentialLCS (string str1, string str2, int row, int column) {
         arr[i] = new int[column];
 
     //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-        }
-    }
 
-    for(int i = 0; i < row; i++) {
-        for (int j = 0; j < column; j++) {
+    for(int i = 0; i < row; i++) 
+        for (int j = 0; j < column; j++) 
             if (i == 0 || j == 0 )
                 arr[i][j] = 0;
             else if (str1[i-1] == str2 [j-1])
                 arr[i][j] = 1 + arr[i-1][j-1];
             else
                 arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
-        }
-    }
 
     int ret = arr[row-1][column-1];
 
@@ -112,35 +108,31 @@ void topHalfLCS (args& a) {
         arr[0][i] = 0;
     }
 
-    for(int i = 1; i <= a.row; i++) {
-        for(int j = 1; j < a.col; j++) {          
-                if(a.s1[i-1] == a.s2[j-1])
-                    arr[i][j] = 1 + arr[i-1][j-1];
-                else
-                    arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
-        }
-    }
+    for(int i = 1; i <= a.row; i++) 
+        for(int j = 1; j < a.col; j++)        
+            if(a.s1[i-1] == a.s2[j-1])
+                arr[i][j] = 1 + arr[i-1][j-1];
+            else
+                arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
 }
 
 //doesn't work yet
 void bottomHalfLCS (args& a) {
     int nrows = a.s1.length();
-    for(int i = nrows; i > a.row; i--) {
+    for(int i = nrows; i > a.row; i--) 
         for(int j = a.col-1; j >= 0; j--) {
             if (i == nrows ||j == a.col-1)
                 arr[i][j] = 0;
             
-            if (i != nrows && j != a.col-1) {
+            if (i != nrows && j != a.col-1) 
                 if(a.s1[i+1] == a.s2[j+1])
                     arr[i][j] = 1 + arr[i+1][j+1];
                 else
                     arr[i][j] = max(arr[i][j+1], arr[i+1][j]);
-            }
+            
         }
-    }
 }
 
-//TODO: FIX - DOESN'T WORK IF FIRST TWO (OR LAST TWO) CHARS ARE EQUAL
 int fb_LCS (string str1, string str2, int row, int column) {
 
     //allocate
@@ -149,11 +141,9 @@ int fb_LCS (string str1, string str2, int row, int column) {
         arr[i] = new int[column];
 
     //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-        }
-    }
 
     int h = row / 2;
     struct args a; 
@@ -168,15 +158,7 @@ int fb_LCS (string str1, string str2, int row, int column) {
     t1.join();
     t2.join();
 
-    /*for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }*/
-
-
-    //TODO: check if this is always correct!!
+    //TODO: find the correct function for merging results (if it even exists)
     return max(arr[h][column], arr[h+1][0]);
 
 }

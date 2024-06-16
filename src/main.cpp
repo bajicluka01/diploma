@@ -25,9 +25,9 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
 
         switch(function) {
             case 1: sequentialLCS(str1, str2, row, column); break;
-            case 2: parallelLCS(str1, str2, row, column); break;
+            case 2: fb_LCS(str1, str2, row, column); break;
             case 3: sequentialLevenshtein(str1, str2, row, column); break;
-            case 4: parallelLevenshtein(str1, str2, row, column); break;
+            case 4: fb_levenshtein(str1, str2, row, column); break;
             default: return 0;
         }
 
