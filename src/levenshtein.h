@@ -61,6 +61,7 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
     return ret;
 }
 
+//anti-diagonal approach with parallelization
 int parallelLevenshtein (string str1, string str2, int row, int column) {
     
     //allocate
@@ -75,10 +76,12 @@ int parallelLevenshtein (string str1, string str2, int row, int column) {
         
     int i = 0;
     int j = 0;
+    //iterating through diagonals
     while(i <= row-1 && j <= column-1) {
 
         int antidiag = min(j, row-i-1);
 
+        //parallell calculations of elements on current diagonal
         #pragma omp parallel for
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
@@ -106,16 +109,11 @@ int parallelLevenshtein (string str1, string str2, int row, int column) {
 
     }
 
-    int ret = arr[row-1][column-1];
-
-    //deallocate
-    for (int i = 0; i < row; i++)
-        delete[] arr[i];
-
-    return ret;
+    return arr[row-1][column-1];
 
 }
 
+//one thread calculates the top half of the table
 void topHalf(args& a) {
     //test if first characters match for the purposes of calculating first row and column more efficiently
     bool firstChar = a.s1[0] == a.s2[0];
@@ -143,6 +141,7 @@ void topHalf(args& a) {
                 arr[i][j] = 1 + min(arr[i][j-1], min(arr[i-1][j], arr[i-1][j-1]));
 }
 
+//one thread calculates the bottom half of the table
 //TODO fix odd/even h
 void bottomHalf(args& a) {
     int nrows = a.s1.length()-1;
@@ -163,6 +162,7 @@ void bottomHalf(args& a) {
         }
     }
 
+    //rest of table
     for(int i = nrows-1; i >= a.row; i--) 
         for(int j = a.col-2; j >= 0; j--) 
             if(a.s1[i] == a.s2[j])
@@ -171,6 +171,7 @@ void bottomHalf(args& a) {
                 arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
 }
 
+//forward-backward approach with 2 threads
 int fb_levenshtein (string str1, string str2, int row, int column) {
     //allocate
     arr = new int*[row];

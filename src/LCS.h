@@ -37,13 +37,7 @@ int sequentialLCS (string str1, string str2, int row, int column) {
             else
                 arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
 
-    int ret = arr[row-1][column-1];
-
-    //deallocate
-    for(int i = 0; i < row; i++)
-        delete[] arr[i];
-
-    return ret;
+    return arr[row-1][column-1];
 }
 
 //anti-diagonal parallelization
@@ -63,10 +57,12 @@ int parallelLCS (string str1, string str2, int row, int column) {
 
     int i = 0;
     int j = 0;
+    //iterate through diagonals
     while(i <= row-1 && j <= column-1) {
 
         int antidiag = min(j, row-i-1);
 
+        //parallel calculation of all elements on current diagonal
         #pragma omp parallel for
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
@@ -89,17 +85,11 @@ int parallelLCS (string str1, string str2, int row, int column) {
 
     }
 
-    int ret = arr[row-1][column-1];
-
-    //deallocate
-    for (int i = 0; i < row; i++)
-        delete[] arr[i];
-
-    return ret;
+    return arr[row-1][column-1];
 
 }
 
-
+//one thread calculates top half of table
 void topHalfLCS (args& a) {
     
     //first row (half) and column
@@ -108,6 +98,7 @@ void topHalfLCS (args& a) {
         arr[0][i] = 0;
     }
 
+    //rest of table
     for(int i = 1; i <= a.row; i++) 
         for(int j = 1; j < a.col; j++)        
             if(a.s1[i-1] == a.s2[j-1])
@@ -116,7 +107,7 @@ void topHalfLCS (args& a) {
                 arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
 }
 
-//doesn't work yet
+//one thread calculates bottom half of table (doesn't work yet)
 void bottomHalfLCS (args& a) {
     int nrows = a.s1.length();
     for(int i = nrows; i > a.row; i--) 
@@ -133,6 +124,7 @@ void bottomHalfLCS (args& a) {
         }
 }
 
+//forward-backward approach with two threads
 int fb_LCS (string str1, string str2, int row, int column) {
 
     //allocate
