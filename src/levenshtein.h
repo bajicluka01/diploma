@@ -171,6 +171,11 @@ void bottomHalf(args& a) {
                 arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
 }
 
+//merges last rows of topHalf and bottomHalf
+int merge(int h) {
+    return 0;
+}
+
 //forward-backward approach with 2 threads
 int fb_levenshtein (string str1, string str2, int row, int column) {
     //allocate
@@ -196,6 +201,9 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     t1.join();
     t2.join();
 
+    //merge results to find the distance
+    int ret = merge(h);
+
     cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
@@ -204,7 +212,6 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
         cout << "\n";
     }
 
-    //TODO: find the correct function for merging results (if it even exists)
-    return max(arr[h+1][0], arr[h][column]);
+    return ret;
 
 }

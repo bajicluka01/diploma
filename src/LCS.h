@@ -124,6 +124,11 @@ void bottomHalfLCS (args& a) {
         }
 }
 
+//merges last rows of topHalf and bottomHalf
+int mergeLCS(int h) {
+    return 0;
+}
+
 //forward-backward approach with two threads
 int fb_LCS (string str1, string str2, int row, int column) {
 
@@ -150,7 +155,8 @@ int fb_LCS (string str1, string str2, int row, int column) {
     t1.join();
     t2.join();
 
-    //TODO: find the correct function for merging results (if it even exists)
-    return max(arr[h][column], arr[h+1][0]);
+    //merge results to find the distance
+    int ret = mergeLCS(h);
 
+    return ret;
 }
