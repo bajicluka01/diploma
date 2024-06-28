@@ -37,13 +37,13 @@ int sequentialLCS (string str1, string str2, int row, int column) {
             else
                 arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
 
-    cout << "\n";
+    /*cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }
+    }*/
 
     return arr[row-1][column-1];
 }
@@ -127,7 +127,6 @@ void bottomHalfLCS (args& a) {
     for(int i = a.col+1; i >= 0; i--)
         arr[nrows+1][i] = 0;
 
-    cout<<"\n\n"<<a.s1<<"  "<<a.s2<<" "<<nrows<<" " <<a.col;
     //rest of table
     for(int i = nrows; i > a.row; i--) 
         for(int j = a.col-1; j > 0; j--) 
@@ -138,8 +137,19 @@ void bottomHalfLCS (args& a) {
 }
 
 //merges last rows of topHalf and bottomHalf
-int mergeLCS(int h) {
-    return 0;
+int mergeLCS(int h, int row, int column) {
+    int* temp = new int[column-1];
+    int currentMax = 0;
+
+    for(int i = 1; i<column; i++) {
+        temp[i] = arr[h][i] + arr[h+1][i];
+
+        if(temp[i] > currentMax)
+            currentMax = temp[i];
+
+    }
+
+    return currentMax;
 }
 
 //forward-backward approach with two threads
@@ -168,16 +178,16 @@ int fb_LCS (string str1, string str2, int row, int column) {
     t1.join();
     t2.join();
 
-    cout << "\n";
+    /*cout << "\n";
     for (int i = 0; i < row+1; i++){
         for (int j = 0; j < column+1; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }
+    }*/
 
     //merge results to find the actual distance
-    int ret = mergeLCS(h);
+    int ret = mergeLCS(h, row, column);
 
     return ret;
 }
