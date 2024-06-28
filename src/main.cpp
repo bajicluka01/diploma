@@ -41,24 +41,26 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
 }
 
 int main (int argc, char* argv[]) {
-    string str1 = "delete";
-    string str2 = "replace";
+    string str1 = "abcbcb";
+    string str2 = "abccabb";
 
-    str1 = randomStringGenerator(20000);
-    str2 = randomStringGenerator(20000);
+    //str1 = randomStringGenerator(10000);
+    //str2 = randomStringGenerator(10000);
 
-    int row = str1.length();
-    int column = str2.length();
+    
+    //TODO: currently needs len+1 for LCS, but just len for Levenshtein
+    int row = str1.length()+1;
+    int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << sequentialLevenshtein(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << sequentialLCS(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << fb_levenshtein(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << fb_LCS(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
