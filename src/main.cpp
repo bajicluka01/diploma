@@ -44,8 +44,8 @@ int main (int argc, char* argv[]) {
     string str1 = "delete";
     string str2 = "replace";
 
-    //str1 = randomStringGenerator(10000);
-    //str2 = randomStringGenerator(10000);
+    str1 = randomStringGenerator(20000);
+    str2 = randomStringGenerator(20000);
 
     int row = str1.length();
     int column = str2.length();

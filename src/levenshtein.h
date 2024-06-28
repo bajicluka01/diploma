@@ -48,13 +48,13 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    cout << "\n";
+    /*cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }
+    }*/
 
     int ret = arr[row-1][column-1];
 
@@ -204,13 +204,27 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     //merge results to find the distance
     int ret = merge(h);
 
-    cout << "\n";
+    //TEMP
+    auto start = high_resolution_clock::now();
+    topHalf(ref(a));
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+    cout << "\n\nTop half duration: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+    bottomHalf(ref(a));
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+    cout << "Bottom half duration: " << duration.count() << "\n\n\n";
+    //TEMP
+
+    /*cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }
+    }*/
 
     return ret;
 
