@@ -172,8 +172,19 @@ void bottomHalf(args& a) {
 }
 
 //merges last rows of topHalf and bottomHalf
-int merge(int h) {
-    return 0;
+int merge(int h, int row, int column) {
+    int* temp = new int[column-1];
+    int currentMin = 0;
+
+    for(int i = 1; i<column; i++) {
+        temp[i] = arr[h][i] + arr[h+1][i];
+
+        if(temp[i] > currentMin)
+            currentMin = temp[i];
+
+    }
+
+    return currentMin;
 }
 
 //forward-backward approach with 2 threads
@@ -202,7 +213,7 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     t2.join();
 
     //merge results to find the distance
-    int ret = merge(h);
+    int ret = merge(h, row, column);
 
     //TEMP
     auto start = high_resolution_clock::now();
@@ -218,13 +229,13 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     cout << "Bottom half duration: " << duration.count() << "\n\n\n";
     //TEMP
 
-    /*cout << "\n";
+    cout << "\n";
     for (int i = 0; i < row; i++){
         for (int j = 0; j < column; j++) {
             cout << arr[i][j] << " ";
         }
         cout << "\n";
-    }*/
+    }
 
     return ret;
 

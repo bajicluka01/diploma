@@ -44,8 +44,8 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcb";
     string str2 = "abccabb";
 
-    str1 = randomStringGenerator(30000);
-    str2 = randomStringGenerator(30000);
+    //str1 = randomStringGenerator(30000);
+    //str2 = randomStringGenerator(30000);
 
     
     //TODO: currently needs len+1 for LCS, but just len for Levenshtein
@@ -53,14 +53,14 @@ int main (int argc, char* argv[]) {
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential LCS solution: " << sequentialLCS(str1, str2, row, column) << "\n";
+    cout << "Sequential LCS solution: " << sequentialLevenshtein(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential LCS duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward LCS solution: " << fb_LCS(str1, str2, row, column) << "\n";
+    cout << "Forward-backward LCS solution: " << fb_levenshtein(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
