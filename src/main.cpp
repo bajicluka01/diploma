@@ -45,10 +45,10 @@ int main (int argc, char* argv[]) {
     //string str2 = "abccabb";
 
     string str1 = "replace";
-    string str2 = "yyyyyyyy";
+    string str2 = "replace";
 
-    //str1 = randomStringGenerator(10000);
-    //str2 = randomStringGenerator(10000);
+    str1 = randomStringGenerator(13001);
+    str2 = randomStringGenerator(20500);
 
     int row = str1.length()+1;
     int column = str2.length()+1;

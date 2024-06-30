@@ -192,7 +192,7 @@ int merge(int h, int row, int column) {
     int currentMin = INT_MAX;
 
     for(int i = 1; i<column; i++) {
-        temp[i] = arr[h][i] + arr[h+1][i];
+        temp[i] = arr[h][i-1] + arr[h+1][i];
 
         if(temp[i] < currentMin)
             currentMin = temp[i];
