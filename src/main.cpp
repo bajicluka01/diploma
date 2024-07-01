@@ -20,6 +20,22 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
     int row = str1.length()+1;
     int column = str2.length()+1;
 
+    /*arr = new int*[row];
+    for(int i = 0; i < row+1; i++)
+        arr[i] = new int[column];
+
+    //initialize zeros
+    for (int i = 0; i < row+1; i++)
+        for (int j = 0; j < column+1; j++) 
+            arr[i][j] = 0;
+
+    int h = row / 2;
+    struct args a; 
+    a.s1 = str1;
+    a.s2 = str2;
+    a.row = h;
+    a.col = column;*/
+
     for(int i = 0; i < n; i++) {
         auto start = high_resolution_clock::now();
 
@@ -28,6 +44,9 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
             case 2: fb_LCS(str1, str2, row, column); break;
             case 3: sequentialLevenshtein(str1, str2, row, column); break;
             case 4: fb_levenshtein(str1, str2, row, column); break;
+            case 5: parallelLevenshtein(str1, str2, row, column); break;
+            //case 5: topHalf(ref(a)); break;
+            //case 6: bottomHalf(ref(a)); break;
             default: return 0;
         }
 
@@ -47,13 +66,13 @@ int main (int argc, char* argv[]) {
     string str1 = "replace";
     string str2 = "replace";
 
-    str1 = randomStringGenerator(13001);
-    str2 = randomStringGenerator(20500);
+    str1 = randomStringGenerator(30000);
+    str2 = randomStringGenerator(30000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
    
-    auto start = high_resolution_clock::now();
+    /*auto start = high_resolution_clock::now();
     cout << "Sequential Levenshtein solution: " << sequentialLevenshtein(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
@@ -65,7 +84,12 @@ int main (int argc, char* argv[]) {
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
-    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
+    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
+
+    
+    cout << "Average Levenshtein dp: "<< avgExecutionTime(3, 1, str1, str2) <<"\n";
+    cout << "Average Levenshtein fb: "<< avgExecutionTime(4, 1, str1, str2) <<"\n";
+    cout << "Average Levenshtein fb: "<< avgExecutionTime(5, 1, str1, str2) <<"\n";
 
     return 0;
 }

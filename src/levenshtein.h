@@ -271,10 +271,11 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     //merge results to find the distance
     int ret = merge(h, row, column);
 
-    //bottomUp(str1, str2, row, column);
 
+    
     /*
     //TEMP
+    int ret = 0;
     auto start = high_resolution_clock::now();
     topHalf(ref(a));
     auto finish = high_resolution_clock::now();
