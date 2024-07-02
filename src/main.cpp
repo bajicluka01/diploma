@@ -66,8 +66,8 @@ int main (int argc, char* argv[]) {
     string str1 = "replace";
     string str2 = "replace";
 
-    str1 = randomStringGenerator(30000);
-    str2 = randomStringGenerator(30000);
+    str1 = randomStringGenerator(50000);
+    str2 = randomStringGenerator(50000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -87,9 +87,9 @@ int main (int argc, char* argv[]) {
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
 
     
-    cout << "Average Levenshtein dp: "<< avgExecutionTime(3, 1, str1, str2) <<"\n";
+    //cout << "Average Levenshtein dp: "<< avgExecutionTime(3, 1, str1, str2) <<"\n";
     cout << "Average Levenshtein fb: "<< avgExecutionTime(4, 1, str1, str2) <<"\n";
-    cout << "Average Levenshtein fb: "<< avgExecutionTime(5, 1, str1, str2) <<"\n";
+    //cout << "Average Levenshtein diag: "<< avgExecutionTime(5, 3, str1, str2) <<"\n";
 
     return 0;
 }
