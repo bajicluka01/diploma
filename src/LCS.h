@@ -16,7 +16,7 @@ struct args {
 int** arr;
 
 //dynamic programming solution
-int sequentialLCS (string str1, string str2, int row, int column) {
+int forward_LCS (string str1, string str2, int row, int column) {
 
     //allocate
     int** arr = new int*[row];
@@ -37,19 +37,35 @@ int sequentialLCS (string str1, string str2, int row, int column) {
             else
                 arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
 
-    /*cout << "\n";
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }*/
-
     return arr[row-1][column-1];
 }
 
+//dynamic programming solution backward
+int backward_LCS (string str1, string str2, int row, int column) {
+
+    //allocate
+    int** arr = new int*[row];
+    for(int i = 0; i < row+1; i++)
+        arr[i] = new int[column];
+
+    //initialize zeros
+    for (int i = 0; i < row+1; i++)
+        for (int j = 0; j < column+1; j++) 
+            arr[i][j] = 0;
+
+    for(int i = row-1; i >= 0; i--) 
+        for(int j = column-1; j >= 0; j--) 
+            if (i == row-1 || j == column-1)
+            if(str1[i-1] == str2[j-1])
+                arr[i][j] = 1 + arr[i+1][j+1];
+            else
+                arr[i][j] = max(arr[i][j+1], arr[i+1][j]);
+
+    return arr[0][0];
+}
+
 //anti-diagonal parallelization
-int parallelLCS (string str1, string str2, int row, int column) {
+int diagonal_LCS (string str1, string str2, int row, int column) {
 
     //allocate
     int** arr = new int*[row];
@@ -98,7 +114,7 @@ int parallelLCS (string str1, string str2, int row, int column) {
 }
 
 //one thread calculates top half of table
-void topHalfLCS (args& a) {
+void topHalf_LCS (args& a) {
     
     //first row (half) and column
     for(int i = 0; i <= a.row; i++) 
@@ -116,10 +132,8 @@ void topHalfLCS (args& a) {
 }
 
 //one thread calculates bottom half of table
-void bottomHalfLCS (args& a) {
+void bottomHalf_LCS (args& a) {
     int nrows = a.s1.length();
-
-    bool lastChar = a.s1[a.s1.length()-1] == a.s2[a.s2.length()-1];
 
     //last row (half) and column
     for(int i = nrows; i > a.row; i--) 
@@ -137,7 +151,7 @@ void bottomHalfLCS (args& a) {
 }
 
 //merges last rows of topHalf and bottomHalf
-int mergeLCS(int h, int row, int column) {
+int merge_LCS(int h, int row, int column) {
     int* temp = new int[column-1];
     int currentMax = 0;
 
@@ -172,22 +186,14 @@ int fb_LCS (string str1, string str2, int row, int column) {
     a.row = h;
     a.col = column;
 
-    thread t1(topHalfLCS, ref(a));
-    thread t2(bottomHalfLCS, ref(a));
+    thread t1(topHalf_LCS, ref(a));
+    thread t2(bottomHalf_LCS, ref(a));
     
     t1.join();
     t2.join();
 
-    /*cout << "\n";
-    for (int i = 0; i < row+1; i++){
-        for (int j = 0; j < column+1; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }*/
-
     //merge results to find the actual distance
-    int ret = mergeLCS(h, row, column);
+    int ret = merge_LCS(h, row, column);
 
     return ret;
 }

@@ -40,11 +40,14 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
         auto start = high_resolution_clock::now();
 
         switch(function) {
-            case 1: sequentialLCS(str1, str2, row, column); break;
-            case 2: fb_LCS(str1, str2, row, column); break;
-            case 3: sequentialLevenshtein(str1, str2, row, column); break;
-            case 4: fb_levenshtein(str1, str2, row, column); break;
-            case 5: parallelLevenshtein(str1, str2, row, column); break;
+            case 1: forward_LCS(str1, str2, row, column); break;
+            case 2: backward_LCS(str1, str2, row, column); break;
+            case 3: diagonal_LCS(str1, str2, row, column); break;
+            case 4: fb_LCS(str1, str2, row, column); break;
+            case 5: forward_levenshtein(str1, str2, row, column); break;
+            case 6: backward_levenshtein(str1, str2, row, column); break;
+            case 7: diagonal_levenshtein(str1, str2, row, column); break;
+            case 8: fb_levenshtein(str1, str2, row, column); break;
             //case 5: topHalf(ref(a)); break;
             //case 6: bottomHalf(ref(a)); break;
             default: return 0;
@@ -66,8 +69,8 @@ int main (int argc, char* argv[]) {
     string str1 = "replace";
     string str2 = "replace";
 
-    str1 = randomStringGenerator(50000);
-    str2 = randomStringGenerator(50000);
+    str1 = randomStringGenerator(5000);
+    str2 = randomStringGenerator(5000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -86,10 +89,16 @@ int main (int argc, char* argv[]) {
 
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
 
-    
-    //cout << "Average Levenshtein dp: "<< avgExecutionTime(3, 1, str1, str2) <<"\n";
-    cout << "Average Levenshtein fb: "<< avgExecutionTime(4, 1, str1, str2) <<"\n";
-    //cout << "Average Levenshtein diag: "<< avgExecutionTime(5, 3, str1, str2) <<"\n";
+    int n_iter = 5;
+
+    cout << "Forward LCS: "<< avgExecutionTime(1, n_iter, str1, str2) <<"\n";
+    cout << "Backward LCS: "<< avgExecutionTime(2, n_iter, str1, str2) <<"\n";
+    cout << "Diagonal LCS: "<< avgExecutionTime(3, n_iter, str1, str2) <<"\n";
+    cout << "Forward-backward LCS: "<< avgExecutionTime(4, n_iter, str1, str2) <<"\n";
+    cout << "Forward Levenshtein: "<< avgExecutionTime(5, n_iter, str1, str2) <<"\n";
+    cout << "Backward Levenshtein: "<< avgExecutionTime(6, n_iter, str1, str2) <<"\n";
+    cout << "Diagonal Levenshtein: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
+    cout << "Forward-backward Levenshtein: "<< avgExecutionTime(8, n_iter, str1, str2) <<"\n";
 
     return 0;
 }

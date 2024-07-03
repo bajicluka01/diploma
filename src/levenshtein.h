@@ -7,7 +7,7 @@ using namespace std;
 using namespace std::chrono;
 
 //dynamic programming solution
-int sequentialLevenshtein (string str1, string str2, int row, int column) {
+int forward_levenshtein (string str1, string str2, int row, int column) {
 
     //allocate
     int** arr = new int*[row];
@@ -20,24 +20,6 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
             arr[i][j] = 0;
         }
     }
-
-    /*
-    //test if first characters match for the purposes of calculating first row and column more efficiently
-    bool firstChar = str1[0] == str2[0];
-
-    //first row and column (can probably be further optimized)
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            if (i == 0 && j == 0)
-                arr[i][j] = firstChar ? 0 : 1;
-            else {
-                if(i == 0) 
-                    arr[i][j] = firstChar ? 0 : j+1;
-                if(j == 0) 
-                    arr[i][j] = firstChar ? 0 : i+1;
-            }
-        }
-    }*/
 
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {    
@@ -52,13 +34,38 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    /*cout << "\n";
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            cout << arr[i][j] << " ";
+    int ret = arr[row-1][column-1];
+
+    return ret;
+}
+
+//dynamic programming solution backward
+int backward_levenshtein (string str1, string str2, int row, int column) {
+
+    //allocate
+    int** arr = new int*[row];
+    for(int i = 0; i < row+1; i++)
+        arr[i] = new int[column];
+
+    //initialize zeros
+    for (int i = 0; i < row+1; i++){
+        for (int j = 0; j < column+1; j++) {
+            arr[i][j] = 0;
         }
-        cout << "\n";
-    }*/
+    }
+
+    for(int i = row-1; i >= 0; i--) {
+        for (int j = column-1; j >= 0; j--) {    
+            if (i == row-1)
+                arr[i][j] = column-j-1;
+            else if (j == column-1)
+                arr[i][j] = row-i-1;
+            else if (str1[i] == str2[j])
+                arr[i][j] = arr[i+1][j+1];
+            else 
+                arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
+        }
+    }
 
     int ret = arr[row-1][column-1];
 
@@ -66,7 +73,7 @@ int sequentialLevenshtein (string str1, string str2, int row, int column) {
 }
 
 //anti-diagonal approach with parallelization
-int parallelLevenshtein (string str1, string str2, int row, int column) {
+int diagonal_levenshtein (string str1, string str2, int row, int column) {
     
     //allocate
     int** arr = new int*[row];
@@ -118,25 +125,7 @@ int parallelLevenshtein (string str1, string str2, int row, int column) {
 }
 
 //one thread calculates the top half of the table
-void topHalf(args& a) {
-    /*
-    //test if first characters match for the purposes of calculating first row and column more efficiently
-    bool firstChar = a.s1[0] == a.s2[0];
-
-    //first row and column (can probably be further optimized)
-    for (int i = 0; i < a.row; i++){
-        for (int j = 0; j < a.col; j++) {
-            if (i == 0 && j == 0)
-                arr[i][j] = firstChar ? 0 : 1;
-            else {
-                if(i == 0) 
-                    arr[i][j] = firstChar ? arr[i][j-1]+1 : j+1;
-                if(j == 0) 
-                    arr[i][j] = firstChar ? arr[i-1][j]+1 : i+1;
-            }
-        }
-    }*/
-
+void topHalf_levenshtein(args& a) {
     for(int i = 0; i <= a.row; i++) 
         for (int j = 0; j < a.col; j++) {      
             if (i == 0)
@@ -151,26 +140,8 @@ void topHalf(args& a) {
 }
 
 //one thread calculates the bottom half of the table
-//TODO fix odd/even h
-void bottomHalf(args& a) {
+void bottomHalf_levenshtein (args& a) {
     int nrows = a.s1.length()+1;
-
-    /*
-    bool lastChar = a.s1[a.s1.length()-1] == a.s2[a.s2.length()-1];
-
-    //first row and column (can probably be further optimized)
-    for (int i = nrows; i >= a.row; i--) {
-        for (int j = a.col-1; j >= 0; j--) {
-            if (i == nrows && j == a.col-1) 
-                arr[i][j] = lastChar ? 0 : 1;
-            else {
-                if(i == nrows) 
-                    arr[i][j] = lastChar ? arr[i][j+1]+1 : a.col-j;
-                if(j == a.col-1) 
-                    arr[i][j] = lastChar ? arr[i+1][j]+1 : nrows-i+1;
-            }
-        }
-    }*/
 
     for(int i = nrows-1; i >= a.row; i--) {
         for (int j = a.col-1; j >= 0; j--) {    
@@ -187,7 +158,7 @@ void bottomHalf(args& a) {
 }
 
 //merges last rows of topHalf and bottomHalf
-int merge(int h, int row, int column) {
+int merge_levenshtein (int h, int row, int column) {
     int* temp = new int[column-1];
     int currentMin = INT_MAX;
 
@@ -199,48 +170,7 @@ int merge(int h, int row, int column) {
 
     }
 
-    //sometimes the correct solution seems to be currentMin-1, TODO: verify why
     return currentMin;
-}
-
-int bottomUp (string str1, string str2, int row, int column) {
-
-    //allocate
-    int** arr = new int*[row];
-    for(int i = 0; i < row+1; i++)
-        arr[i] = new int[column];
-
-    //initialize zeros
-    for (int i = 0; i < row+1; i++){
-        for (int j = 0; j < column+1; j++) {
-            arr[i][j] = 0;
-        }
-    }
-
-    for(int i = row-1; i >= 0; i--) {
-        for (int j = column-1; j >= 0; j--) {    
-            if (i == row-1)
-                arr[i][j] = column-j-1;
-            else if (j == column-1)
-                arr[i][j] = row-i-1;
-            else if (str1[i] == str2[j])
-                arr[i][j] = arr[i+1][j+1];
-            else 
-                arr[i][j] = 1 + min(arr[i][j+1], min(arr[i+1][j], arr[i+1][j+1]));
-        }
-    }
-
-    cout << "\n";
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }
-
-    int ret = arr[row-1][column-1];
-
-    return ret;
 }
 
 //forward-backward approach with 2 threads
@@ -262,17 +192,15 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     a.row = h;
     a.col = column;
 
-    thread t1(topHalf, ref(a));
-    thread t2(bottomHalf, ref(a));
+    thread t1(topHalf_levenshtein, ref(a));
+    thread t2(bottomHalf_levenshtein, ref(a));
     
     t1.join();
     t2.join();
 
     //merge results to find the distance
-    int ret = merge(h, row, column);
+    int ret = merge_levenshtein(h, row, column);
 
-
-    
     /*
     //TEMP
     int ret = 0;
@@ -289,14 +217,6 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     cout << "Bottom half duration: " << duration.count() << "\n\n\n";
     //TEMP
     */
-
-    /*cout << "\n";
-    for (int i = 0; i < row+1; i++){
-        for (int j = 0; j < column+1; j++) {
-            cout << arr[i][j] << " ";
-        }
-        cout << "\n";
-    }*/
 
     return ret;
 
