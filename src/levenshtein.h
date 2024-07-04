@@ -10,9 +10,9 @@ using namespace std::chrono;
 int forward_levenshtein (string str1, string str2, int row, int column) {
 
     //allocate
-    int** arr = new int*[row];
+    arr = new unsigned short int*[row];
     for(int i = 0; i < row; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row; i++){
@@ -43,9 +43,9 @@ int forward_levenshtein (string str1, string str2, int row, int column) {
 int backward_levenshtein (string str1, string str2, int row, int column) {
 
     //allocate
-    int** arr = new int*[row];
+    arr = new unsigned short int*[row];
     for(int i = 0; i < row+1; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row+1; i++){
@@ -76,9 +76,9 @@ int backward_levenshtein (string str1, string str2, int row, int column) {
 int diagonal_levenshtein (string str1, string str2, int row, int column) {
     
     //allocate
-    int** arr = new int*[row];
+    arr = new unsigned short int*[row];
     for (int i = 0; i < row; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row; i++)
@@ -176,9 +176,9 @@ int merge_levenshtein (int h, int row, int column) {
 //forward-backward approach with 2 threads
 int fb_levenshtein (string str1, string str2, int row, int column) {
     //allocate
-    arr = new int*[row];
+    arr = new unsigned short int*[row];
     for(int i = 0; i < row+1; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row+1; i++)

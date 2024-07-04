@@ -69,8 +69,8 @@ int main (int argc, char* argv[]) {
     string str1 = "replace";
     string str2 = "replace";
 
-    str1 = randomStringGenerator(5000);
-    str2 = randomStringGenerator(5000);
+    str1 = randomStringGenerator(60000);
+    str2 = randomStringGenerator(60000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -89,16 +89,17 @@ int main (int argc, char* argv[]) {
 
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
 
-    int n_iter = 5;
+    int n_iter = 1;
 
-    cout << "Forward LCS: "<< avgExecutionTime(1, n_iter, str1, str2) <<"\n";
-    cout << "Backward LCS: "<< avgExecutionTime(2, n_iter, str1, str2) <<"\n";
-    cout << "Diagonal LCS: "<< avgExecutionTime(3, n_iter, str1, str2) <<"\n";
-    cout << "Forward-backward LCS: "<< avgExecutionTime(4, n_iter, str1, str2) <<"\n";
-    cout << "Forward Levenshtein: "<< avgExecutionTime(5, n_iter, str1, str2) <<"\n";
-    cout << "Backward Levenshtein: "<< avgExecutionTime(6, n_iter, str1, str2) <<"\n";
-    cout << "Diagonal Levenshtein: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
+    //cout << "Forward LCS: "<< avgExecutionTime(1, n_iter, str1, str2) <<"\n";
+    //cout << "Backward LCS: "<< avgExecutionTime(2, n_iter, str1, str2) <<"\n";
+    //cout << "Diagonal LCS: "<< avgExecutionTime(3, n_iter, str1, str2) <<"\n";
+    //cout << "Forward-backward LCS: "<< avgExecutionTime(4, n_iter, str1, str2) <<"\n";
+    
+    //cout << "Backward Levenshtein: "<< avgExecutionTime(6, n_iter, str1, str2) <<"\n";
+    //cout << "Diagonal Levenshtein: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
     cout << "Forward-backward Levenshtein: "<< avgExecutionTime(8, n_iter, str1, str2) <<"\n";
+    //cout << "Forward Levenshtein: "<< avgExecutionTime(5, n_iter, str1, str2) <<"\n";
 
     return 0;
 }

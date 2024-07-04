@@ -13,15 +13,15 @@ struct args {
     int col;
 };
 
-int** arr;
+unsigned short int** arr;
 
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
 
     //allocate
-    int** arr = new int*[row];
+    arr = new unsigned short int*[row];
     for(int i = 0; i < row; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row; i++)
@@ -44,9 +44,9 @@ int forward_LCS (string str1, string str2, int row, int column) {
 int backward_LCS (string str1, string str2, int row, int column) {
 
     //allocate
-    int** arr = new int*[row];
+    arr = new unsigned short int*[row];
     for(int i = 0; i < row+1; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row+1; i++)
@@ -68,9 +68,9 @@ int backward_LCS (string str1, string str2, int row, int column) {
 int diagonal_LCS (string str1, string str2, int row, int column) {
 
     //allocate
-    int** arr = new int*[row];
+    arr = new unsigned short int*[row];
     for (int i = 0; i < row; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row; i++){
@@ -170,9 +170,9 @@ int merge_LCS(int h, int row, int column) {
 int fb_LCS (string str1, string str2, int row, int column) {
 
     //allocate
-    arr = new int*[row];
+    arr = new unsigned short int*[row];
     for(int i = 0; i < row+1; i++)
-        arr[i] = new int[column];
+        arr[i] = new unsigned short int[column];
 
     //initialize zeros
     for (int i = 0; i < row+1; i++)
