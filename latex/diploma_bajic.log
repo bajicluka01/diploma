@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  14 JUN 2024 22:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  5 JUL 2024 18:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -766,17 +766,17 @@ Package biblatex Info: Reference segment=0 on input line 182.
 
 
 {C:/Users/bajic/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-<cc_cc_30.pdf, id=85, 25.27844pt x 25.27844pt>
+<cc_cc_30.pdf, id=109, 25.27844pt x 25.27844pt>
 File: cc_cc_30.pdf Graphic file (type pdf)
 <use cc_cc_30.pdf>
 Package pdftex.def Info: cc_cc_30.pdf  used on input line 235.
 (pdftex.def)             Requested size: 18.74585pt x 18.74585pt.
-<cc_by_30.pdf, id=86, 18.74034pt x 18.73953pt>
+<cc_by_30.pdf, id=110, 18.74034pt x 18.73953pt>
 File: cc_by_30.pdf Graphic file (type pdf)
 <use cc_by_30.pdf>
 Package pdftex.def Info: cc_by_30.pdf  used on input line 235.
 (pdftex.def)             Requested size: 18.74028pt x 18.73947pt.
-<cc_sa_30.pdf, id=87, 18.73955pt x 18.73994pt>
+<cc_sa_30.pdf, id=111, 18.73955pt x 18.73994pt>
 File: cc_sa_30.pdf Graphic file (type pdf)
 <use cc_sa_30.pdf>
 Package pdftex.def Info: cc_sa_30.pdf  used on input line 235.
@@ -807,11 +807,16 @@ th page group included in a single page
 pdfTeX warning: pdflatex (file ./cc_sa_30.pdf): PDF inclusion: multiple pdfs wi
 th page group included in a single page
 >]
+Underfull \hbox (badness 10000) in paragraph at lines 262--269
+
+ []
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.278 \clearemptydoublepage
+l.288 \clearemptydoublepage
                             [3
 
 ]
@@ -819,7 +824,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.278 \clearemptydoublepage
+l.288 \clearemptydoublepage
                             [4
 
 ]
@@ -827,13 +832,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.287 \clearemptydoublepage
+l.297 \clearemptydoublepage
                             [5]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.287 \clearemptydoublepage
+l.297 \clearemptydoublepage
                             [6
 
 ]
@@ -841,16 +846,24 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.296 \clearemptydoublepage
+l.306 \clearemptydoublepage
                             [7]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.296 \clearemptydoublepage
+l.306 \clearemptydoublepage
                             [8
 
-] (diploma_bajic.toc)
+] (diploma_bajic.toc
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.26 ...{\numberline {5}Zaključki}{11}{chapter.5}
+                                                  % [9
+
+])
 \tf@toc=\write5
 \openout5 = `diploma_bajic.toc'.
 
@@ -859,31 +872,27 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.307 \clearemptydoublepage
-                            [9
+l.317 \clearemptydoublepage
+                            [10]
+Underfull \hbox (badness 10000) in paragraph at lines 326--327
+[]\OT1/cmr/m/n/12 najdalj^^Tsa sku-pna pod-se-
+ []
 
-]
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.307 \clearemptydoublepage
-                            [10
-
-]
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.324 \clearemptydoublepage
+l.334 \clearemptydoublepage
                             [11
 
+
 ]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.324 \clearemptydoublepage
+l.334 \clearemptydoublepage
                             [12
 
 ]
@@ -891,7 +900,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.346 \clearemptydoublepage
+l.355 \clearemptydoublepage
                             [13
 
 ]
@@ -899,7 +908,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.346 \clearemptydoublepage
+l.355 \clearemptydoublepage
                             [14
 
 ]
@@ -907,7 +916,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.369 \clearemptydoublepage
+l.378 \clearemptydoublepage
                             [15
 
 ]
@@ -915,7 +924,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.369 \clearemptydoublepage
+l.378 \clearemptydoublepage
                             [16
 
 ]
@@ -931,19 +940,19 @@ Poglavje 2.
 
 ]
 Poglavje 3.
+[5] [6] [7] [8
+
+]
+Poglavje 4.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5]
-[6]
-Poglavje 4.
-[7
-
-] [8
-
-]
+ [9]
+[10]
 Poglavje 5.
-[9] [10
+[11
+
+] [12
 
 ]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
@@ -952,25 +961,25 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
-) [11] (diploma_bajic.aux)
+) [13] (diploma_bajic.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `diploma_bajic.out' has not changed.
-(rerunfilecheck)             Checksum: C4C8A0D82374614E045B1AC769DEB32C;2021.
+(rerunfilecheck)             Checksum: 663585C0C1E5E15DEF0471C1F6450F9D;3260.
 Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 \openout1 = `diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 20076 strings out of 474486
- 352095 string characters out of 5743755
- 1932542 words of memory out of 5000000
- 42059 multiletter control sequences out of 15000+600000
- 569334 words of font info for 77 fonts, out of 8000000 for 9000
+ 20092 strings out of 474486
+ 352286 string characters out of 5743755
+ 1933542 words of memory out of 5000000
+ 42066 multiletter control sequences out of 15000+600000
+ 569641 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,81p,1861b,1962s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,81p,1861b,2296s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmcsc10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/
@@ -985,9 +994,9 @@ pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users
 ti8.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmtt10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/publ
 ic/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (27 pages, 223914 bytes).
+Output written on diploma_bajic.pdf (29 pages, 235292 bytes).
 PDF statistics:
- 285 PDF objects out of 1000 (max. 8388607)
- 37 named destinations out of 1000 (max. 500000)
- 164 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 325 PDF objects out of 1000 (max. 8388607)
+ 46 named destinations out of 1000 (max. 500000)
+ 212 words of extra memory for PDF output out of 10000 (max. 10000000)
 

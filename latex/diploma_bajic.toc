@@ -11,12 +11,19 @@
 \contentsline {section}{\numberline {2.1}Dinamično programiranje}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}LCS}{3}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Levenshteinova razdalja}{3}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Primer uporabe}{3}{subsection.2.3.1}%
 \contentsline {chapter}{\numberline {3}Vzporedni algoritmi}{5}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Pristop naprej-nazaj}{5}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Diagonalni pristop}{6}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Rezultati}{7}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Podatki}{7}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Zaključki}{9}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Sklep}{9}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Nadalnji razvoj}{9}{section.5.2}%
-\contentsline {chapter}{Literatura}{11}{chapter*.7}%
+\contentsline {section}{\numberline {3.2}Prostorska optimizacija}{6}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Diagonalni pristop}{6}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Rezultati}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Generiranje podatkov}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Delovno okolje}{10}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Teoretične pohitritve/Časovne zahtevnosti}{10}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Primerjava sekvenčnih algoritmov}{10}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Primerjava vzporednih algoritmov}{10}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Celotna primerjava}{10}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Zaključki}{11}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Sklepi}{11}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Nadalnji razvoj}{11}{section.5.2}%
+\contentsline {chapter}{Literatura}{13}{chapter*.7}%
