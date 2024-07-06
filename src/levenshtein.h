@@ -159,14 +159,16 @@ void bottomHalf_levenshtein (args& a) {
 
 //merges last rows of topHalf and bottomHalf
 int merge_levenshtein (int h, int row, int column) {
-    int* temp = new int[column-1];
+    int temp = 0;
+    int temp2 = 0;
     int currentMin = INT_MAX;
 
     for(int i = 1; i<column; i++) {
-        temp[i] = arr[h][i-1] + arr[h+1][i];
+        temp = arr[h][i] + arr[h+1][i];
+        temp2 = arr[h][i] + arr[h+1][i+1];
 
-        if(temp[i] < currentMin)
-            currentMin = temp[i];
+        if(temp < currentMin || temp2 < currentMin)
+            currentMin = min(temp, temp2);
 
     }
 
