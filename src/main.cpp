@@ -69,21 +69,21 @@ int main (int argc, char* argv[]) {
     string str1 = "replace";
     string str2 = "replace";
 
-    str1 = randomStringGenerator(943);
-    str2 = randomStringGenerator(6001);
+    str1 = randomStringGenerator(1000);
+    str2 = randomStringGenerator(1000);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << forward_LCS(str1, str2, row, column) << "\n";
+    //cout << "Sequential Levenshtein solution: " << forward_levenshtein(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << fb_LCS(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << forward_levenshtein_space_optimization(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 

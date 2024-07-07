@@ -34,9 +34,41 @@ int forward_levenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    int ret = arr[row-1][column-1];
+    return arr[row-1][column-1];
+}
 
-    return ret;
+//space optimization: we only keep current two rows in memory
+int forward_levenshtein_space_optimization (string str1, string str2, int row, int column) {
+
+    int temp1[column]; 
+    int current[column];
+
+    //initialize zeros
+    for (int i = 0; i < column; i++) {
+        temp1[i] = 0;
+        current[i] = 0;
+    }
+
+    for(int i = 0; i < row; i++) {
+
+        for(int j = 0; j < column; j++) {
+            if (i == 0)
+                current[j] = j;
+            else if (j == 0)
+                current[j] = i;
+            else if (str1[i-1] == str2[j-1])
+                current[j] = temp1[j-1];
+            else 
+                current[j] = 1 + min(current[j-1], min(temp1[j], temp1[j-1]));
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) 
+            temp1[j] = current[j];
+        
+    }
+
+    return current[column-1];
 }
 
 //dynamic programming solution backward
@@ -67,9 +99,7 @@ int backward_levenshtein (string str1, string str2, int row, int column) {
         }
     }
 
-    int ret = arr[row-1][column-1];
-
-    return ret;
+    return arr[row-1][column-1];;
 }
 
 //anti-diagonal approach with parallelization
