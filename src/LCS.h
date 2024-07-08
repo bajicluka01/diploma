@@ -30,7 +30,7 @@ int forward_LCS (string str1, string str2, int row, int column) {
 
     for(int i = 0; i < row; i++) 
         for (int j = 0; j < column; j++) 
-            if (i == 0 || j == 0 )
+            if (i == 0 || j == 0)
                 arr[i][j] = 0;
             else if (str1[i-1] == str2 [j-1])
                 arr[i][j] = 1 + arr[i-1][j-1];
@@ -38,6 +38,38 @@ int forward_LCS (string str1, string str2, int row, int column) {
                 arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
 
     return arr[row-1][column-1];
+}
+
+//space optimization: we only keep current two rows in memory
+int forward_LCS_space_optimization (string str1, string str2, int row, int column) {
+
+    int temp1[column]; 
+    int current[column];
+
+    //initialize zeros
+    for (int i = 0; i < column; i++) {
+        temp1[i] = 0;
+        current[i] = 0;
+    }
+
+    for(int i = 0; i < row; i++) {
+
+        for(int j = 0; j < column; j++) {
+            if (i == 0 || j == 0)
+                current[j] = 0;
+            else if (str1[i-1] == str2[j-1])
+                current[j] = 1 + temp1[j-1];
+            else
+                current[j] = max(current[j-1], temp1[j]);
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) 
+            temp1[j] = current[j];
+
+    }
+
+    return current[column-1];
 }
 
 //dynamic programming solution backward
@@ -56,7 +88,8 @@ int backward_LCS (string str1, string str2, int row, int column) {
     for(int i = row-1; i >= 0; i--) 
         for(int j = column-1; j >= 0; j--) 
             if (i == row-1 || j == column-1)
-            if(str1[i-1] == str2[j-1])
+                arr[i][j] = 0;
+            else if(str1[i] == str2[j])
                 arr[i][j] = 1 + arr[i+1][j+1];
             else
                 arr[i][j] = max(arr[i][j+1], arr[i+1][j]);
