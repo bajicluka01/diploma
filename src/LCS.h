@@ -15,6 +15,10 @@ struct args {
 
 unsigned short int** arr;
 
+//for forward-backward with space optimization
+int* arrTop;
+int* arrBottom;
+
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
 
@@ -74,7 +78,6 @@ int forward_LCS_space_optimization (string str1, string str2, int row, int colum
 
 //dynamic programming solution backward
 int backward_LCS (string str1, string str2, int row, int column) {
-
     //allocate
     arr = new unsigned short int*[row];
     for(int i = 0; i < row+1; i++)
@@ -95,6 +98,37 @@ int backward_LCS (string str1, string str2, int row, int column) {
                 arr[i][j] = max(arr[i][j+1], arr[i+1][j]);
 
     return arr[0][0];
+}
+
+//space optimization: we only keep current two rows in memory
+int backward_LCS_space_optimization (string str1, string str2, int row, int column) {
+
+    int temp1[column]; 
+    int current[column];
+
+    //initialize zeros
+    for (int i = 0; i < column; i++) {
+        temp1[i] = 0;
+        current[i] = 0;
+    }
+
+    for(int i = row-1; i >= 0; i--) {
+        for(int j = column-1; j >= 0; j--) {
+            if (i == row-1 || j == column-1)
+                current[j] = 0;
+            else if(str1[i] == str2[j])
+                current[j] = 1 + temp1[j+1];
+            else
+                current[j] = max(current[j+1], temp1[j]);
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) 
+            temp1[j] = current[j];
+
+    }
+
+    return current[0];
 }
 
 //anti-diagonal parallelization
@@ -148,17 +182,11 @@ int diagonal_LCS (string str1, string str2, int row, int column) {
 
 //one thread calculates top half of table
 void topHalf_LCS (args& a) {
-    
-    //first row (half) and column
     for(int i = 0; i <= a.row; i++) 
-        arr[i][0] = 0;
-    for(int i = 0; i <= a.col; i++)
-        arr[0][i] = 0;
-
-    //rest of table
-    for(int i = 1; i <= a.row; i++) 
-        for(int j = 1; j < a.col; j++)        
-            if(a.s1[i-1] == a.s2[j-1])
+        for(int j = 0; j < a.col; j++)
+            if(i == 0 || j == 0)
+                arr[i][j] = 0;        
+            else if(a.s1[i-1] == a.s2[j-1])
                 arr[i][j] = 1 + arr[i-1][j-1];
             else
                 arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
@@ -168,16 +196,11 @@ void topHalf_LCS (args& a) {
 void bottomHalf_LCS (args& a) {
     int nrows = a.s1.length();
 
-    //last row (half) and column
     for(int i = nrows; i > a.row; i--) 
-        arr[i][a.col] = 0;
-    for(int i = a.col+1; i >= 0; i--)
-        arr[nrows+1][i] = 0;
-
-    //rest of table
-    for(int i = nrows; i > a.row; i--) 
-        for(int j = a.col-1; j > 0; j--) 
-            if(a.s1[i-1] == a.s2[j-1])
+        for(int j = a.col; j > 0; j--) 
+            if (i == nrows || j == a.col) 
+                arr[i][j] = 0;
+            else if(a.s1[i-1] == a.s2[j-1])
                 arr[i][j] = 1 + arr[i+1][j+1];
             else
                 arr[i][j] = max(arr[i][j+1], arr[i+1][j]);
@@ -189,9 +212,97 @@ int merge_LCS(int h, int row, int column) {
     int temp2 = 0;
     int currentMax = 0;
 
-    for(int i = 1; i<column; i++) {
+    for(int i = 0; i < column; i++) {
         temp = arr[h][i] + arr[h+1][i];
         temp2 = arr[h][i] + arr[h+1][i+1];
+
+        if(temp > currentMax || temp2 > currentMax)
+            currentMax = max(temp, temp2);
+
+    }
+
+    return currentMax;
+}
+
+//space optimization: we only keep current two rows in memory
+void topHalf_LCS_space_optimization (args& a) {
+    int temp1[a.col+1]; 
+    int current[a.col+1];
+
+    //initialize zeros
+    for (int i = 0; i < a.col+1; i++) {
+        temp1[i] = 0;
+        current[i] = 0;
+        arrTop[i] = 0;
+    }
+
+    for(int i = 0; i <= a.row; i++) {
+        for(int j = 0; j < a.col; j++) {
+            if (i == 0 || j == 0)
+                current[j] = 0;
+            else if (a.s1[i-1] == a.s2[j-1])
+                current[j] = 1 + temp1[j-1];
+            else
+                current[j] = max(current[j-1], temp1[j]);
+        }
+
+        //rewrite data
+        for(int j = 0; j < a.col+1; j++) 
+            temp1[j] = current[j];
+
+    }
+
+    for(int i = 0; i < a.col+1; i++) 
+        arrTop[i] = current[i];
+    
+}
+
+//space optimization: we only keep current two rows in memory
+void bottomHalf_LCS_space_optimization (args& a) {
+    int temp1[a.col+1]; 
+    int current[a.col+1];
+    
+
+    //initialize zeros
+    for (int i = 0; i < a.col; i++) {
+        temp1[i] = 0;
+        current[i] = 0;
+        arrBottom[i] = 0;
+    }
+
+    int nrows = a.s1.length();
+
+    for(int i = nrows; i > a.row; i--) {
+        for(int j = a.col; j > 0; j--)  
+            if (i == nrows || j == a.col)
+                current[j] = 0;
+            else if (a.s1[i-1] == a.s2[j-1])
+                current[j] = 1 + temp1[j+1];
+            else 
+                current[j] = max(current[j+1], temp1[j]);
+
+        //rewrite data
+        for(int j = 0; j < a.col; j++) 
+            temp1[j] = current[j];
+        
+    }
+
+    for(int i = 0; i < a.col; i++) 
+        arrBottom[i] = current[i];
+
+}
+
+
+
+//merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
+int merge_LCS_space_optimization(int column) {
+    int temp = 0;
+    int temp2 = 0;
+    int currentMax = 0;
+
+    for(int i = 0; i < column; i++) {
+        temp = arrTop[i] + arrBottom[i];
+        temp2 = arrTop[i] + arrBottom[i+1];
 
         if(temp > currentMax || temp2 > currentMax)
             currentMax = max(temp, temp2);
@@ -205,9 +316,9 @@ int merge_LCS(int h, int row, int column) {
 int fb_LCS (string str1, string str2, int row, int column) {
 
     //allocate
-    arr = new unsigned short int*[row];
+    arr = new unsigned short int*[row+1];
     for(int i = 0; i < row+1; i++)
-        arr[i] = new unsigned short int[column];
+        arr[i] = new unsigned short int[column+1];
 
     //initialize zeros
     for (int i = 0; i < row+1; i++)
@@ -229,6 +340,31 @@ int fb_LCS (string str1, string str2, int row, int column) {
 
     //merge results to find the actual distance
     int ret = merge_LCS(h, row, column);
+
+    return ret;
+}
+
+//forward-backward approach with two threads and with space optimization
+int fb_LCS_space_optimization (string str1, string str2, int row, int column) {
+
+    int h = row / 2;
+    struct args a; 
+    a.s1 = str1;
+    a.s2 = str2;
+    a.row = h;
+    a.col = column;
+
+    arrTop = new int[column+1];
+    arrBottom = new int[column+1];
+
+    thread t1(topHalf_LCS_space_optimization, ref(a));
+    thread t2(bottomHalf_LCS_space_optimization, ref(a));
+    
+    t1.join();
+    t2.join();
+
+    //merge results to find the actual distance
+    int ret = merge_LCS_space_optimization(column);
 
     return ret;
 }

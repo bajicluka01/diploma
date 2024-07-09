@@ -8,6 +8,7 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                "-fopenmp",
                 "-O3",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
