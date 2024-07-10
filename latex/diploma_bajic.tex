@@ -31,6 +31,30 @@
 \usepackage{color}
 \usepackage{soul}
 
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Izvorna koda}
+%\lstset{
+%  basicstyle=\fontsize{11}{13}\selectfont\ttfamily
+%}
+\lstdefinestyle{mystyle}{
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  %numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstset{style=mystyle}
+
 \usepackage[
 backend=bibtex,
 style=numeric,
@@ -179,6 +203,7 @@ sorting=nty,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \begin{document}
 \selectlanguage{slovene}
 \frontmatter
@@ -258,6 +283,7 @@ Besedilo je oblikovano z urejevalnikom besedil \LaTeX.}
 \thispagestyle{empty}
 \
 \vfill
+
 \bigskip
 \noindent\textbf{Kandidat:} Luka Bajić\\
 \noindent\textbf{Naslov:} Inženiring vzporednih algoritmov\\
@@ -290,7 +316,7 @@ opis diplome v angleščini
 % zahvala
 \thispagestyle{empty}\mbox{}\vfill\null\it%
 \noindent
-Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diplomske naloge. 
+Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diplomske naloge in Urošu Koritniku za moralno podporo in koristne nasvete tekom študija. 
 \rm\normalfont
 
 % prazna stran
@@ -324,7 +350,7 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 \noindent\begin{tabular}{p{0.11\textwidth}|p{.39\textwidth}|p{.39\textwidth}}    % po potrebi razširi prvo kolono tabele na račun drugih dveh!
   {\bf kratica} & {\bf angleško}                              & {\bf slovensko} \\ \hline
   {\bf LCS}      & longest common subsequence               & najdaljša skupna podsekvenca \\
-  {\bf DBMS} & database management system & sistem za upravljanje podatkovnih baz \\
+  {\bf JSON} & JavaScript Object Notation & JavaScript objektna notacija \\
   {\bf SVM}   & support vector machine              & metoda podpornih vektorjev \\
 %  \dots & \dots & \dots \\
 \end{tabular}
@@ -346,7 +372,7 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 \bigskip
 
 %\noindent\textbf{Povzetek:} 
-\noindent Algoritmi za iskanje podobnosti med nizi so pomemben gradnik raznovrstnih aplikacij, od preverjevalnikov črkovanja do orodij za kontrolo verzij (npr. Git). Diplomsko delo opiše različne pristope optimizacije dveh tovrstnih algoritmov: Levenshteinove razdalje in najdaljše skupne podsekvence (??), z uporabo koncepta večnitnosti in dveh temelnjih pristopov paralelizacije - diagonalni in naprej-nazaj. Glavni cilj je časovna pohitritev algoritmov, ki jo ustrezno izmerimo in primerjamo nove implementacije z obstoječimi. Za pristop naprej-nazaj razvijemo tudi prostorsko optimizirano metodo, ki je smiselna za uporabo pri ogromnih količinah vhodnih podatkov. 
+\noindent Algoritmi za iskanje podobnosti med nizi so pomemben gradnik raznovrstnih aplikacij, ki so dandanes v vsakodnevni uporabi, od preverjevalnikov črkovanja do orodij za kontrolo verzij (npr. Git). Diplomsko delo opiše različne pristope optimizacije dveh tovrstnih algoritmov: Levenshteinove razdalje in najdaljše skupne podsekvence (??), z uporabo koncepta večnitnosti in dveh temelnjih pristopov paralelizacije - diagonalni in naprej-nazaj. Glavni cilj je časovna pohitritev algoritmov, ki jo ustrezno izmerimo in primerjamo nove implementacije z obstoječimi. Za pristop naprej-nazaj razvijemo tudi prostorsko optimizirano metodo, ki je smiselna za uporabo pri ogromnih količinah vhodnih podatkov. 
 
 \bigskip
 
@@ -415,9 +441,47 @@ Primer praktične uporabe \cite{documentsimilarity}
 
 Osnovna struktura vzporednega algoritma za oba problema je enaka kot njuna rešitev iz prejšnjega poglavja - še vedno uporabljamo dvodimenzionalno tabelo za hranjenje vmesnih vrednosti, torej je prostorska zahtevnost enaka - O(n*m). Razlika je samo v tem, da vrednosti, ki niso medsebojno odvisne, lahko računamo vzporedno z uporabo koncepta večnitnosti (angl. multithreading). Za to obstajata dva glavna pristopa - diagonalni in naprej-nazaj. 
 
+Vsega skupaj smo implementirali 14 različic algoritmov:
+\begin{itemize}
+  \item LCS naprej (dinamično programiranje)
+  \item LCS naprej s prostorsko optimizacijo
+  \item LCS nazaj (dinamično programiranje)
+  \item LCS nazaj s prostorsko optimizacijo
+  \item LCS naprej-nazaj (2 niti)
+  \item LCS naprej-nazaj s prostorsko optimizacijo (2 niti)
+  \item LCS diagonalno (poljubno število niti)
+  \item Levenshteinova razdalja naprej (dinamično programiranje)
+  \item Levenshteinova razdalja naprej s prostorsko optimizacijo
+  \item Levenshteinova razdalja nazaj (dinamično programiranje)
+  \item Levenshteinova razdalja nazaj s prostorsko optimizacijo
+  \item Levenshteinova razdalja naprej-nazaj (2 niti)
+  \item Levenshteinova razdalja naprej-nazaj s prostorsko optimizacijo (2 niti)
+  \item Levenshteinova razdalja diagonalno (poljubno število niti)
+\end{itemize}
+
 \section{Pristop naprej-nazaj}
 
-V prejšnjem poglavju smo po tabeli iterirali od leve proti desni, ter od vrha navzdol, torej za i = 0, 1, ..., n in j = 0, 1, ..., m, nakar smo prišli do končne rešitve na poziciji (i, j). Brez težav lahko počnemo ravno obratno - iteriramo od i = n, n-1, ... 0 in j = m, m-1, ..., 0 in v tem primeru dobimo rešitev na poziciji (0, 0). Izkaže se, da lahko z uporabo dveh niti poženemo oba načina istočasno. Tabelo v abstraktnem smislu prepolovimo na dva dela - ena nit računa zgornjo polovico, druga pa spodnjo. Na ta način, vsaj teoretično, dosežemo dvakratno pohitritev. Na koncu moramo še združiti zadnjo vrstico prve niti z zadnjo vrstico druge niti z združevalni funkcijo [koda], ki pa je časovne zahtevnosti O(n), ker gre dejansko samo za dve enodimenzionalni tabeli, tako da nima bistvenega vpliva na čas izvajanja celotnega algoritma. 
+V prejšnjem poglavju smo po tabeli iterirali od leve proti desni, ter od vrha navzdol, torej za i = 0, 1, ..., n in j = 0, 1, ..., m, nakar smo prišli do končne rešitve na poziciji (i, j). Brez težav lahko počnemo ravno obratno - iteriramo od i = n, n-1, ... 0 in j = m, m-1, ..., 0 in v tem primeru dobimo rešitev na poziciji (0, 0). Izkaže se, da lahko z uporabo dveh niti poženemo oba načina istočasno. Tabelo v abstraktnem smislu prepolovimo na dva dela - ena nit računa zgornjo polovico, druga pa spodnjo. Na ta način, vsaj teoretično, dosežemo dvakratno pohitritev. Na koncu moramo še združiti zadnjo vrstico prve niti z zadnjo vrstico druge niti z združevalni funkcijo [koda], ki pa je časovne zahtevnosti O(n), ker gre dejansko samo za dve enodimenzionalni tabeli, tako da nima bistvenega vpliva na čas izvajanja celotnega algoritma. \ref{LCSnaprej}
+
+\begin{lstlisting}[language=C++, caption={Algoritem LCS naprej}, captionpos=b, label=LCSnaprej]
+int forward_LCS (string str1, string str2, int row, int column) {
+    for(int i = 0; i < row; i++) 
+        for (int j = 0; j < column; j++) 
+            if (i == 0 || j == 0)
+                arr[i][j] = 0;
+            else if (str1[i-1] == str2 [j-1])
+                arr[i][j] = 1 + arr[i-1][j-1];
+            else
+                arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
+
+    return arr[row-1][column-1];
+}
+\end{lstlisting}
+
+
+
+
+
 
 \section{Prostorska optimizacija}
 

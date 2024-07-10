@@ -13,9 +13,9 @@
 \contentsline {section}{\numberline {2.3}Levenshteinova razdalja}{3}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Primer uporabe}{3}{subsection.2.3.1}%
 \contentsline {chapter}{\numberline {3}Vzporedni algoritmi}{5}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Pristop naprej-nazaj}{5}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Prostorska optimizacija}{6}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Diagonalni pristop}{6}{section.3.3}%
+\contentsline {section}{\numberline {3.1}Pristop naprej-nazaj}{6}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Prostorska optimizacija}{7}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Diagonalni pristop}{8}{section.3.3}%
 \contentsline {chapter}{\numberline {4}Rezultati}{9}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Generiranje podatkov}{9}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Delovno okolje}{10}{section.4.2}%
