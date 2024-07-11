@@ -8,8 +8,8 @@ using namespace std;
 using namespace std::chrono;
 
 //generates random string of length len consisting of English alphabet characters
-string randomStringGenerator (int len) {
-    srand(42);
+string randomStringGenerator (int len, int seed) {
+    srand(seed);
     string str = "";
     for(int i = 0; i < len; i++)
         str += 'a' + rand()%26;
@@ -77,8 +77,8 @@ void testLevenshteinForValues(int v1, int v2) {
     for(int i = 1; i <= v1; i++) {
         for(int j = 1; j <= v2; j++) {
 
-            string str1 = randomStringGenerator(i);
-            string str2 = randomStringGenerator(j);
+            string str1 = randomStringGenerator(i, 42);
+            string str2 = randomStringGenerator(j, 101);
 
             int row = str1.length()+1;
             int column = str2.length()+1;
@@ -109,15 +109,20 @@ void testLevenshteinForValues(int v1, int v2) {
             }
             if (tmp1 != tmp6) {
                 cout<<"Error: forward-backward ("<<i<<" "<<j<<")\n";
-                return;
+                //return;
             }
             if (tmp1 != tmp7) {
                 cout<<"Error: forward-backward space optimization ("<<i<<" "<<j<<")\n";
-                return;
+                /*for(int i = 0; i < column; i++) 
+                    cout<<arrTop[i]<<" ";
+                cout<<"\n";
+                for(int i = 0; i < column; i++) 
+                    cout<<arrBottom[i]<<" ";
+                cout<<"\n";*/
+                //return;
             }
         }
     }
-
 
     cout<<"OK!";
 }
@@ -127,8 +132,8 @@ void testLCSforValues(int v1, int v2) {
     for(int i = 1; i <= v1; i++) {
         for(int j = 1; j <= v2; j++) {
 
-            string str1 = randomStringGenerator(i);
-            string str2 = randomStringGenerator(j);
+            string str1 = randomStringGenerator(i, 42);
+            string str2 = randomStringGenerator(j, 555);
 
             int row = str1.length()+1;
             int column = str2.length()+1;
@@ -163,26 +168,30 @@ void testLCSforValues(int v1, int v2) {
             }
             if (tmp1 != tmp7) {
                 cout<<"Error: forward-backward space optimization ("<<i<<" "<<j<<")\n";
+                for(int i = 0; i < column; i++) 
+                    cout<<arrTop[i]<<" ";
+                cout<<"\n";
+                for(int i = 0; i < column; i++) 
+                    cout<<arrBottom[i]<<" ";
+                cout<<"\n";
+                
                 return;
             }
         }
     }
 
-
     cout<<"OK!";
 }
 
 int main (int argc, char* argv[]) {
-    string str1 = "abcbcb";
-    string str2 = "abccabb";
+    //string str1 = "abcbcb";
+    //string str2 = "abccabb";
 
-    //string str1 = "replace";
-    //string str2 = "replace";
+    string str1 = "replace";
+    string str2 = "replace";
 
-
-    //interesting examples: (3001, 4006), (555, 4006), (555, 333)
-    str1 = randomStringGenerator(8);
-    str2 = randomStringGenerator(4);
+    str1 = randomStringGenerator(11, 42);
+    str2 = randomStringGenerator(3, 101);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
@@ -215,17 +224,17 @@ int main (int argc, char* argv[]) {
     //cout << "Forward Levenshtein: "<< avgExecutionTime(5, n_iter, str1, str2) <<"\n";
 
 
-    /*
+    
     //test if all algorithms return same values
-    cout<<forward_levenshtein(str1, str2, row, column)<<"\n";
+    /*cout<<forward_levenshtein(str1, str2, row, column)<<"\n";
     cout<<forward_levenshtein_space_optimization(str1, str2, row, column)<<"\n";
     cout<<backward_levenshtein(str1, str2, row, column)<<"\n";
     cout<<backward_levenshtein_space_optimization(str1, str2, row, column)<<"\n";
     cout<<diagonal_levenshtein(str1, str2, row, column)<<"\n";
     cout<<fb_levenshtein(str1, str2, row, column)<<"\n";
-    cout<<fb_levenshtein_space_optimization(str1, str2, row, column)<<"\n\n";
+    cout<<fb_levenshtein_space_optimization(str1, str2, row, column)<<"\n\n";*/
 
-    cout<<forward_LCS(str1, str2, row, column)<<"\n";
+    /*cout<<forward_LCS(str1, str2, row, column)<<"\n";
     cout<<forward_LCS_space_optimization(str1, str2, row, column)<<"\n";
     cout<<backward_LCS(str1, str2, row, column)<<"\n";
     cout<<backward_LCS_space_optimization(str1, str2, row, column)<<"\n";
@@ -233,9 +242,17 @@ int main (int argc, char* argv[]) {
     cout<<fb_LCS(str1, str2, row, column)<<"\n";
     cout<<fb_LCS_space_optimization(str1, str2, row, column)<<"\n";*/
 
-    testLCSforValues(10, 10);
 
-    testLevenshteinForValues(10, 10);
+    
+    //testLCSforValues(15, 15);
+    //cout<<forward_LCS(str1, str2, row, column)<<"\n";
+    //cout<<str1<<"\n"<<str2<<"\n";
+
+    testLevenshteinForValues(100, 25);
+    //cout<<"\n"<<forward_levenshtein(str1, str2, row, column)<<"\n";
+    //cout<<fb_levenshtein(str1, str2, row, column)<<"\n";
+    //cout<<fb_levenshtein_space_optimization(str1, str2, row, column)<<"\n";
+    //cout<<str1<<" "<<str2;
 
     return 0;
 }

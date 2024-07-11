@@ -36,7 +36,7 @@ int forward_LCS (string str1, string str2, int row, int column) {
         for (int j = 0; j < column; j++) 
             if (i == 0 || j == 0)
                 arr[i][j] = 0;
-            else if (str1[i-1] == str2 [j-1])
+            else if (str1[i-1] == str2[j-1])
                 arr[i][j] = 1 + arr[i-1][j-1];
             else
                 arr[i][j] = max(arr[i-1][j], arr[i][j-1]);
@@ -188,7 +188,7 @@ void topHalf_LCS (args& a) {
                 arr[i][j] = 0;        
             else if(a.s1[i-1] == a.s2[j-1])
                 arr[i][j] = 1 + arr[i-1][j-1];
-            else
+            else 
                 arr[i][j] = max(arr[i][j-1], arr[i-1][j]);
 }
 
@@ -196,9 +196,13 @@ void topHalf_LCS (args& a) {
 void bottomHalf_LCS (args& a) {
     int nrows = a.s1.length();
 
-    for(int i = nrows; i > a.row; i--) 
+    //in case there's nothing for this thread to do
+    if(nrows == 1)
+        return;
+
+    for(int i = nrows+1; i > a.row; i--) 
         for(int j = a.col; j > 0; j--) 
-            if (i == nrows || j == a.col) 
+            if (i == nrows+1 || j == a.col) 
                 arr[i][j] = 0;
             else if(a.s1[i-1] == a.s2[j-1])
                 arr[i][j] = 1 + arr[i+1][j+1];
@@ -221,6 +225,14 @@ int merge_LCS(int h, int row, int column) {
 
     }
 
+    /*cout<<"\nh = "<<h<<"\n";
+    for(int i = 0; i < row+1; i++) {
+        for(int j = 0; j < column+1; j++)
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }
+    cout<<"currentMax "<<currentMax<<"\n";
+    */
     return currentMax;
 }
 
@@ -272,9 +284,13 @@ void bottomHalf_LCS_space_optimization (args& a) {
 
     int nrows = a.s1.length();
 
-    for(int i = nrows; i > a.row; i--) {
+    //in case there's nothing for this thread to do
+    if(nrows == 1)
+        return;
+
+    for(int i = nrows+1; i > a.row; i--) {
         for(int j = a.col; j > 0; j--)  
-            if (i == nrows || j == a.col)
+            if (i == nrows+1 || j == a.col)
                 current[j] = 0;
             else if (a.s1[i-1] == a.s2[j-1])
                 current[j] = 1 + temp1[j+1];

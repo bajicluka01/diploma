@@ -204,6 +204,10 @@ void topHalf_levenshtein(args& a) {
 void bottomHalf_levenshtein (args& a) {
     int nrows = a.s1.length()+1;
 
+    //in case there's nothing for this thread to do
+    if(nrows == 1)
+        return;
+
     for(int i = nrows-1; i >= a.row; i--) {
         for (int j = a.col-1; j >= 0; j--) {    
             if (i == nrows-1)
@@ -224,12 +228,11 @@ int merge_levenshtein (int h, int row, int column) {
     int temp2 = 0;
     int currentMin = INT_MAX;
 
-    for(int i = 1; i<column; i++) {
-        temp = arr[h][i] + arr[h+1][i];
-        temp2 = arr[h][i] + arr[h+1][i+1];
+    for(int i = 1; i <= column; i++) {
+        temp = arr[h][i-1] + arr[h+1][i];
 
-        if(temp < currentMin || temp2 < currentMin)
-            currentMin = min(temp, temp2);
+        if(temp < currentMin)
+            currentMin = temp;
 
     }
 
@@ -243,7 +246,7 @@ void topHalf_levenshtein_space_optimization(args& a) {
     
 
     //initialize zeros
-    for (int i = 0; i < a.col; i++) {
+    for (int i = 0; i <= a.col; i++) {
         temp1[i] = 0;
         current[i] = 0;
         arrTop[i] = 0;
@@ -286,6 +289,10 @@ void bottomHalf_levenshtein_space_optimization(args& a) {
 
     int nrows = a.s1.length()+1;
 
+    //in case there's nothing for this thread to do
+    if(nrows == 1)
+        return;
+
     for(int i = nrows-1; i >= a.row; i--) {
         for (int j = a.col-1; j >= 0; j--) {   
             if (i == nrows-1)
@@ -317,12 +324,11 @@ int merge_levenshtein_space_optimization (int column) {
     int temp2 = 0;
     int currentMin = INT_MAX;
 
-    for(int i = 1; i<column; i++) {
-        temp = arrTop[i] + arrBottom[i];
-        temp2 = arrTop[i] + arrBottom[i+1];
+    for(int i = 1; i <= column; i++) {
+        temp = arrTop[i-1] + arrBottom[i];
 
-        if(temp < currentMin || temp2 < currentMin)
-            currentMin = min(temp, temp2);
+        if(temp < currentMin)
+            currentMin = temp;
 
     }
 
@@ -356,6 +362,7 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
 
     //merge results to find the distance
     int ret = merge_levenshtein(h, row, column);
+
 
     /*
     //TEMP
