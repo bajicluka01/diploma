@@ -244,11 +244,11 @@ int main (int argc, char* argv[]) {
 
 
     
-    //testLCSforValues(15, 15);
+    testLCSforValues(100, 25);
     //cout<<forward_LCS(str1, str2, row, column)<<"\n";
     //cout<<str1<<"\n"<<str2<<"\n";
 
-    testLevenshteinForValues(100, 25);
+    //testLevenshteinForValues(100, 25);
     //cout<<"\n"<<forward_levenshtein(str1, str2, row, column)<<"\n";
     //cout<<fb_levenshtein(str1, str2, row, column)<<"\n";
     //cout<<fb_levenshtein_space_optimization(str1, str2, row, column)<<"\n";

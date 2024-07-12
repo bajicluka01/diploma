@@ -213,15 +213,13 @@ void bottomHalf_LCS (args& a) {
 //merges last rows of topHalf and bottomHalf
 int merge_LCS(int h, int row, int column) {
     int temp = 0;
-    int temp2 = 0;
     int currentMax = 0;
 
-    for(int i = 0; i < column; i++) {
-        temp = arr[h][i] + arr[h+1][i];
-        temp2 = arr[h][i] + arr[h+1][i+1];
+    for(int i = 1; i <= column; i++) {
+        temp = arr[h][i-1] + arr[h+1][i];
 
-        if(temp > currentMax || temp2 > currentMax)
-            currentMax = max(temp, temp2);
+        if(temp > currentMax)
+            currentMax = temp;
 
     }
 
@@ -276,7 +274,7 @@ void bottomHalf_LCS_space_optimization (args& a) {
     
 
     //initialize zeros
-    for (int i = 0; i < a.col; i++) {
+    for (int i = 0; i <= a.col; i++) {
         temp1[i] = 0;
         current[i] = 0;
         arrBottom[i] = 0;
@@ -313,15 +311,13 @@ void bottomHalf_LCS_space_optimization (args& a) {
 //merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
 int merge_LCS_space_optimization(int column) {
     int temp = 0;
-    int temp2 = 0;
     int currentMax = 0;
 
-    for(int i = 0; i < column; i++) {
-        temp = arrTop[i] + arrBottom[i];
-        temp2 = arrTop[i] + arrBottom[i+1];
+    for(int i = 1; i <= column; i++) {
+        temp = arrTop[i-1] + arrBottom[i];
 
-        if(temp > currentMax || temp2 > currentMax)
-            currentMax = max(temp, temp2);
+        if(temp > currentMax)
+            currentMax = temp;
 
     }
 
