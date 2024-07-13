@@ -15,15 +15,15 @@
 \contentsline {chapter}{\numberline {3}Vzporedni algoritmi}{5}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Pristop naprej-nazaj}{6}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Prostorska optimizacija}{7}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Diagonalni pristop}{8}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Rezultati}{9}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Generiranje podatkov}{9}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Delovno okolje}{10}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Teoretične pohitritve/Časovne zahtevnosti}{10}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Primerjava sekvenčnih algoritmov}{10}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Primerjava vzporednih algoritmov}{10}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Celotna primerjava}{10}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Zaključki}{11}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Sklepi}{11}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Nadalnji razvoj}{11}{section.5.2}%
-\contentsline {chapter}{Literatura}{13}{chapter*.7}%
+\contentsline {section}{\numberline {3.3}Diagonalni pristop}{9}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Rezultati}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Generiranje podatkov}{11}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Delovno okolje}{12}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Teoretične pohitritve/Časovne zahtevnosti}{12}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Primerjava sekvenčnih algoritmov}{12}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Primerjava vzporednih algoritmov}{12}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Celotna primerjava}{12}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Zaključki}{13}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Sklepi}{13}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Nadalnji razvoj}{13}{section.5.2}%
+\contentsline {chapter}{Literatura}{15}{chapter*.7}%
