@@ -38,14 +38,124 @@
     \field{labeltitlesource}{title}
     \field{sortinit}{C}
     \field{sortinithash}{C}
-    \field{booktitle}{Proceedings of the Digital Forensics Research Conference
-  Europe (DFRWS EU)}
     \verb{doi}
     \verb 10.48550/arXiv.2307.11496
     \endverb
     \field{title}{Identifying document similarity using a fast estimation of
   the Levenshtein Distance based on compression and signatures}
     \field{year}{2022}
+  \endentry
+
+  \entry{LCSpracticalUse}{book}{}
+    \name{author}{4}{}{%
+      {{hash=CTH}{%
+         family={Cormen},
+         familyi={C\bibinitperiod},
+         given={Thomas\bibnamedelima H},
+         giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+      {{hash=LCE}{%
+         family={Leiserson},
+         familyi={L\bibinitperiod},
+         given={Charles\bibnamedelima E},
+         giveni={C\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+      {{hash=RRL}{%
+         family={Rivest},
+         familyi={R\bibinitperiod},
+         given={Ronald\bibnamedelima L},
+         giveni={R\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Stein},
+         familyi={S\bibinitperiod},
+         given={Clifford},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {The MIT Press}%
+    }
+    \strng{namehash}{CTH+1}
+    \strng{fullhash}{CTHLCERRLSC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{Introduction to Algorithms}
+    \field{year}{2022}
+  \endentry
+
+  \entry{weightedLevenshtein}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=FL}{%
+         family={Fontan},
+         familyi={F\bibinitperiod},
+         given={Lionel},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=FI}{%
+         family={Ferrané},
+         familyi={F\bibinitperiod},
+         given={Isabelle},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=FJ}{%
+         family={Farinas},
+         familyi={F\bibinitperiod},
+         given={Jérôme},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=PJ}{%
+         family={Pinquier},
+         familyi={P\bibinitperiod},
+         given={Julien},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=AX}{%
+         family={Aumont},
+         familyi={A\bibinitperiod},
+         given={Xavier},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FL+1}
+    \strng{fullhash}{FLFIFJPJAX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{booktitle}{Proc. Interspeech 2016}
+    \verb{doi}
+    \verb 10.21437/Interspeech.2016-431
+    \endverb
+    \field{issn}{2958-1796}
+    \field{pages}{650\bibrangedash 654}
+    \field{title}{{Using Phonologically Weighted Levenshtein Distances for the
+  Prediction of Microscopic Intelligibility}}
+    \field{year}{2016}
+  \endentry
+
+  \entry{compilerFlag}{online}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={GNU},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{Using the GNU Compiler Collection (GCC)}
+    \verb{url}
+    \verb https://gcc.gnu.org/onlinedocs/gcc-4.6.4/gcc/
+    \endverb
+    \field{urlday}{16}
+    \field{urlmonth}{07}
+    \field{urlyear}{2024}
   \endentry
 
   \entry{diplomaPremk}{report}{}
