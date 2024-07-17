@@ -172,7 +172,7 @@ int main (int argc, char* argv[]) {
     string str1 = "replace";
     string str2 = "replace";
 
-    int strLen = 10000;
+    int strLen = 40000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -181,18 +181,18 @@ int main (int argc, char* argv[]) {
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << forward_levenshtein_space_optimization(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << forward_LCS(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
-    /*start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << backward_LCS_space_optimization(str1, str2, row, column) << "\n";
+    start = high_resolution_clock::now();
+    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
-    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
+    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
 
     int n_iter = 1;
 

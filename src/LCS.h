@@ -154,7 +154,10 @@ int diagonal_LCS (string str1, string str2, int row, int column) {
         int antidiag = min(j, row-i-1);
 
         //parallel calculation of all elements on current diagonal
-        #pragma omp parallel for
+        //#pragma omp parallel for
+        //#pragma omp target teams distribute parallel for
+        //#pragma omp target teams loop
+        #pragma omp parallel for num_threads (6)
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
             int b = j - k;
@@ -223,14 +226,6 @@ int merge_LCS(int h, int row, int column) {
 
     }
 
-    /*cout<<"\nh = "<<h<<"\n";
-    for(int i = 0; i < row+1; i++) {
-        for(int j = 0; j < column+1; j++)
-            cout<<arr[i][j]<<" ";
-        cout<<"\n";
-    }
-    cout<<"currentMax "<<currentMax<<"\n";
-    */
     return currentMax;
 }
 
