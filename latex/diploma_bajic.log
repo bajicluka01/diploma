@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  16 JUL 2024 18:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  18 JUL 2024 19:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -837,17 +837,17 @@ Package biblatex Info: Reference segment=0 on input line 209.
 
 
 {C:/Users/bajic/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-<cc_cc_30.pdf, id=105, 25.27844pt x 25.27844pt>
+<cc_cc_30.pdf, id=101, 25.27844pt x 25.27844pt>
 File: cc_cc_30.pdf Graphic file (type pdf)
 <use cc_cc_30.pdf>
 Package pdftex.def Info: cc_cc_30.pdf  used on input line 262.
 (pdftex.def)             Requested size: 18.74585pt x 18.74585pt.
-<cc_by_30.pdf, id=106, 18.74034pt x 18.73953pt>
+<cc_by_30.pdf, id=102, 18.74034pt x 18.73953pt>
 File: cc_by_30.pdf Graphic file (type pdf)
 <use cc_by_30.pdf>
 Package pdftex.def Info: cc_by_30.pdf  used on input line 262.
 (pdftex.def)             Requested size: 18.74028pt x 18.73947pt.
-<cc_sa_30.pdf, id=107, 18.73955pt x 18.73994pt>
+<cc_sa_30.pdf, id=103, 18.73955pt x 18.73994pt>
 File: cc_sa_30.pdf Graphic file (type pdf)
 <use cc_sa_30.pdf>
 Package pdftex.def Info: cc_sa_30.pdf  used on input line 262.
@@ -931,7 +931,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.25 ...{\numberline {5}Zaključki}{21}{chapter.5}
+l.26 ...ne {5.2}Nadaljnji razvoj}{21}{section.5.2}
                                                   % [9
 
 ])
@@ -1027,13 +1027,7 @@ nput line 451.
 Poglavje 3.
 [7
 
-] [8]
-Overfull \hbox (4.16072pt too wide) in paragraph at lines 555--556
-\OT1/cmr/m/n/12 zgor-njo po-lo-vico, druga pa spo-dnjo [][]3.2[][]. Na ta na^^T
-cin, vsaj te-o-reti^^Tcno, dose^^Tzemo
- []
-
-[9] [10] [11]
+] [8] [9] [10] [11]
 Underfull \vbox (badness 7667) has occurred while \output is active []
 
  [12]
@@ -1045,37 +1039,38 @@ Poglavje 4.
 Underfull \vbox (badness 2293) has occurred while \output is active []
 
  [15]
-<plots/LCS_comparison.png, id=389, 462.528pt x 346.896pt>
+<plots/LCS_comparison.png, id=385, 462.528pt x 346.896pt>
 File: plots/LCS_comparison.png Graphic file (type png)
 <use plots/LCS_comparison.png>
-Package pdftex.def Info: plots/LCS_comparison.png  used on input line 718.
-(pdftex.def)             Requested size: 350.99762pt x 263.26257pt.
-<plots/LCS_comparison_space.png, id=391, 462.528pt x 346.896pt>
+Package pdftex.def Info: plots/LCS_comparison.png  used on input line 727.
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+
+[16]
+<plots/LCS_comparison_space.png, id=394, 462.528pt x 346.896pt>
 File: plots/LCS_comparison_space.png Graphic file (type png)
 <use plots/LCS_comparison_space.png>
-Package pdftex.def Info: plots/LCS_comparison_space.png  used on input line 726
+Package pdftex.def Info: plots/LCS_comparison_space.png  used on input line 738
 .
-(pdftex.def)             Requested size: 350.99762pt x 263.26257pt.
-<plots/Levenshtein_comparison.png, id=392, 462.528pt x 346.896pt>
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+<plots/Levenshtein_comparison.png, id=399, 462.528pt x 346.896pt>
 File: plots/Levenshtein_comparison.png Graphic file (type png)
 <use plots/Levenshtein_comparison.png>
 Package pdftex.def Info: plots/Levenshtein_comparison.png  used on input line 7
-34.
-(pdftex.def)             Requested size: 350.99762pt x 263.26257pt.
-<plots/Levenshtein_comparison_space.png, id=393, 462.528pt x 346.896pt>
+52.
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+<plots/Levenshtein_comparison_space.png, id=400, 462.528pt x 346.896pt>
 File: plots/Levenshtein_comparison_space.png Graphic file (type png)
 <use plots/Levenshtein_comparison_space.png>
 Package pdftex.def Info: plots/Levenshtein_comparison_space.png  used on input 
-line 742.
-(pdftex.def)             Requested size: 350.99762pt x 263.26257pt.
-
-[16 <./plots/LCS_comparison.png>] [17 <./plots/LCS_comparison_space.png>]
-[18 <./plots/Levenshtein_comparison.png>] [19 <./plots/Levenshtein_comparison_s
-pace.png>] [20
-
-]
+line 760.
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+ [17 <./plots/LCS_comparison.png>] [18 <./plots/LCS_comparison_space.png>]
+[19 <./plots/Levenshtein_comparison.png>] [20 <./plots/Levenshtein_comparison_s
+pace.png>]
 Poglavje 5.
-[21] [22
+[21
+
+] [22
 
 ]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
@@ -1090,19 +1085,19 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `diploma_bajic.out' has not changed.
-(rerunfilecheck)             Checksum: 42B92B3B7621F80A91739A936BA15F37;2988.
+(rerunfilecheck)             Checksum: 789ACB36DB986498DCFCB3E6A0D1AD32;2911.
 Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 \openout1 = `diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22851 strings out of 474486
- 392084 string characters out of 5743755
+ 22849 strings out of 474486
+ 392060 string characters out of 5743755
  2210542 words of memory out of 5000000
- 44661 multiletter control sequences out of 15000+600000
+ 44660 multiletter control sequences out of 15000+600000
  570314 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,17n,81p,1861b,2296s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,17n,81p,1861b,2269s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\bajic\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1200.pk><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -1121,9 +1116,9 @@ type1/public/amsfonts/cm/cmti12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKT
 eX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/bajic/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/bajic/AppData/Lo
 cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (39 pages, 442991 bytes).
+Output written on diploma_bajic.pdf (39 pages, 446951 bytes).
 PDF statistics:
- 546 PDF objects out of 1000 (max. 8388607)
- 171 named destinations out of 1000 (max. 500000)
- 224 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 547 PDF objects out of 1000 (max. 8388607)
+ 170 named destinations out of 1000 (max. 500000)
+ 216 words of extra memory for PDF output out of 10000 (max. 10000000)
 

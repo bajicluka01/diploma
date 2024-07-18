@@ -19,10 +19,9 @@
 \contentsline {chapter}{\numberline {4}Rezultati}{15}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Generiranje podatkov}{15}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Delovno okolje}{16}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Primerjava sekvenčnih algoritmov}{16}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Primerjava vzporednih algoritmov}{16}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Celotna primerjava}{16}{section.4.5}%
+\contentsline {section}{\numberline {4.3}Primerjava algoritmov za LCS}{16}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Primerjava algoritmov za Levenshteinovo razdaljo}{17}{section.4.4}%
 \contentsline {chapter}{\numberline {5}Zaključki}{21}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Sklepi}{21}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Nadalnji razvoj}{21}{section.5.2}%
+\contentsline {section}{\numberline {5.2}Nadaljnji razvoj}{21}{section.5.2}%
 \contentsline {chapter}{Literatura}{23}{chapter*.7}%

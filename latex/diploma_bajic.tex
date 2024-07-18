@@ -373,7 +373,7 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 \bigskip
 
 %\noindent\textbf{Povzetek:} 
-\noindent Algoritmi za iskanje podobnosti med nizi so pomemben gradnik raznovrstnih aplikacij, ki so dandanes v vsakodnevni uporabi, od črkovalnikov do orodij za kontrolo različic (npr. Git). Diplomsko delo opiše različne pristope optimizacije dveh tovrstnih algoritmov: Levenshteinove razdalje in najdaljšega skupnega podzaporedja, z uporabo koncepta večnitnosti in dveh temelnjih pristopov paralelizacije - diagonalni in naprej-nazaj. Glavni cilj je časovna pohitritev algoritmov, ki jo ustrezno izmerimo in primerjamo nove implementacije z obstoječimi. Za pristop naprej-nazaj razvijemo tudi prostorsko optimizirano metodo, ki je smiselna za uporabo pri ogromnih količinah vhodnih podatkov. 
+\noindent Algoritmi za iskanje podobnosti med nizi so pomemben gradnik raznovrstnih aplikacij, ki so dandanes v vsakodnevni uporabi, od črkovalnikov do orodij za kontrolo različic (npr. Git). Diplomsko delo opiše različne pristope optimizacije dveh tovrstnih algoritmov: Levenshteinove razdalje in najdaljšega skupnega podzaporedja, z uporabo koncepta večnitnosti in dveh temeljnjih pristopov paralelizacije - diagonalni in naprej-nazaj. Glavni cilj je časovna pohitritev algoritmov, ki jo ustrezno izmerimo in primerjamo nove implementacije z obstoječimi. Za pristop naprej-nazaj razvijemo tudi prostorsko optimizirano metodo, ki je smiselna za uporabo pri ogromnih količinah vhodnih podatkov. 
 
 \bigskip
 
@@ -411,7 +411,7 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 
 \chapter{Uvod}
 
-V diplomskem delu so opisani različni pristopi za optimizacijo algoritmov za računanje Levenshteinove razdalje in najdaljšega skupnega podzaporedja (angl. Longest Common Subsequence - LCS) z uporabo vzporednega procesiranja. 
+V diplomskem delu so opisani različni pristopi za optimizacijo algoritmov za računanje Levenshteinove razdalje in najdaljšega skupnega podzaporedja (angl. Longest Common Subsequence - LCS) z uporabo vzporednega procesiranja. Gre za dva zelo pogosto uporabljena algoritma za potrebe primerjave nizov oziroma iskanje razdalje med nizi, ki ju običajno rešujemo z dinamičnim programiranjem (za potrebe tega diplomskega dela smo se omejili na razdalje med točno dvema nizoma, ki je tudi najpogosteje uporabljena v praktičnih aplikacijah). S pomočjo koncepta večnitnosti smo razvili več različic algoritmov, ki dosežejo časovno pohitritev v primerjavi z osnovno implementacijo. Meritve smo izvajali na naključno generiranih nizih, velikosti med 10000 in 250000 znakov. Poleg časovne pohitritve, smo iskali tudi možnosti za prostorske optimizacije, torej algoritme, ki zasedejo čimmanjšo količino delovnega pomnilnika, kar je uporabno predvsem za vhodne podatke ogromne velikosti, ki jih ni smiselno, oziroma pogosto celo nemogoče v celoti hraniti v delovnem pomnilniku. 
 
 \section{Motivacija}
 
@@ -419,11 +419,11 @@ Iskanje podobnosti med nizi se na prvi pogled zdi dokaj enostaven problem, venda
 
 \section{Struktura}
 
-Diplomsko delo je razdeljeno na pet poglavij. Po uvodnem delu sledi opis obeh temelnjih algoritmov, njune praktične uporabnosti in njunih implementacij z uporabo dinamičnega programiranja. Tretje poglavje predstavi dva glavna pristopa povzporejanja - diagonalni in naprej-nazaj. Pri slednjem je prikazan tudi primer prostorske optimizacije. V četrtem poglavju so predstavljeni rezultati meritev na različnih velikostih vhodnih podatkov in primerjave časov izvajanja posameznih različic algoritmov. V petem poglavju sledijo še sklepi in ideje za nadalnji razvoj. 
+Diplomsko delo je razdeljeno na pet poglavij. Po uvodnem delu sledi opis obeh temeljnjih algoritmov, njune praktične uporabnosti in njunih implementacij z uporabo dinamičnega programiranja. Tretje poglavje predstavi dva glavna pristopa povzporejanja - diagonalni in naprej-nazaj. Pri slednjem je prikazan tudi primer prostorske optimizacije. V četrtem poglavju so predstavljeni rezultati meritev na različnih velikostih vhodnih podatkov in primerjave časov izvajanja posameznih različic algoritmov. V petem poglavju sledijo še sklepi in ideje za nadaljnji razvoj. 
 
 \chapter{Metode in paradigme}
 
-V tem poglavju je predstavljena algoritmična paradigma dinamičnega programiranja, ki služi kot temelj za vse algoritme, ki smo jih implementirali. Nato sta podrobneje predstavljena še osnovna algoritma za računanje LCS in Levenshteinove razdalje. 
+V tem poglavju je predstavljena algoritmična paradigma dinamičnega programiranja, ki služi kot temelj za vse algoritme, ki smo jih implementirali. Nato sta podrobneje opisana še osnovna algoritma za računanje LCS in Levenshteinove razdalje. 
 
 \section{Dinamično programiranje}
 
@@ -552,7 +552,7 @@ int fb_LCS (string str1, string str2, int row, int column) {
 }
 \end{lstlisting}
 
-Tabelo v abstraktnem smislu prepolovimo na dva dela - ena nit računa zgornjo polovico, druga pa spodnjo \ref{fbLCSthreads}. Na ta način, vsaj teoretično, dosežemo dvakratno pohitritev. 
+Tabelo v abstraktnem smislu prepolovimo na dva dela - ena nit računa zgornjo polovico, druga pa spodnjo (\ref{fbLCSthreads}). Na ta način, vsaj teoretično, dosežemo dvakratno pohitritev. 
 
 \bigskip
 \begin{lstlisting}[language=C++, caption={Vsaka nit računa svojo polovico tabele}, captionpos=b, label=fbLCSthreads]
@@ -591,15 +591,15 @@ Kadar obe niti zaključita izvajanje, je rezultat funkcije naprej-nazaj dvodimen
 \begin{center}
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
 \cline{3-8}
-  \multicolumn{2}{c|}{}  & a & b & c & d & e & f & \multicolumn{1}{|c}{} \\ \cline{2-9}
+  \multicolumn{2}{c|}{}  & a & b & b & d & c & c & \multicolumn{1}{|c}{} \\ \cline{2-9}
  \multicolumn{1}{c|}{} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & 0 \\ \hline
-x  & \textcolor{red}{0}  & 1 &  2 & 3 & 4 & 5 & 6 & 0 \\ \hline
-y  & \textcolor{red}{0} & 2 & 2 & 3 & 4 & 5 & 6 & 0 \\ \hline
-z  & \textcolor{red}{0} & \cellcolor{blue!15}3 & \cellcolor{blue!15}3 & \cellcolor{blue!15}3 & \cellcolor{blue!15}4 & \cellcolor{blue!15}5 & \cellcolor{blue!15}6 & 0 \\ \hline
-x  & 0 & \cellcolor{blue!15}1  & \cellcolor{blue!15}1 &  \cellcolor{blue!15}2 & \cellcolor{blue!15}3 & \cellcolor{blue!15}4 & \cellcolor{blue!15}5 & \textcolor{red}{0} \\ \hline
-y  & 0 & 2 & 2 & 3 & 4 & 5 & 5 & \textcolor{red}{0} \\ \hline
-z  & 0 & 3 & 3 & 3 & 4 & 5 & 5 & \textcolor{red}{0} \\ \hline
-\multicolumn{1}{c|}{}  & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} \\ \cline{2-9}
+b  & \textcolor{red}{0}  & 0 & 1 & 1 & 1 & 1 & 1 & 0 \\ \hline
+c  & \textcolor{red}{0} & 0 & 1 & 1 & 1 & 2 & 2 & 0 \\ \hline
+a  & \textcolor{red}{0} & \cellcolor{blue!15}1 & \cellcolor{blue!15}1 & \cellcolor{blue!15}1 & \cellcolor{blue!15}1 & \cellcolor{blue!15}2 & \cellcolor{blue!15}2 & 0 \\ \hline
+a  & 0 & \cellcolor{blue!15}3  & \cellcolor{blue!15}2 &  \cellcolor{blue!15}2 & \cellcolor{blue!15}2 & \cellcolor{blue!15}1 & \cellcolor{blue!15}1 & \textcolor{red}{0} \\ \hline
+d  & 0 & 2 & 2 & 2 & 2 & 1 & 1 & \textcolor{red}{0} \\ \hline
+c  & 1 & 1 & 1 & 1 & 1 & 1 & 1 & \textcolor{red}{0} \\ \hline
+\multicolumn{1}{c|}{}  & 0 & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} & \textcolor{red}{0} \\ \cline{2-9}
 \end{tabular}
 
 \end{center}
@@ -607,9 +607,9 @@ z  & 0 & 3 & 3 & 3 & 4 & 5 & 5 & \textcolor{red}{0} \\ \hline
 \label{fbLCSresult}
 \end{figure}
 
-Da dobimo končno razdaljo, moramo še združiti zadnjo vrstico prve niti z zadnjo vrstico druge niti z združevalni funkcijo, ki pa je časovne zahtevnosti \begin{math}O(n)\end{math}, ker gre dejansko samo za dve enodimenzionalni tabeli, tako da nima bistvenega vpliva na čas izvajanja celotnega algoritma. 
+Da dobimo končno razdaljo, moramo še združiti zadnjo vrstico prve niti z zadnjo vrstico druge niti z združevalno funkcijo, ki pa je časovne zahtevnosti \begin{math}O(n)\end{math}, ker gre dejansko samo za dve enodimenzionalni tabeli, tako da nima bistvenega vpliva na čas izvajanja celotnega algoritma. 
 
-Za združevanje pri Levenshteinovi razdalji (\ref{merge}) iščemo najmanjšo vsoto istoležnih elementov, pri LCS pa največjo. 
+Za združevanje pri Levenshteinovi razdalji (\ref{merge}) iščemo najmanjšo vsoto istoležnih elementov po diagonali, pri LCS pa največjo. 
 
 
 \bigskip
@@ -636,7 +636,7 @@ int merge_levenshtein (int h, int row, int column) {
 
 Pri delu z ogromno količino vhodnih podatkov se lahko zgodi da velikost tabele presega kapaciteto pomnilnika. Že za 2 niza dolžine 20000 se izkaže, da če želimo hraniti celotno dvodimenzionalno tabelo v pomnilniku, mora biti velikost le-tega približno 16GB, če predpostavimo da spremenljivke podatkovnega tipa int zasedejo 4 bajte na danem sistemu. Pri naših meritvah, ki so podrobneje opisane v poglavju 4, smo se temu problemu izognili z uporabo spremenljivk podatkovnega tipa unsigned short int, ki zasedajo samo 2 bajta v pomnilniku. Pri tem smo morali biti pozorni, da ne pride do preliva (angl. overflow), saj lahko z dvema bajtoma hranimo maksimalno vrednost 65535, vendar ker vemo, da je tako za LCS kot za Levenshteinovo razdaljo zgornja meja rezultata manjša ali enaka dolžini daljšega izmed vhodnih nizov, je ta pristop vseeno smiselen za vhodne nize krajše od dolžine 65536 (čeprav nizi te dolžine kljub vsemu presegajo kapaciteto pomnilnika na povprečnem osebnem računalniku, na katerem smo poganjali teste). 
 
-Vseeno pa je smiselno najti splošnejšo rešitev. Izkaže se, da pri pristopu naprej-nazaj, oziroma tudi brez uporabe večnitnosti pri pristopih naprej in nazaj, lahko bistveno zmanjšamo porabo prostora tako, da v pomnilniku hranimo samo vrstico, ki jo trenutno računamo in prejšnjo vrstico, ostale so nepotrebne in jih lahko zavržemo (\ref{spaceOptimization}). Kot je razvidno iz rezultatov v 4. poglavju, smo s tem dosegli dodatno pohitritev, kljub temu, da mora program v vsaki iteraciji prepisovati vrednosti med tabelama. Glavna slabost tega pristopa pa je, da ker ne hranimo vmesnih izračunov v pomnilniku, na koncu tudi ne moremo rekonstruirati poti po kateri smo prišli do rezultata. Drugače povedano, algoritem vrne samo razdaljo med nizoma, ne moremo pa ugotoviti kako dejansko pretvoriti prvi niz v drugega (kar sicer ni bilo relevantno pri naši analizi, je pa vseeno pomemben koncept pri marsikaterih praktičnih aplikacijah tovrstnih algoritmov). Vsekakor pa je ta način zelo uporaben za ogromne vhodne podatke, kadar hranjenje dvodimenzionalne tabele v pomnilniku ne pride v poštev. 
+Vseeno pa je smiselno najti splošnejšo rešitev. Izkaže se, da pri pristopu naprej-nazaj, oziroma tudi brez uporabe večnitnosti pri pristopih naprej in nazaj, lahko bistveno zmanjšamo porabo prostora tako, da v pomnilniku hranimo samo vrstico, ki jo trenutno računamo in prejšnjo vrstico, ostale so nepotrebne in jih lahko zavržemo (\ref{spaceOptimization}). Kot je razvidno iz rezultatov v 4. poglavju, smo s tem dosegli dodatno pohitritev, kljub temu, da mora program v vsaki iteraciji prepisovati vrednosti med tabelama. Glavna slabost tega pristopa pa je, da glede na to, da ne hranimo vmesnih izračunov v pomnilniku, na koncu tudi ne moremo rekonstruirati poti po kateri smo prišli do rezultata. Drugače povedano, algoritem vrne samo razdaljo med nizoma, ne moremo pa ugotoviti kako dejansko pretvoriti prvi niz v drugega (kar sicer ni bilo relevantno pri naši analizi, je pa vseeno pomemben koncept pri marsikaterih praktičnih aplikacijah tovrstnih algoritmov). Vsekakor pa je ta način zelo uporaben za ogromne vhodne podatke, kadar hranjenje dvodimenzionalne tabele v pomnilniku ne pride v poštev. 
 
 \begin{lstlisting}[language=C++, caption={Prostorska optimizacija}, captionpos=b, label=spaceOptimization]
 int backward_levenshtein_space_optimization (string str1, string str2, int row, int column) {
@@ -694,58 +694,75 @@ V tem poglavju so prikazane meritve časov izvajanja za posamezne algoritme in m
 
 \section{Generiranje podatkov}
 
-Vhodni podatki so enakega tipa tako za LCS kot za Levenshteinovo razdaljo: teoretično gre za poljubno število znakovnih nizov, vendar smo se za potrebe tega diplomskega dela omejili na delo z točno dvema nizoma, ki vsebujeta znake iz angleške abecede. Na same algoritme ne bi imelo nobenega vpliva, če bi uporabili celotno ASCII tabelo ali katerikoli drug nabor znakov, edina razlika bi bila v tem, da bi bile izračunane razdalje v povprečju krajše zaradi manjše teoretične verjetnosti da se posamezen znak pojavi v obeh nizih. Posledično bi se izvedlo manj klicev funkcij min oz. max, vendar je kar se tiče časovne zahtevnosti ta pohitritev zanemarljiva. 
+Vhodni podatki so enakega tipa tako za LCS kot za Levenshteinovo razdaljo: teoretično gre za poljubno število znakovnih nizov, vendar smo se za potrebe tega diplomskega dela omejili na delo s točno dvema nizoma, ki vsebujeta znake iz angleške abecede. Na same algoritme ne bi imelo nobenega vpliva, če bi uporabili celotno ASCII tabelo ali katerikoli drug nabor znakov, edina razlika bi bila v tem, da bi bile izračunane razdalje v povprečju krajše zaradi manjše teoretične verjetnosti da se posamezen znak pojavi v obeh nizih. Posledično bi se izvedlo manj klicev funkcij min oz. max, vendar je kar se tiče časovne zahtevnosti ta pohitritev zanemarljiva. 
 
 \section{Delovno okolje}
 
-VSCode
-gcc
--O3 \cite{compilerFlag}
-AMD
-16GB
-JSON
+Vse mertive, ki so predstavljene v naslednjih podpoglavjih, smo izvajali na s sistemu s sledečimi specifikacijami:
+\begin{itemize}
+    \item operacijski sistem: Windows 11 Home, 64-bitni
+    \item procesor: AMD Ryzen 7 6800H:
+        \begin{itemize}
+            \item 3.2GHz
+            \item 8 jeder, 16 niti
+            \item 16MB L3 predpomnilnika
+        \end{itemize}
+    \item delovni pomnilnik: 16GB DDR5
+\end{itemize}
+
+Za vizualizacijo rezultatov smo uporabili knjižnico Matplotlib, v programskem jeziku Python, preostanek programske kode (torej implementacija vseh 14 različic algoritmov in generiranje naključnih podatkov), je spisan v programskem jeziku C++. Kot urejevalnik smo uporabljali Visual Studio Code, ki ima vgrajen prevajalnik gcc, verzije 13.2.0. Ključnega pomena je, da prevajalniku dodamo optimizacijsko stikalo -O3 \cite{compilerFlag} v JSON datoteki tasks.json. S tem nekoliko povečamo čas prevajanja, vendar je čas dejanskega izvajanja programa občutno hitrejši. 
 
 
 
-\section{Primerjava sekvenčnih algoritmov}
 
+\section{Primerjava algoritmov za LCS}
 
+Za implementacije, ki hranijo celotno tabelo v delovnem pomnilniku smo meritve izvedli za nize dolžin med 10000 in 60000, s korakom 10000, za implemetacije s prostorsko optimizacijo pa za nize dolžin med 100000 in 250000, s korakom 50000. 
 
-\section{Primerjava vzporednih algoritmov}
+Kot smo pričakovali, je čas izvajanja za pristopa naprej in nazaj praktično enak, s pristopom naprej-nazaj pa dosežemo pohitritev že na meritvi z nizi dolžine 10000 (\ref{comparison1}). Izkaže pa se, da pohitritev ni ravno dvakratna, kot bi teoretično pričakovali pri uporabi dveh niti. 
+
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{plots/LCS_comparison.png}
+\includegraphics[width=1.0\textwidth]{plots/LCS_comparison.png}
 \end{center}
-\caption{Primerjava LCS algoritmov}
+\caption{Primerjava LCS algoritmov naprej, nazaj in naprej-nazaj}
 \label{comparison1}
 \end{figure}
 
+
+Pri primerjavi prostorsko optimiziranih funkcij (\ref{comparison2}) ravno tako vidimo, da ne obstaja bistvena razlika med pristopoma naprej in nazaj, je pa tukaj pristop naprej-nazaj res skoraj dvakrat hitrejši, iz česar lahko sklepamo, da je ozko grlo pri prenašanju dvodimenzionalnih tabel v predpomnilnik. 
+
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{plots/LCS_comparison_space.png}
+\includegraphics[width=1.0\textwidth]{plots/LCS_comparison_space.png}
 \end{center}
 \caption{Primerjava LCS algoritmov s prostorsko optimizacijo}
 \label{comparison2}
 \end{figure}
 
+\section{Primerjava algoritmov za Levenshteinovo razdaljo}
+
+Ker sta algoritma za iskanje LCS in Levenshteinove razdalje konceptualno zelo podobna, lahko pričakujemo, da bo to razvidno tudi iz praktičnih meritev. Izkaže se, da če primerjamo \ref{comparison1} in \ref{comparison3} oziroma \ref{comparison2} in \ref{comparison4} res vidimo podobne rezultate za enake dolžine vhodnih nizov. 
+
+
+
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{plots/Levenshtein_comparison.png}
+\includegraphics[width=1.0\textwidth]{plots/Levenshtein_comparison.png}
 \end{center}
-\caption{Primerjava algoritmov za iskanje Levenshteinove razdalje}
+\caption{Primerjava algoritmov za iskanje Levenshteinove razdalje naprej, nazaj in naprej-nazaj}
 \label{comparison3}
 \end{figure}
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{plots/Levenshtein_comparison_space.png}
+\includegraphics[width=1.0\textwidth]{plots/Levenshtein_comparison_space.png}
 \end{center}
-\caption{Primerjava algoritmov za iskanje Levenshteinove razdalje s prostorsko optimizacijo}
+\caption{Primerjava algoritmov za iskanje Levenshteinove razdalje s prostorsko optimizacijo naprej, nazaj in naprej-nazaj}
 \label{comparison4}
 \end{figure}
 
-\section{Celotna primerjava}
 
 
 
@@ -754,11 +771,15 @@ JSON
 
 \chapter{Zaključki}
 
+V tem poglavju predstavimo sklepne ugotovitve diplomskega dela in predlagamo nekaj možnih idej za nadaljnji razvoj.
+
 \section{Sklepi}
 
-\section{Nadalnji razvoj}
+Izkaže se, da obstajajo možni načini povzporejanja algoritmov za računanje LCS in Levenshteinove razdalje, kljub temu, da pri obeh problemih obstaja velika medsebojna odvisnost med izračunanimi rezultati v matriki. Veliko pohitritev dosežemo že z uporabo dveh niti in na relativno majhnih vhodnih podatkih. Če nas ne zanima rekonstrukcija poti, po kateri smo prišli do rezultata, pa lahko implementiramo še občutno izboljšano porabo prostora v pomnilniku. 
 
-Z vzporednimi algoritmi dosegli občutno pohitritev že na običajnih osebnih računalnikih. V nadalnje bi bilo zanimivo preveriti ali je čas izvajanja morda še krajši na zmogljivejših sistemih z ogromno kolilčino jeder, oziroma ali je mogoče algoritme še dodatno prilagoditi za tovrstne sisteme. 
+\section{Nadaljnji razvoj}
+
+Z vzporednimi algoritmi smo dosegli občutno pohitritev že na običajnih osebnih računalnikih. V nadaljnje bi bilo zanimivo preveriti ali je čas izvajanja morda še krajši na zmogljivejših sistemih z ogromno kolilčino jeder, oziroma ali je mogoče algoritme še dodatno prilagoditi za tovrstne sisteme. 
 
 
 %\cleardoublepage
