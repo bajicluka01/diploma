@@ -166,13 +166,13 @@ void testLCSforValues(int v1, int v2) {
 }
 
 int main (int argc, char* argv[]) {
-    //string str1 = "abcbcb";
-    //string str2 = "abccabb";
+    string str1 = "abcbcb";
+    string str2 = "abccabb";
 
-    string str1 = "replace";
-    string str2 = "replace";
+    //string str1 = "replace";
+    //string str2 = "replace";
 
-    int strLen = 40000;
+    int strLen = 30000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -181,14 +181,21 @@ int main (int argc, char* argv[]) {
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << forward_LCS(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_parallel(str1, str2, row, column) << "\n";
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_test(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 

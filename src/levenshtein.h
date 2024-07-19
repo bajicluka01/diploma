@@ -1,3 +1,4 @@
+#include <barrier>
 #include <stdio.h>
 #include <iostream>
 #include <chrono>
@@ -153,8 +154,151 @@ int diagonal_levenshtein (string str1, string str2, int row, int column) {
 
         int antidiag = min(j, row-i-1);
 
+        for (int k = 0; k <= antidiag; ++k){
+            int a = i + k;
+            int b = j - k;
+
+            if (a == 0)
+                arr[a][b] = b;
+            if (b == 0)
+                arr[a][b] = a;
+            
+            if (a != 0 && b != 0) {
+                if (str1[a-1] == str2[b-1])
+                    arr[a][b] = arr[a-1][b-1];
+                else
+                    arr[a][b] = 1 + min(arr[a][b-1], min(arr[a-1][b], arr[a-1][b-1]));
+            }
+        }
+        
+        if(j >= (column-1)) {
+            j = column - 2;
+            i++;
+        }
+        else
+            j++;
+
+    }
+
+    /*cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }*/
+
+    return arr[row-1][column-1];
+
+}
+
+void diagonal_thread (diag& a) {
+    int i = 0;
+    int j = 0;
+
+    //iterating through diagonals
+    while(i <= a.row-1 && j <= a.col-1) {
+
+        int current_elements = min(j, a.row-i-1);
+
+        for (int k = a.id-1; k <= current_elements; k+=a.n_total-1) {
+            int aa = i + k;
+            int b = j - k;
+
+            if (aa == 0)
+                arr[aa][b] = b;
+            if (b == 0)
+                arr[aa][b] = aa;
+            
+            if (aa != 0 && b != 0) {
+                if (a.s1[aa-1] == a.s2[b-1])
+                    arr[aa][b] = arr[aa-1][b-1];
+                else
+                    arr[aa][b] = 1 + min(arr[aa][b-1], min(arr[aa-1][b], arr[aa-1][b-1]));
+            }
+        }
+        
+        if(j >= (a.col-1)) {
+            j = a.col - 2;
+            i++;
+        }
+        else
+            j++;
+
+        //wait for all threads to finish woring on current diagonal
+        bar.arrive_and_wait();
+
+    }
+}
+
+//anti-diagonal approach with parallelization
+int diagonal_levenshtein_test (string str1, string str2, int row, int column) {
+    
+    //allocate
+    arr = new unsigned short int*[row];
+    for (int i = 0; i < row; i++)
+        arr[i] = new unsigned short int[column];
+
+     //initialize zeros
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
+            arr[i][j] = 0;
+        
+    int n_threads = n_thr;
+
+    thread threads[n_threads];
+    diag diag_structs[n_threads];
+
+    //bar = barrier(n_threads);
+
+    for(int i = 0; i < n_threads; i++) {
+
+        diag_structs[i].s1 = str1;
+        diag_structs[i].s2 = str2;
+        diag_structs[i].row = row;
+        diag_structs[i].col = column;
+        diag_structs[i].id = i+1;
+        diag_structs[i].n_total = n_threads;
+
+        threads[i] = thread(diagonal_thread, ref(diag_structs[i]));
+        
+    }
+
+    for(int i = 0; i < n_threads; i++) 
+        threads[i].join();
+
+    /*cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }*/
+
+    return arr[row-1][column-1];
+
+}
+
+//anti-diagonal approach with parallelization
+int diagonal_levenshtein_parallel (string str1, string str2, int row, int column) {
+    
+    //allocate
+    arr = new unsigned short int*[row];
+    for (int i = 0; i < row; i++)
+        arr[i] = new unsigned short int[column];
+
+    //initialize zeros
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
+            arr[i][j] = 0;
+        
+    int i = 0;
+    int j = 0;
+    //iterating through diagonals
+    while(i <= row-1 && j <= column-1) {
+
+        int antidiag = min(j, row-i-1);
+
         //parallell calculations of elements on current diagonal
-        #pragma omp parallel for
+        #pragma omp parallel for num_threads (6)
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
             int b = j - k;
@@ -180,6 +324,13 @@ int diagonal_levenshtein (string str1, string str2, int row, int column) {
             j++;
 
     }
+
+    /*cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }*/
 
     return arr[row-1][column-1];
 
@@ -315,8 +466,6 @@ void bottomHalf_levenshtein_space_optimization(args& a) {
         arrBottom[i] = current[i];
     
 }
-
-
 
 //merges topHalf_levenshtein_space_optimization and bottomHalf_levenshtein_space_optimization
 int merge_levenshtein_space_optimization (int column) {

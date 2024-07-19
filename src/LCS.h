@@ -3,6 +3,7 @@
 #include <chrono>
 #include <omp.h>
 #include <thread>
+#include <barrier>
 using namespace std;
 using namespace std::chrono;
 
@@ -12,6 +13,18 @@ struct args {
     int row;
     int col;
 };
+
+struct diag {
+    string s1;
+    string s2;
+    int row;
+    int col;
+    int id;
+    int n_total;
+};
+
+int n_thr = 6;
+barrier bar { n_thr };
 
 unsigned short int** arr;
 
@@ -133,6 +146,53 @@ int backward_LCS_space_optimization (string str1, string str2, int row, int colu
 
 //anti-diagonal parallelization
 int diagonal_LCS (string str1, string str2, int row, int column) {
+
+    //allocate
+    arr = new unsigned short int*[row];
+    for (int i = 0; i < row; i++)
+        arr[i] = new unsigned short int[column];
+
+    //initialize zeros
+    for (int i = 0; i < row; i++){
+        for (int j = 0; j < column; j++) {
+            arr[i][j] = 0;
+        }
+    }
+
+    int i = 0;
+    int j = 0;
+    //iterate through diagonals
+    while(i <= row-1 && j <= column-1) {
+
+        int antidiag = min(j, row-i-1);
+
+        for (int k = 0; k <= antidiag; ++k){
+            int a = i + k;
+            int b = j - k;
+
+            if (a == 0 || b == 0)
+                arr[a][b] = 0;
+            else if (str1[a-1] == str2[b-1])
+                arr[a][b] = 1 + arr[a-1][b-1];
+            else
+                arr[a][b] = max (arr[a-1][b], arr[a][b-1]);
+        }
+        
+        if(j >= (column-1)) {
+            j = column - 2  ;
+            i++;
+        }
+        else
+            j++;
+
+    }
+
+    return arr[row-1][column-1];
+
+}
+
+//anti-diagonal parallelization
+int diagonal_LCS_parallel (string str1, string str2, int row, int column) {
 
     //allocate
     arr = new unsigned short int*[row];
@@ -300,8 +360,6 @@ void bottomHalf_LCS_space_optimization (args& a) {
         arrBottom[i] = current[i];
 
 }
-
-
 
 //merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
 int merge_LCS_space_optimization(int column) {
