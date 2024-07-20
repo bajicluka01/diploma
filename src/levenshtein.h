@@ -237,11 +237,6 @@ int diagonal_levenshtein_test (string str1, string str2, int row, int column) {
     arr = new unsigned short int*[row];
     for (int i = 0; i < row; i++)
         arr[i] = new unsigned short int[column];
-
-     //initialize zeros
-    for (int i = 0; i < row; i++)
-        for (int j = 0; j < column; j++) 
-            arr[i][j] = 0;
         
     int n_threads = n_thr;
 

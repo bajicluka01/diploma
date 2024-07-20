@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 x = [10000, 20000, 30000, 40000, 50000, 60000]
 x2 = [100000, 150000, 200000, 250000]
+x3 = [10000, 20000, 30000, 40000, 50000]
 
 forwardLevenshtein =  [0.345842, 1.519301, 3.626702, 6.293141, 9.199267, 13.429229]
 backwardLevenshtein = [0.338444, 1.529102, 3.404311, 6.001849, 9.053014, 13.321899]
@@ -19,9 +20,12 @@ forwardLCSspace =  [11.047188, 23.489699, 41.342735, 65.269299]
 backwardLCSspace = [10.564286, 23.267623, 42.785099, 68.833067]
 fbLCSspace =       [6.365848, 14.281909, 26.146862, 40.857753]
 
-#TODO
-diagonalLevenshtein = []
+#TODO more improvements required
+diagonalLevenshtein =         [0.766702, 3.249734, 7.991920, 16.164053, 35.703142]
+diagonalLevenshteinParallel = [1.018414, 2.634201, 5.033297, 8.543985, 17.881329]
+
 diagonalLCS =         []
+diagonalLCSParallel = []
 
 plt.figure(1)
 plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein)), label=['forward', 'backward', 'forward-backward'])
@@ -54,5 +58,12 @@ plt.xlabel('string length')
 plt.ylabel('average execution time (seconds)')
 plt.legend()
 
+
+plt.figure(5)
+plt.plot(x3, list(zip(diagonalLevenshtein, diagonalLevenshteinParallel)), label=['diagonal', 'diagonal parallel'])
+plt.title('Diagonal Levenshtein comparison')
+plt.xlabel('string length')
+plt.ylabel('average execution time (seconds)')
+plt.legend()
 
 plt.show()
