@@ -174,7 +174,7 @@ int main (int argc, char* argv[]) {
     //string str1 = "replace";
     //string str2 = "replace";
 
-    int strLen = 5000;
+    int strLen = 50000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -214,7 +214,7 @@ int main (int argc, char* argv[]) {
     //cout << "Forward-backward LCS: "<< avgExecutionTime(6, n_iter, str1, str2) <<"\n";
     //cout << "Forward-backward LCS space optimization: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
 
-    cout << "Diagonal Levenshtein: "<< avgExecutionTime(12, n_iter, str1, str2) <<"\n";
+    //cout << "Diagonal Levenshtein: "<< avgExecutionTime(12, n_iter, str1, str2) <<"\n";
     cout << "Diagonal Levenshtein Parallel: "<< avgExecutionTime(16, n_iter, str1, str2) <<"\n";
     
     //cout << "Forward Levenshtein: "<< avgExecutionTime(8, n_iter, str1, str2) <<"\n";
