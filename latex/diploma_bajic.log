@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  18 JUL 2024 19:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  22 JUL 2024 18:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -410,7 +410,32 @@ Package: soul-ori 2023-06-14 v3.1 letterspacing/underlining (mf)
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
-)) (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+)) (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen166
+\captionmargin=\dimen167
+\caption@leftmargin=\dimen168
+\caption@rightmargin=\dimen169
+\caption@width=\dimen170
+\caption@indent=\dimen171
+\caption@parindent=\dimen172
+\caption@hangindent=\dimen173
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count299
+\c@continuedfloat=\count300
+Package caption Info: hyperref package is loaded.
+)
+(C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count301
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count302
+) (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
@@ -432,9 +457,9 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
 Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen166
+\col@sep=\dimen174
 \ar@mcellbox=\box53
-\extrarowheight=\dimen167
+\extrarowheight=\dimen175
 \NC@list=\toks34
 \extratabsurround=\skip64
 \backup@length=\skip65
@@ -442,39 +467,39 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 )
 \everycr=\toks35
 \minrowclearance=\skip66
-\rownum=\count299
+\rownum=\count303
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/graphics\dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/tools\tabularx.sty
 Package: tabularx 2023/07/08 v2.11c `tabularx' package (DPC)
-\TX@col@width=\dimen168
-\TX@old@table=\dimen169
-\TX@old@col=\dimen170
-\TX@target=\dimen171
-\TX@delta=\dimen172
-\TX@cols=\count300
+\TX@col@width=\dimen176
+\TX@old@table=\dimen177
+\TX@old@col=\dimen178
+\TX@target=\dimen179
+\TX@delta=\dimen180
+\TX@cols=\count304
 \TX@ftn=\toks36
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
-\lst@mode=\count301
+\lst@mode=\count305
 \lst@gtempboxa=\box55
 \lst@token=\toks37
-\lst@length=\count302
-\lst@currlwidth=\dimen173
-\lst@column=\count303
-\lst@pos=\count304
-\lst@lostspace=\dimen174
-\lst@width=\dimen175
-\lst@newlines=\count305
-\lst@lineno=\count306
-\lst@maxwidth=\dimen176
+\lst@length=\count306
+\lst@currlwidth=\dimen181
+\lst@column=\count307
+\lst@pos=\count308
+\lst@lostspace=\dimen182
+\lst@width=\dimen183
+\lst@newlines=\count309
+\lst@lineno=\count310
+\lst@maxwidth=\dimen184
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
-\c@lstnumber=\count307
-\lst@skipnumbers=\count308
+\c@lstnumber=\count311
+\lst@skipnumbers=\count312
 \lst@framebox=\box56
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
@@ -486,54 +511,54 @@ Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count309
+\lrq@indent=\count313
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-\c@tabx@nest=\count310
-\c@listtotal=\count311
-\c@listcount=\count312
-\c@liststart=\count313
-\c@liststop=\count314
-\c@citecount=\count315
-\c@citetotal=\count316
-\c@multicitecount=\count317
-\c@multicitetotal=\count318
-\c@instcount=\count319
-\c@maxnames=\count320
-\c@minnames=\count321
-\c@maxitems=\count322
-\c@minitems=\count323
-\c@citecounter=\count324
-\c@maxcitecounter=\count325
-\c@savedcitecounter=\count326
-\c@uniquelist=\count327
-\c@uniquename=\count328
-\c@refsection=\count329
-\c@refsegment=\count330
-\c@maxextratitle=\count331
-\c@maxextratitleyear=\count332
-\c@maxextraname=\count333
-\c@maxextradate=\count334
-\c@maxextraalpha=\count335
-\c@abbrvpenalty=\count336
-\c@highnamepenalty=\count337
-\c@lownamepenalty=\count338
-\c@maxparens=\count339
-\c@parenlevel=\count340
-\blx@tempcnta=\count341
-\blx@tempcntb=\count342
-\blx@tempcntc=\count343
-\c@blx@maxsection=\count344
-\blx@maxsegment@0=\count345
-\blx@notetype=\count346
-\blx@parenlevel@text=\count347
-\blx@parenlevel@foot=\count348
-\blx@sectionciteorder@0=\count349
-\blx@sectionciteorderinternal@0=\count350
-\blx@entrysetcounter=\count351
-\blx@biblioinstance=\count352
+\c@tabx@nest=\count314
+\c@listtotal=\count315
+\c@listcount=\count316
+\c@liststart=\count317
+\c@liststop=\count318
+\c@citecount=\count319
+\c@citetotal=\count320
+\c@multicitecount=\count321
+\c@multicitetotal=\count322
+\c@instcount=\count323
+\c@maxnames=\count324
+\c@minnames=\count325
+\c@maxitems=\count326
+\c@minitems=\count327
+\c@citecounter=\count328
+\c@maxcitecounter=\count329
+\c@savedcitecounter=\count330
+\c@uniquelist=\count331
+\c@uniquename=\count332
+\c@refsection=\count333
+\c@refsegment=\count334
+\c@maxextratitle=\count335
+\c@maxextratitleyear=\count336
+\c@maxextraname=\count337
+\c@maxextradate=\count338
+\c@maxextraalpha=\count339
+\c@abbrvpenalty=\count340
+\c@highnamepenalty=\count341
+\c@lownamepenalty=\count342
+\c@maxparens=\count343
+\c@parenlevel=\count344
+\blx@tempcnta=\count345
+\blx@tempcntb=\count346
+\blx@tempcntc=\count347
+\c@blx@maxsection=\count348
+\blx@maxsegment@0=\count349
+\blx@notetype=\count350
+\blx@parenlevel@text=\count351
+\blx@parenlevel@foot=\count352
+\blx@sectionciteorder@0=\count353
+\blx@sectionciteorderinternal@0=\count354
+\blx@entrysetcounter=\count355
+\blx@biblioinstance=\count356
 \labelnumberwidth=\skip67
 \labelalphawidth=\skip68
 \biblabelsep=\skip69
@@ -545,9 +570,9 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \blx@bcfin=\read3
 \blx@bcfout=\write3
 \blx@langwohyphens=\language80
-\c@mincomprange=\count353
-\c@maxcomprange=\count354
-\c@mincompwidth=\count355
+\c@mincomprange=\count357
+\c@maxcomprange=\count358
+\c@mincompwidth=\count359
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
@@ -558,74 +583,74 @@ Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'numeric.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count356
-\c@savedafterword=\count357
-\c@annotator=\count358
-\c@savedannotator=\count359
-\c@author=\count360
-\c@savedauthor=\count361
-\c@bookauthor=\count362
-\c@savedbookauthor=\count363
-\c@commentator=\count364
-\c@savedcommentator=\count365
-\c@editor=\count366
-\c@savededitor=\count367
-\c@editora=\count368
-\c@savededitora=\count369
-\c@editorb=\count370
-\c@savededitorb=\count371
-\c@editorc=\count372
-\c@savededitorc=\count373
-\c@foreword=\count374
-\c@savedforeword=\count375
-\c@holder=\count376
-\c@savedholder=\count377
-\c@introduction=\count378
-\c@savedintroduction=\count379
-\c@namea=\count380
-\c@savednamea=\count381
-\c@nameb=\count382
-\c@savednameb=\count383
-\c@namec=\count384
-\c@savednamec=\count385
-\c@translator=\count386
-\c@savedtranslator=\count387
-\c@shortauthor=\count388
-\c@savedshortauthor=\count389
-\c@shorteditor=\count390
-\c@savedshorteditor=\count391
-\c@labelname=\count392
-\c@savedlabelname=\count393
-\c@institution=\count394
-\c@savedinstitution=\count395
-\c@lista=\count396
-\c@savedlista=\count397
-\c@listb=\count398
-\c@savedlistb=\count399
-\c@listc=\count400
-\c@savedlistc=\count401
-\c@listd=\count402
-\c@savedlistd=\count403
-\c@liste=\count404
-\c@savedliste=\count405
-\c@listf=\count406
-\c@savedlistf=\count407
-\c@location=\count408
-\c@savedlocation=\count409
-\c@organization=\count410
-\c@savedorganization=\count411
-\c@origlocation=\count412
-\c@savedoriglocation=\count413
-\c@origpublisher=\count414
-\c@savedorigpublisher=\count415
-\c@publisher=\count416
-\c@savedpublisher=\count417
-\c@language=\count418
-\c@savedlanguage=\count419
-\c@origlanguage=\count420
-\c@savedoriglanguage=\count421
-\c@pageref=\count422
-\c@savedpageref=\count423
+\c@afterword=\count360
+\c@savedafterword=\count361
+\c@annotator=\count362
+\c@savedannotator=\count363
+\c@author=\count364
+\c@savedauthor=\count365
+\c@bookauthor=\count366
+\c@savedbookauthor=\count367
+\c@commentator=\count368
+\c@savedcommentator=\count369
+\c@editor=\count370
+\c@savededitor=\count371
+\c@editora=\count372
+\c@savededitora=\count373
+\c@editorb=\count374
+\c@savededitorb=\count375
+\c@editorc=\count376
+\c@savededitorc=\count377
+\c@foreword=\count378
+\c@savedforeword=\count379
+\c@holder=\count380
+\c@savedholder=\count381
+\c@introduction=\count382
+\c@savedintroduction=\count383
+\c@namea=\count384
+\c@savednamea=\count385
+\c@nameb=\count386
+\c@savednameb=\count387
+\c@namec=\count388
+\c@savednamec=\count389
+\c@translator=\count390
+\c@savedtranslator=\count391
+\c@shortauthor=\count392
+\c@savedshortauthor=\count393
+\c@shorteditor=\count394
+\c@savedshorteditor=\count395
+\c@labelname=\count396
+\c@savedlabelname=\count397
+\c@institution=\count398
+\c@savedinstitution=\count399
+\c@lista=\count400
+\c@savedlista=\count401
+\c@listb=\count402
+\c@savedlistb=\count403
+\c@listc=\count404
+\c@savedlistc=\count405
+\c@listd=\count406
+\c@savedlistd=\count407
+\c@liste=\count408
+\c@savedliste=\count409
+\c@listf=\count410
+\c@savedlistf=\count411
+\c@location=\count412
+\c@savedlocation=\count413
+\c@organization=\count414
+\c@savedorganization=\count415
+\c@origlocation=\count416
+\c@savedoriglocation=\count417
+\c@origpublisher=\count418
+\c@savedorigpublisher=\count419
+\c@publisher=\count420
+\c@savedpublisher=\count421
+\c@language=\count422
+\c@savedlanguage=\count423
+\c@origlanguage=\count424
+\c@savedoriglanguage=\count425
+\c@pageref=\count426
+\c@savedpageref=\count427
 \shorthandwidth=\skip75
 \shortjournalwidth=\skip76
 \shortserieswidth=\skip77
@@ -660,19 +685,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.def
 File: biblatex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
-\c@textcitecount=\count424
-\c@textcitetotal=\count425
-\c@textcitemaxnames=\count426
-\c@biburlbigbreakpenalty=\count427
-\c@biburlbreakpenalty=\count428
-\c@biburlnumpenalty=\count429
-\c@biburlucpenalty=\count430
-\c@biburllcpenalty=\count431
+\c@textcitecount=\count428
+\c@textcitetotal=\count429
+\c@textcitemaxnames=\count430
+\c@biburlbigbreakpenalty=\count431
+\c@biburlbreakpenalty=\count432
+\c@biburlnumpenalty=\count433
+\c@biburlucpenalty=\count434
+\c@biburllcpenalty=\count435
 \biburlbigskip=\muskip18
 \biburlnumskip=\muskip19
 \biburlucskip=\muskip20
 \biburllcskip=\muskip21
-\c@smartand=\count432
+\c@smartand=\count436
 )
 Package biblatex Info: Trying to load bibliography style 'numeric'...
 Package biblatex Info: ... file 'numeric.bbx' found.
@@ -686,8 +711,8 @@ Package biblatex Info: ... file 'standard.bbx' found.
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\standard.b
 bx
 File: standard.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count433
-\c@bbx:relatedtotal=\count434
+\c@bbx:relatedcount=\count437
+\c@bbx:relatedtotal=\count438
 ))
 Package biblatex Info: Trying to load citation style 'numeric'...
 Package biblatex Info: ... file 'numeric.cbx' found.
@@ -722,7 +747,7 @@ Package: expl3 2024-01-04 L3 programming layer (loader)
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count435
+\l__color_backend_stack_int=\count439
 \l__pdf_internal_box=\box57
 ))
 Package biblatex Info: ... and expl3
@@ -738,9 +763,9 @@ Package: xparse 2023-10-10 L3 Experimental document command parser
 )
 Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
 ))
-\c@izrek=\count436
-\c@trditev=\count437
-\countA=\count438
+\c@izrek=\count440
+\c@trditev=\count441
+\countA=\count442
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/xmpincl\xmpincl.sty
 Package: xmpincl 2021/09/22 v2.4 Include XMP data in pdflatex
@@ -756,38 +781,38 @@ Package csquotes Info: Redefining alias 'default' -> 'english'.
 (diploma_bajic.aux)
 \openout1 = `diploma_bajic.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 209.
-LaTeX Font Info:    ... okay on input line 209.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 212.
+LaTeX Font Info:    ... okay on input line 212.
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count439
-\scratchdimen=\dimen177
+\scratchcounter=\count443
+\scratchdimen=\dimen185
 \scratchbox=\box58
-\nofMPsegments=\count440
-\nofMParguments=\count441
+\nofMPsegments=\count444
+\nofMParguments=\count445
 \everyMPshowfont=\toks38
-\MPscratchCnt=\count442
-\MPscratchDim=\dimen178
-\MPnumerator=\count443
-\makeMPintoPDFobject=\count444
+\MPscratchCnt=\count446
+\MPscratchDim=\dimen186
+\MPnumerator=\count447
+\makeMPintoPDFobject=\count448
 \everyMPtoPDFconversion=\toks39
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
@@ -800,12 +825,15 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 209.
+Package hyperref Info: Link coloring ON on input line 212.
  (diploma_bajic.out) (diploma_bajic.out)
 \@outlinefile=\write4
 \openout4 = `diploma_bajic.out'.
 
-\c@lstlisting=\count445
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count449
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
@@ -831,8 +859,8 @@ Package biblatex Info: Data encoding 'utf8' specified.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'diploma_bajic.bbl' found.
  (diploma_bajic.bbl)
-Package biblatex Info: Reference section=0 on input line 209.
-Package biblatex Info: Reference segment=0 on input line 209.
+Package biblatex Info: Reference section=0 on input line 212.
+Package biblatex Info: Reference segment=0 on input line 212.
  [1
 
 
@@ -840,25 +868,25 @@ Package biblatex Info: Reference segment=0 on input line 209.
 <cc_cc_30.pdf, id=101, 25.27844pt x 25.27844pt>
 File: cc_cc_30.pdf Graphic file (type pdf)
 <use cc_cc_30.pdf>
-Package pdftex.def Info: cc_cc_30.pdf  used on input line 262.
+Package pdftex.def Info: cc_cc_30.pdf  used on input line 265.
 (pdftex.def)             Requested size: 18.74585pt x 18.74585pt.
 <cc_by_30.pdf, id=102, 18.74034pt x 18.73953pt>
 File: cc_by_30.pdf Graphic file (type pdf)
 <use cc_by_30.pdf>
-Package pdftex.def Info: cc_by_30.pdf  used on input line 262.
+Package pdftex.def Info: cc_by_30.pdf  used on input line 265.
 (pdftex.def)             Requested size: 18.74028pt x 18.73947pt.
 <cc_sa_30.pdf, id=103, 18.73955pt x 18.73994pt>
 File: cc_sa_30.pdf Graphic file (type pdf)
 <use cc_sa_30.pdf>
-Package pdftex.def Info: cc_sa_30.pdf  used on input line 262.
+Package pdftex.def Info: cc_sa_30.pdf  used on input line 265.
 (pdftex.def)             Requested size: 18.73949pt x 18.73988pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 270
+LaTeX Font Info:    Trying to load font information for U+msa on input line 273
 .
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 270
+LaTeX Font Info:    Trying to load font information for U+msb on input line 273
 .
 
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -868,7 +896,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.281 \clearemptydoublepage
+l.284 \clearemptydoublepage
                             [2 <./cc_cc_30.pdf> <./cc_by_30.pdf
 
 pdfTeX warning: pdflatex (file ./cc_by_30.pdf): PDF inclusion: multiple pdfs wi
@@ -878,7 +906,7 @@ th page group included in a single page
 pdfTeX warning: pdflatex (file ./cc_sa_30.pdf): PDF inclusion: multiple pdfs wi
 th page group included in a single page
 >]
-Underfull \hbox (badness 10000) in paragraph at lines 290--297
+Underfull \hbox (badness 10000) in paragraph at lines 293--300
 
  []
 
@@ -887,7 +915,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.316 \clearemptydoublepage
+l.319 \clearemptydoublepage
                             [3
 
 ]
@@ -895,7 +923,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.316 \clearemptydoublepage
+l.319 \clearemptydoublepage
                             [4
 
 ]
@@ -903,13 +931,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.325 \clearemptydoublepage
+l.328 \clearemptydoublepage
                             [5]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.325 \clearemptydoublepage
+l.328 \clearemptydoublepage
                             [6
 
 ]
@@ -917,13 +945,13 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.334 \clearemptydoublepage
+l.337 \clearemptydoublepage
                             [7]
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.334 \clearemptydoublepage
+l.337 \clearemptydoublepage
                             [8
 
 ] (diploma_bajic.toc
@@ -931,7 +959,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.26 ...ne {5.2}Nadaljnji razvoj}{21}{section.5.2}
+l.26 ...ne {5.2}Nadaljnji razvoj}{26}{section.5.2}
                                                   % [9
 
 ])
@@ -943,9 +971,9 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.345 \clearemptydoublepage
+l.348 \clearemptydoublepage
                             [10]
-Underfull \hbox (badness 5475) in paragraph at lines 354--355
+Underfull \hbox (badness 5475) in paragraph at lines 357--358
 []|\OT1/cmr/m/n/12 najdalj^^Tse sku-pno pod-za-po-
  []
 
@@ -954,7 +982,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.361 \clearemptydoublepage
+l.364 \clearemptydoublepage
                             [11
 
 
@@ -963,7 +991,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.361 \clearemptydoublepage
+l.364 \clearemptydoublepage
                             [12
 
 ]
@@ -971,7 +999,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.382 \clearemptydoublepage
+l.385 \clearemptydoublepage
                             [13
 
 ]
@@ -979,7 +1007,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.382 \clearemptydoublepage
+l.385 \clearemptydoublepage
                             [14
 
 ]
@@ -987,7 +1015,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.405 \clearemptydoublepage
+l.408 \clearemptydoublepage
                             [15
 
 ]
@@ -995,15 +1023,19 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.405 \clearemptydoublepage
+l.408 \clearemptydoublepage
                             [16
 
 ]
 Poglavje 1.
-[1
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
 
 
-] [2]
+]
+[2]
 Poglavje 2.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1011,6 +1043,9 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [3
 
 ]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
@@ -1021,80 +1056,89 @@ File: lstlang1.sty 2023/02/27 1.9 listings language file
 File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 451.
+nput line 481.
 
-[4] [5] [6]
-Poglavje 3.
-[7
-
-] [8] [9] [10] [11]
-Underfull \vbox (badness 7667) has occurred while \output is active []
-
- [12]
-[13] [14
+[5] [6] [7] [8
 
 ]
+Poglavje 3.
+[9] [10] [11] [12] [13] [14] [15] [16]
 Poglavje 4.
 
 Underfull \vbox (badness 2293) has occurred while \output is active []
 
- [15]
-<plots/LCS_comparison.png, id=385, 462.528pt x 346.896pt>
+ [17
+
+]
+<plots/LCS_comparison.png, id=418, 462.528pt x 346.896pt>
 File: plots/LCS_comparison.png Graphic file (type png)
 <use plots/LCS_comparison.png>
-Package pdftex.def Info: plots/LCS_comparison.png  used on input line 727.
+Package pdftex.def Info: plots/LCS_comparison.png  used on input line 849.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
 
-[16]
-<plots/LCS_comparison_space.png, id=394, 462.528pt x 346.896pt>
+[18]
+<plots/LCS_comparison_space.png, id=427, 462.528pt x 346.896pt>
 File: plots/LCS_comparison_space.png Graphic file (type png)
 <use plots/LCS_comparison_space.png>
-Package pdftex.def Info: plots/LCS_comparison_space.png  used on input line 738
+Package pdftex.def Info: plots/LCS_comparison_space.png  used on input line 860
 .
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
-<plots/Levenshtein_comparison.png, id=399, 462.528pt x 346.896pt>
+<plots/Levenshtein_comparison.png, id=432, 462.528pt x 346.896pt>
 File: plots/Levenshtein_comparison.png Graphic file (type png)
 <use plots/Levenshtein_comparison.png>
-Package pdftex.def Info: plots/Levenshtein_comparison.png  used on input line 7
-52.
+Package pdftex.def Info: plots/Levenshtein_comparison.png  used on input line 8
+79.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
-<plots/Levenshtein_comparison_space.png, id=400, 462.528pt x 346.896pt>
+<plots/Levenshtein_comparison_space.png, id=433, 462.528pt x 346.896pt>
 File: plots/Levenshtein_comparison_space.png Graphic file (type png)
 <use plots/Levenshtein_comparison_space.png>
 Package pdftex.def Info: plots/Levenshtein_comparison_space.png  used on input 
-line 760.
+line 887.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
- [17 <./plots/LCS_comparison.png>] [18 <./plots/LCS_comparison_space.png>]
-[19 <./plots/Levenshtein_comparison.png>] [20 <./plots/Levenshtein_comparison_s
-pace.png>]
+<plots/Levenshtein_diagonal_comparison.png, id=434, 462.528pt x 346.896pt>
+File: plots/Levenshtein_diagonal_comparison.png Graphic file (type png)
+<use plots/Levenshtein_diagonal_comparison.png>
+Package pdftex.def Info: plots/Levenshtein_diagonal_comparison.png  used on inp
+ut line 898.
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+<plots/Levenshtein_thread_number.png, id=435, 462.528pt x 346.896pt>
+File: plots/Levenshtein_thread_number.png Graphic file (type png)
+<use plots/Levenshtein_thread_number.png>
+Package pdftex.def Info: plots/Levenshtein_thread_number.png  used on input lin
+e 907.
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+ [19 <./plots/LCS_comparison.png>] [20 <./plots/LCS_comparison_space.png>]
+[21 <./plots/Levenshtein_comparison.png>] [22 <./plots/Levenshtein_comparison_s
+pace.png>] [23 <./plots/Levenshtein_diagonal_comparison.png>] [24 <./plots/Leve
+nshtein_thread_number.png>]
 Poglavje 5.
-[21
+[25
 
-] [22
-
-]
+] [26]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
-) [23] (diploma_bajic.aux)
+) [27
+
+] (diploma_bajic.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `diploma_bajic.out' has not changed.
-(rerunfilecheck)             Checksum: 789ACB36DB986498DCFCB3E6A0D1AD32;2911.
+(rerunfilecheck)             Checksum: 9C3ACD09D3963D6210C749EDCD988818;2912.
 Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 \openout1 = `diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22849 strings out of 474486
- 392060 string characters out of 5743755
- 2210542 words of memory out of 5000000
- 44660 multiletter control sequences out of 15000+600000
+ 24325 strings out of 474486
+ 421067 string characters out of 5743755
+ 2138542 words of memory out of 5000000
+ 46102 multiletter control sequences out of 15000+600000
  570314 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,17n,81p,1861b,2269s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1109,16 +1153,17 @@ Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/bajic/
 AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/User
 s/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb>
 <C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-sl12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmsy10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmti10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmti12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/bajic/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/bajic/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (39 pages, 446951 bytes).
+r8.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmsl12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmti10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/bajic/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/bajic/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/bajic/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on diploma_bajic.pdf (43 pages, 551879 bytes).
 PDF statistics:
- 547 PDF objects out of 1000 (max. 8388607)
- 170 named destinations out of 1000 (max. 500000)
- 216 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 605 PDF objects out of 1000 (max. 8388607)
+ 196 named destinations out of 1000 (max. 500000)
+ 226 words of extra memory for PDF output out of 10000 (max. 10000000)
 
