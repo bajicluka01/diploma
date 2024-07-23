@@ -261,15 +261,74 @@ int diagonal_levenshtein_test (string str1, string str2, int row, int column) {
     for(int i = 0; i < n_threads; i++) 
         threads[i].join();
 
-    /*cout<<"\n";
+    cout<<"\n";
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) 
             cout<<arr[i][j]<<" ";
         cout<<"\n";
-    }*/
+    }
 
     return arr[row-1][column-1];
 
+}
+
+int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, int column) {
+    int newRow = 2 * row - 1;
+
+    //allocate
+    arrMemory = new unsigned short int*[newRow];
+    /*for (int i = 0; i < newRow; i++)
+        if(i < row)
+            arrMemory[i] = new unsigned short int[i+1];
+        else
+            arrMemory[i] = new unsigned short int[2 * row - i - 1];*/
+
+    for (int i = 0; i < newRow; i++) 
+        arrMemory[i] = new unsigned short int[column];
+        
+    //initialize zeros
+    for (int i = 0; i < newRow; i++)
+        for (int j = 0; j < column; j++) 
+            arrMemory[i][j] = 0;
+
+    //first row and column (row becomes a diagonal)
+    for (int i = 0; i < row; i++)
+        arrMemory[i][0] = i;
+    for (int j = 0; j < column; j++)
+        arrMemory[j][j] = j;
+
+    //upper triangle
+    for(int i = 2; i < column; i++) {
+        for(int j = 1; j < i; j++) {
+            if(str1[i-j] == str2[j])
+                arrMemory[i][j] = arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-2][j-1], min(arrMemory[i-1][j-1], arrMemory[i-1][j]));
+        }
+    }
+
+    //lower triangle
+    for(int i = row+1; i <newRow; i++) {
+        for(int j = 0; j < row+column-1-i; j++) {
+            if(str1[i-row] == str2[j])
+                arrMemory[i][j] = arrMemory[i-2][j];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-2][j], min(arrMemory[i-1][j], arrMemory[i-1][j]));
+        }
+    }
+
+
+    cout<<"\n";
+    for(int i = 0; i < newRow; i++) {
+        for(int j = 0; j < column; j++) {
+            if(i < row && j > i)
+                continue;
+            cout<<arrMemory[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+
+    return arrMemory[newRow-1][0]; 
 }
 
 //anti-diagonal approach with parallelization

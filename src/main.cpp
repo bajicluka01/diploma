@@ -171,18 +171,15 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcb";
     string str2 = "abccabb";
 
-    //string str1 = "replace";
-    //string str2 = "replace";
+    int strLen = 30000;
 
-    int strLen = 50000;
-
-    str1 = randomStringGenerator(strLen, 42);
-    str2 = randomStringGenerator(strLen, 101);
+    //str1 = randomStringGenerator(strLen, 42);
+    //str2 = randomStringGenerator(strLen, 101);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
    
-    /*auto start = high_resolution_clock::now();
+    auto start = high_resolution_clock::now();
     cout << "Sequential Levenshtein solution: " << diagonal_levenshtein(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
@@ -190,18 +187,11 @@ int main (int argc, char* argv[]) {
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_parallel(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_optimization(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
-
-    start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_test(str1, str2, row, column) << "\n";
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
 
     int n_iter = 1;
 
@@ -215,7 +205,7 @@ int main (int argc, char* argv[]) {
     //cout << "Forward-backward LCS space optimization: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
 
     //cout << "Diagonal Levenshtein: "<< avgExecutionTime(12, n_iter, str1, str2) <<"\n";
-    cout << "Diagonal Levenshtein Parallel: "<< avgExecutionTime(16, n_iter, str1, str2) <<"\n";
+    //cout << "Diagonal Levenshtein Parallel: "<< avgExecutionTime(16, n_iter, str1, str2) <<"\n";
     
     //cout << "Forward Levenshtein: "<< avgExecutionTime(8, n_iter, str1, str2) <<"\n";
     //cout << "Forward Levenshtein space optimization: "<< avgExecutionTime(9, n_iter, str1, str2) <<"\n";

@@ -32,6 +32,9 @@ unsigned short int** arr;
 int* arrTop;
 int* arrBottom;
 
+//for diagonal memory optimization
+unsigned short int** arrMemory; 
+
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
 
