@@ -64,6 +64,12 @@ void testLevenshteinForValues(int v1, int v2) {
             string str1 = randomStringGenerator(i, 42);
             string str2 = randomStringGenerator(j, 101);
 
+            if(str2.length() > str1.length()) {
+                string tmp = str1;
+                str1 = str2;
+                str2 = tmp;
+            }
+
             int row = str1.length()+1;
             int column = str2.length()+1;
 
@@ -74,6 +80,8 @@ void testLevenshteinForValues(int v1, int v2) {
             int tmp5 = diagonal_levenshtein(str1, str2, row, column);
             int tmp6 = fb_levenshtein(str1, str2, row, column);
             int tmp7 = fb_levenshtein_space_optimization(str1, str2, row, column);
+            int tmp8 = diagonal_levenshtein_test(str1, str2, row, column);
+            int tmp9 = diagonal_levenshtein_memory_optimization(str1, str2, row, column);
 
             if (tmp1 != tmp2) {
                 cout<<"Error: forward space optimization ("<<i<<" "<<j<<")\n";
@@ -104,6 +112,23 @@ void testLevenshteinForValues(int v1, int v2) {
                     cout<<arrBottom[i]<<" ";
                 cout<<"\n";*/
                 //return;
+            }
+            if (tmp1 != tmp8) {
+                cout<<"Error: diagonal test ("<<i<<" "<<j<<")\n";
+                return;
+            }
+            if (tmp1 != tmp9) {
+                cout<<"Error: diagonal memory optimization ("<<i<<" "<<j<<")\n";
+
+                /*for(int i = 0; i < row + column - 1; i++) {
+                    for(int j = 0; j < column; j++) {
+                        if(i < row && j > i)
+                            continue;
+                        cout<<arrMemory[i][j]<<" ";
+                    }
+                    cout<<"\n";
+                }*/
+                return;
             }
         }
     }
@@ -171,10 +196,17 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 10000;
+    int strLen = 30000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
+
+    //diagonal approach requires len(str1) >= len(str2)
+    if(str2.length() > str1.length()) {
+        string tmp = str1;
+        str1 = str2;
+        str2 = tmp;
+    }
 
     int row = str1.length()+1;
     int column = str2.length()+1;

@@ -308,8 +308,6 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
     }
 
     //middle
-
-    //if str1 longer than str2
     for(int i = column; i < row; i++) {
         for(int j = 1; j < column; j++) {
             if(str1[i-j-1] == str2[j-1])
@@ -318,6 +316,7 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
                 arrMemory[i][j] = 1 + min(arrMemory[i-1][j], min(arrMemory[i-1][j-1], arrMemory[i-2][j-1]));
         }
     }
+
 
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
