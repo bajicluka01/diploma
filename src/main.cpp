@@ -168,13 +168,13 @@ void testLCSforValues(int v1, int v2) {
 }
 
 int main (int argc, char* argv[]) {
-    string str1 = "abcbcb";
-    string str2 = "abccabb";
+    string str1 = "abcbcbj";
+    string str2 = "abccacj";
 
-    int strLen = 30000;
+    int strLen = 10000;
 
-    //str1 = randomStringGenerator(strLen, 42);
-    //str2 = randomStringGenerator(strLen, 101);
+    str1 = randomStringGenerator(strLen, 42);
+    str2 = randomStringGenerator(strLen, 101);
 
     int row = str1.length()+1;
     int column = str2.length()+1;
