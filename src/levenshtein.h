@@ -231,7 +231,7 @@ void diagonal_thread (diag& a) {
 }
 
 //anti-diagonal approach with parallelization
-int diagonal_levenshtein_test (string str1, string str2, int row, int column) {
+int diagonal_levenshtein_parallel (string str1, string str2, int row, int column) {
     
     //allocate
     arr = new unsigned short int*[row];
@@ -272,6 +272,59 @@ int diagonal_levenshtein_test (string str1, string str2, int row, int column) {
 
 }
 
+void diagonal_thread_memory_optimization (diag& a) {
+    int newRow = a.row + a.col - 1;
+
+    //first row and column (row actually becomes a diagonal, because we tilt the array by 45degrees)
+    for (int i = a.id-1; i < a.row; i+=a.n_total-1)
+        arrMemory[i][0] = i;
+    for (int j = a.id; j < a.col; j+=a.n_total-1)
+        arrMemory[j][j] = j;
+
+    //upper triangle
+    for(int i = 2; i < a.col; i++) {
+        bar.arrive_and_wait();
+        for(int j = a.id; j < i; j+=a.n_total-1) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                arrMemory[i][j] = arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-2][j-1], min(arrMemory[i-1][j-1], arrMemory[i-1][j]));
+        }
+    }
+
+    //middle
+    for(int i = a.col; i < a.row; i++) {
+        bar.arrive_and_wait();
+        for(int j = a.id; j < a.col; j+=a.n_total-1) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                arrMemory[i][j] = arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-1][j], min(arrMemory[i-1][j-1], arrMemory[i-2][j-1]));
+        }
+    }
+
+    bar.arrive_and_wait();
+    for(int j = a.id-1; j < a.col - 1; j+=a.n_total-1) {
+        if(a.s1[a.row-j-2] == a.s2[j])
+            arrMemory[a.row][j] = arrMemory[a.row-2][j];
+        else
+            arrMemory[a.row][j] = 1 + min(arrMemory[a.row-2][j], min(arrMemory[a.row-1][j+1], arrMemory[a.row-1][j]));
+    }
+    
+
+    //lower triangle
+    for(int i = a.row+1; i < newRow; i++) {
+        bar.arrive_and_wait();
+        for(int j = a.id-1; j < newRow - i; j+=a.n_total-1) {
+            if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
+                arrMemory[i][j] = arrMemory[i-2][j+1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-2][j+1], min(arrMemory[i-1][j+1], arrMemory[i-1][j]));
+        }
+    }
+}
+
+//memory optimization: diagonals are now represented as rows, so that we only need to access previous two rows in the memory, as opposed to every row
 int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, int column) {
     int newRow = row + column - 1;
 
@@ -281,7 +334,7 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
         if(i < row)
             arrMemory[i] = new unsigned short int[i+1];
         else
-            arrMemory[i] = new unsigned short int[2 * row - i - 1];*/
+            arrMemory[i] = new unsigned short int[row + column - i - 1];*/
 
     for (int i = 0; i < newRow; i++) 
         arrMemory[i] = new unsigned short int[column];
@@ -336,22 +389,73 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
         }
     }
 
+    return arrMemory[newRow-1][0]; 
+}
+
+//memory optimization + parallelization
+int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    //allocate
+    arrMemory = new unsigned short int*[newRow];
+    /*for (int i = 0; i < newRow; i++)
+        if(i < row)
+            arrMemory[i] = new unsigned short int[i+1];
+        else
+            arrMemory[i] = new unsigned short int[row + column - i - 1];*/
+
+    for (int i = 0; i < newRow; i++) 
+        arrMemory[i] = new unsigned short int[column];
+        
+    //initialize zeros
+    for (int i = 0; i < newRow; i++)
+        for (int j = 0; j < column; j++) 
+            arrMemory[i][j] = 0;
+
+    int n_threads = n_thr;
+
+    thread threads[n_threads];
+    diag diag_structs[n_threads];
+
+    //bar = barrier(n_threads);
+
+    for(int i = 0; i < n_threads; i++) {
+
+        diag_structs[i].s1 = str1;
+        diag_structs[i].s2 = str2;
+        diag_structs[i].row = row;
+        diag_structs[i].col = column;
+        diag_structs[i].id = i+1;
+        diag_structs[i].n_total = n_threads;
+
+        threads[i] = thread(diagonal_thread_memory_optimization, ref(diag_structs[i]));
+        
+    }
+
+    for(int i = 0; i < n_threads; i++) 
+        threads[i].join();
 
     /*cout<<"\n";
-    for(int i = 0; i < newRow; i++) {
-        for(int j = 0; j < column; j++) {
-            if(i < row && j > i)
-                continue;
-            cout<<arrMemory[i][j]<<" ";
-        }
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
         cout<<"\n";
     }*/
 
     return arrMemory[newRow-1][0]; 
 }
 
-//anti-diagonal approach with parallelization
-int diagonal_levenshtein_parallel (string str1, string str2, int row, int column) {
+
+
+
+
+
+
+
+
+
+//diagonal parallelization using the OpenMP library
+int diagonal_levenshtein_parallel_openmp (string str1, string str2, int row, int column) {
     
     //allocate
     arr = new unsigned short int*[row];

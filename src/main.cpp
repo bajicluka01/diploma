@@ -42,7 +42,7 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
             case 13: fb_levenshtein(str1, str2, row, column); break;
             case 14: fb_levenshtein_space_optimization(str1, str2, row, column); break;
             case 15: diagonal_LCS_parallel(str1, str2, row, column); break;
-            case 16: diagonal_levenshtein_test(str1, str2, row, column); break;
+            case 16: diagonal_levenshtein_parallel(str1, str2, row, column); break;
             default: return 0;
         }
 
@@ -80,7 +80,7 @@ void testLevenshteinForValues(int v1, int v2) {
             int tmp5 = diagonal_levenshtein(str1, str2, row, column);
             int tmp6 = fb_levenshtein(str1, str2, row, column);
             int tmp7 = fb_levenshtein_space_optimization(str1, str2, row, column);
-            int tmp8 = diagonal_levenshtein_test(str1, str2, row, column);
+            int tmp8 = diagonal_levenshtein_parallel(str1, str2, row, column);
             int tmp9 = diagonal_levenshtein_memory_optimization(str1, str2, row, column);
 
             if (tmp1 != tmp2) {
@@ -196,7 +196,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 30000;
+    int strLen = 20000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -212,7 +212,7 @@ int main (int argc, char* argv[]) {
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein_parallel(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
@@ -220,6 +220,13 @@ int main (int argc, char* argv[]) {
 
     start = high_resolution_clock::now();
     cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_optimization(str1, str2, row, column) << "\n";
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_optimization_parallel(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
