@@ -23,7 +23,7 @@ struct diag {
     int n_total;
 };
 
-int n_thr = 6;
+int n_thr = 8;
 barrier bar { n_thr };
 
 unsigned short int** arr;

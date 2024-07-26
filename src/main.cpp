@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <omp.h>
+#include <math.h>
 #include "LCS.h"
 #include "levenshtein.h"
 using namespace std;
@@ -196,7 +197,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 20000;
+    int strLen = 30000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);

@@ -272,58 +272,6 @@ int diagonal_levenshtein_parallel (string str1, string str2, int row, int column
 
 }
 
-void diagonal_thread_memory_optimization (diag& a) {
-    int newRow = a.row + a.col - 1;
-
-    //first row and column (row actually becomes a diagonal, because we tilt the array by 45degrees)
-    for (int i = a.id-1; i < a.row; i+=a.n_total-1)
-        arrMemory[i][0] = i;
-    for (int j = a.id; j < a.col; j+=a.n_total-1)
-        arrMemory[j][j] = j;
-
-    //upper triangle
-    for(int i = 2; i < a.col; i++) {
-        bar.arrive_and_wait();
-        for(int j = a.id; j < i; j+=a.n_total-1) {
-            if(a.s1[i-j-1] == a.s2[j-1])
-                arrMemory[i][j] = arrMemory[i-2][j-1];
-            else
-                arrMemory[i][j] = 1 + min(arrMemory[i-2][j-1], min(arrMemory[i-1][j-1], arrMemory[i-1][j]));
-        }
-    }
-
-    //middle
-    for(int i = a.col; i < a.row; i++) {
-        bar.arrive_and_wait();
-        for(int j = a.id; j < a.col; j+=a.n_total-1) {
-            if(a.s1[i-j-1] == a.s2[j-1])
-                arrMemory[i][j] = arrMemory[i-2][j-1];
-            else
-                arrMemory[i][j] = 1 + min(arrMemory[i-1][j], min(arrMemory[i-1][j-1], arrMemory[i-2][j-1]));
-        }
-    }
-
-    bar.arrive_and_wait();
-    for(int j = a.id-1; j < a.col - 1; j+=a.n_total-1) {
-        if(a.s1[a.row-j-2] == a.s2[j])
-            arrMemory[a.row][j] = arrMemory[a.row-2][j];
-        else
-            arrMemory[a.row][j] = 1 + min(arrMemory[a.row-2][j], min(arrMemory[a.row-1][j+1], arrMemory[a.row-1][j]));
-    }
-    
-
-    //lower triangle
-    for(int i = a.row+1; i < newRow; i++) {
-        bar.arrive_and_wait();
-        for(int j = a.id-1; j < newRow - i; j+=a.n_total-1) {
-            if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
-                arrMemory[i][j] = arrMemory[i-2][j+1];
-            else
-                arrMemory[i][j] = 1 + min(arrMemory[i-2][j+1], min(arrMemory[i-1][j+1], arrMemory[i-1][j]));
-        }
-    }
-}
-
 //memory optimization: diagonals are now represented as rows, so that we only need to access previous two rows in the memory, as opposed to every row
 int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, int column) {
     int newRow = row + column - 1;
@@ -392,9 +340,67 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
     return arrMemory[newRow-1][0]; 
 }
 
+void diagonal_thread_memory_optimization (diag& a) {
+    int newRow = a.row + a.col - 1;
+
+    int chunkSize = ceil((double)(a.row)/a.n_total);
+
+    //cout<<"\n"<<(a.id-1)*chunkSize<<" "<<(a.id-1)*chunkSize+chunkSize<<"\n";
+
+    //first row and column (row actually becomes a diagonal, because we tilt the array by 45degrees)
+    for (int i = (a.id-1)*chunkSize; i < a.row && i < (a.id-1)*chunkSize+chunkSize; i++)
+        arrMemory[i][0] = i;
+    for (int j = (a.id-1)*chunkSize; j < a.col && j < (a.id-1)*chunkSize+chunkSize; j++)
+        arrMemory[j][j] = j;
+
+    //upper triangle
+    for(int i = 2; i < a.col; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                arrMemory[i][j] = arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-2][j-1], min(arrMemory[i-1][j-1], arrMemory[i-1][j]));
+        }
+    }
+
+    //middle
+    for(int i = a.col; i < a.row; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                arrMemory[i][j] = arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-1][j], min(arrMemory[i-1][j-1], arrMemory[i-2][j-1]));
+        }
+    }
+
+    bar.arrive_and_wait();
+    for(int j = (a.id-1)*chunkSize; j < a.col - 1 && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        if(a.s1[a.row-j-2] == a.s2[j])
+            arrMemory[a.row][j] = arrMemory[a.row-2][j];
+        else
+            arrMemory[a.row][j] = 1 + min(arrMemory[a.row-2][j], min(arrMemory[a.row-1][j+1], arrMemory[a.row-1][j]));
+    }
+    
+
+    //lower triangle
+    for(int i = a.row+1; i < newRow; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize; j < newRow - i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
+                arrMemory[i][j] = arrMemory[i-2][j+1];
+            else
+                arrMemory[i][j] = 1 + min(arrMemory[i-2][j+1], min(arrMemory[i-1][j+1], arrMemory[i-1][j]));
+        }
+    }
+}
+
 //memory optimization + parallelization
 int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, int row, int column) {
     int newRow = row + column - 1;
+
+    auto start = high_resolution_clock::now();
 
     //allocate
     arrMemory = new unsigned short int*[newRow];
@@ -411,6 +417,14 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
     for (int i = 0; i < newRow; i++)
         for (int j = 0; j < column; j++) 
             arrMemory[i][j] = 0;
+
+
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    cout << "\nAllocation: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
 
     int n_threads = n_thr;
 
@@ -441,6 +455,11 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
             cout<<arr[i][j]<<" ";
         cout<<"\n";
     }*/
+
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Calculation: " << duration.count() << "\n";
 
     return arrMemory[newRow-1][0]; 
 }
