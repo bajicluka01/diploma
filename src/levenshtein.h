@@ -404,19 +404,18 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
 
     //allocate
     arrMemory = new unsigned short int*[newRow];
-    /*for (int i = 0; i < newRow; i++)
+
+    //still needs to be checked for edge cases and whatnot
+    for (int i = 0; i < newRow; i++) 
         if(i < row)
             arrMemory[i] = new unsigned short int[i+1];
         else
-            arrMemory[i] = new unsigned short int[row + column - i - 1];*/
-
-    for (int i = 0; i < newRow; i++) 
-        arrMemory[i] = new unsigned short int[column];
+            arrMemory[i] = new unsigned short int[row + column - i - 1];
         
     //initialize zeros
-    for (int i = 0; i < newRow; i++)
-        for (int j = 0; j < column; j++) 
-            arrMemory[i][j] = 0;
+    //for (int i = 0; i < newRow; i++)
+    //    for (int j = 0; j < column; j++) 
+    //        arrMemory[i][j] = 0;
 
 
     auto finish = high_resolution_clock::now();
