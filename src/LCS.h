@@ -147,7 +147,7 @@ int backward_LCS_space_optimization (string str1, string str2, int row, int colu
     return current[0];
 }
 
-//anti-diagonal parallelization
+//anti-diagonal approach
 int diagonal_LCS (string str1, string str2, int row, int column) {
 
     //allocate
@@ -194,8 +194,275 @@ int diagonal_LCS (string str1, string str2, int row, int column) {
 
 }
 
-//anti-diagonal parallelization
+void diagonal_LCS_thread (diag& a) {
+    int i = 0;
+    int j = 0;
+
+    //iterating through diagonals
+    while(i <= a.row-1 && j <= a.col-1) {
+
+        int current_elements = min(j, a.row-i-1);
+
+        for (int k = a.id-1; k <= current_elements; k+=a.n_total-1) {
+            int aa = i + k;
+            int b = j - k;
+
+            if (aa == 0 || b == 0)
+                arr[aa][b] = 0;
+            else if (a.s1[aa-1] == a.s2[b-1])
+                arr[aa][b] = 1 + arr[aa-1][b-1];
+            else
+                arr[aa][b] = max (arr[aa-1][b], arr[aa][b-1]);
+        }
+        
+        if(j >= (a.col-1)) {
+            j = a.col - 2;
+            i++;
+        }
+        else
+            j++;
+
+        //wait for all threads to finish woring on current diagonal
+        bar.arrive_and_wait();
+
+    }
+}
+
+//anti-diagonal approach with parallelization
 int diagonal_LCS_parallel (string str1, string str2, int row, int column) {
+    
+    //allocate
+    arr = new unsigned short int*[row];
+    for (int i = 0; i < row; i++)
+        arr[i] = new unsigned short int[column];
+        
+    int n_threads = n_thr;
+
+    thread threads[n_threads];
+    diag diag_structs[n_threads];
+
+    //bar = barrier(n_threads);
+
+    for(int i = 0; i < n_threads; i++) {
+
+        diag_structs[i].s1 = str1;
+        diag_structs[i].s2 = str2;
+        diag_structs[i].row = row;
+        diag_structs[i].col = column;
+        diag_structs[i].id = i+1;
+        diag_structs[i].n_total = n_threads;
+
+        threads[i] = thread(diagonal_LCS_thread, ref(diag_structs[i]));
+        
+    }
+
+    for(int i = 0; i < n_threads; i++) 
+        threads[i].join();
+
+    /*cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }*/
+
+    return arr[row-1][column-1];
+
+}
+
+//memory optimization: diagonals are now represented as rows, so that we only need to access previous two rows in the memory, as opposed to every row
+int diagonal_LCS_memory_optimization(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    //allocate
+    arrMemory = new unsigned short int*[newRow];
+    for (int i = 0; i < newRow; i++)
+        if(i < row)
+            arrMemory[i] = new unsigned short int[i+1];
+        else
+            arrMemory[i] = new unsigned short int[row + column - i - 1];
+
+    //for (int i = 0; i < newRow; i++) 
+    //    arrMemory[i] = new unsigned short int[column];
+        
+    //initialize zeros
+    //for (int i = 0; i < newRow; i++)
+    //    for (int j = 0; j < column; j++) 
+    //        arrMemory[i][j] = 0;
+
+    //first row and column (row becomes a diagonal)
+    for (int i = 0; i < row; i++)
+        arrMemory[i][0] = 0;
+    for (int j = 1; j < column; j++)
+        arrMemory[j][j] = 0;
+
+    //upper triangle
+    for(int i = 2; i < column; i++) {
+        for(int j = 1; j < i; j++) {
+            if(str1[i-j-1] == str2[j-1])
+                arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = max(arrMemory[i-1][j-1], arrMemory[i-1][j]);
+        }
+    }
+
+    //middle
+    for(int i = column; i < row; i++) {
+        for(int j = 1; j < column; j++) {
+            if(str1[i-j-1] == str2[j-1])
+                arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = max(arrMemory[i-1][j], arrMemory[i-1][j-1]);
+        }
+    }
+
+
+    for(int j = 0; j < column - 1; j++) {
+        if(str1[row-j-2] == str2[j])
+            arrMemory[row][j] = 1 + arrMemory[row-2][j];
+        else
+            arrMemory[row][j] = max(arrMemory[row-1][j+1], arrMemory[row-1][j]);
+    }
+    
+
+    //lower triangle
+    for(int i = row+1; i < newRow; i++) {
+        for(int j = 0; j < newRow - i; j++) {
+            if(str1[row-j-2] == str2[j+i-row])
+                arrMemory[i][j] = 1 + arrMemory[i-2][j+1];
+            else
+                arrMemory[i][j] = max(arrMemory[i-1][j+1], arrMemory[i-1][j]);
+        }
+    }
+
+    return arrMemory[newRow-1][0]; 
+}
+
+void diagonal_LCS_memory_optimization_thread (diag& a) {
+    int newRow = a.row + a.col - 1;
+
+    int chunkSize = ceil((double)(a.row)/a.n_total);
+
+    //cout<<"\n"<<(a.id-1)*chunkSize<<" "<<(a.id-1)*chunkSize+chunkSize<<"\n";
+
+    //first row and column (row actually becomes a diagonal, because we tilt the array by 45degrees)
+    for (int i = (a.id-1)*chunkSize; i < a.row && i < (a.id-1)*chunkSize+chunkSize; i++)
+        arrMemory[i][0] = 0;
+    for (int j = (a.id-1)*chunkSize; j < a.col && j < (a.id-1)*chunkSize+chunkSize; j++)
+        arrMemory[j][j] = 0;
+
+    //upper triangle
+    for(int i = 2; i < a.col; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = max(arrMemory[i-1][j-1], arrMemory[i-1][j]);
+        }
+    }
+
+    //middle
+    for(int i = a.col; i < a.row; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
+            else
+                arrMemory[i][j] = max(arrMemory[i-1][j], arrMemory[i-1][j-1]);
+        }
+    }
+
+    bar.arrive_and_wait();
+    for(int j = (a.id-1)*chunkSize; j < a.col - 1 && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        if(a.s1[a.row-j-2] == a.s2[j])
+            arrMemory[a.row][j] = 1 + arrMemory[a.row-2][j];
+        else
+            arrMemory[a.row][j] = max(arrMemory[a.row-1][j+1], arrMemory[a.row-1][j]);
+    }
+    
+
+    //lower triangle
+    for(int i = a.row+1; i < newRow; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize; j < newRow - i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
+                arrMemory[i][j] = 1 + arrMemory[i-2][j+1];
+            else
+                arrMemory[i][j] = max(arrMemory[i-1][j+1], arrMemory[i-1][j]);
+        }
+    }
+}
+
+//memory optimization + parallelization
+int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    auto start = high_resolution_clock::now();
+
+    //allocate
+    arrMemory = new unsigned short int*[newRow];
+
+    //still needs to be checked for edge cases and whatnot
+    for (int i = 0; i < newRow; i++) 
+        if(i < row)
+            arrMemory[i] = new unsigned short int[i+1];
+        else
+            arrMemory[i] = new unsigned short int[row + column - i - 1];
+        
+    //initialize zeros
+    //for (int i = 0; i < newRow; i++)
+    //    for (int j = 0; j < column; j++) 
+    //        arrMemory[i][j] = 0;
+
+
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    cout << "\nAllocation: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+
+    int n_threads = n_thr;
+
+    thread threads[n_threads];
+    diag diag_structs[n_threads];
+
+    //bar = barrier(n_threads);
+
+    for(int i = 0; i < n_threads; i++) {
+
+        diag_structs[i].s1 = str1;
+        diag_structs[i].s2 = str2;
+        diag_structs[i].row = row;
+        diag_structs[i].col = column;
+        diag_structs[i].id = i+1;
+        diag_structs[i].n_total = n_threads;
+
+        threads[i] = thread(diagonal_LCS_memory_optimization_thread, ref(diag_structs[i]));
+        
+    }
+
+    for(int i = 0; i < n_threads; i++) 
+        threads[i].join();
+
+    /*cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }*/
+
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Calculation: " << duration.count() << "\n";
+
+    return arrMemory[newRow-1][0]; 
+}
+
+//diagonal parallelization using the OpenMP library
+int diagonal_LCS_parallel_openmp (string str1, string str2, int row, int column) {
 
     //allocate
     arr = new unsigned short int*[row];
@@ -220,7 +487,7 @@ int diagonal_LCS_parallel (string str1, string str2, int row, int column) {
         //#pragma omp parallel for
         //#pragma omp target teams distribute parallel for
         //#pragma omp target teams loop
-        #pragma omp parallel for num_threads (6)
+        #pragma omp parallel for num_threads (n_thr)
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
             int b = j - k;

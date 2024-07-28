@@ -134,7 +134,7 @@ int backward_levenshtein_space_optimization (string str1, string str2, int row, 
     return current[0];
 }
 
-//anti-diagonal approach with parallelization
+//anti-diagonal approach
 int diagonal_levenshtein (string str1, string str2, int row, int column) {
     
     //allocate
@@ -191,7 +191,7 @@ int diagonal_levenshtein (string str1, string str2, int row, int column) {
 
 }
 
-void diagonal_thread (diag& a) {
+void diagonal_levenshtein_thread (diag& a) {
     int i = 0;
     int j = 0;
 
@@ -254,7 +254,7 @@ int diagonal_levenshtein_parallel (string str1, string str2, int row, int column
         diag_structs[i].id = i+1;
         diag_structs[i].n_total = n_threads;
 
-        threads[i] = thread(diagonal_thread, ref(diag_structs[i]));
+        threads[i] = thread(diagonal_levenshtein_thread, ref(diag_structs[i]));
         
     }
 
@@ -278,19 +278,19 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
 
     //allocate
     arrMemory = new unsigned short int*[newRow];
-    /*for (int i = 0; i < newRow; i++)
+    for (int i = 0; i < newRow; i++)
         if(i < row)
             arrMemory[i] = new unsigned short int[i+1];
         else
-            arrMemory[i] = new unsigned short int[row + column - i - 1];*/
+            arrMemory[i] = new unsigned short int[row + column - i - 1];
 
-    for (int i = 0; i < newRow; i++) 
-        arrMemory[i] = new unsigned short int[column];
+    //for (int i = 0; i < newRow; i++) 
+    //    arrMemory[i] = new unsigned short int[column];
         
     //initialize zeros
-    for (int i = 0; i < newRow; i++)
-        for (int j = 0; j < column; j++) 
-            arrMemory[i][j] = 0;
+    //for (int i = 0; i < newRow; i++)
+    //    for (int j = 0; j < column; j++) 
+    //        arrMemory[i][j] = 0;
 
     //first row and column (row becomes a diagonal)
     for (int i = 0; i < row; i++)
@@ -340,7 +340,7 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
     return arrMemory[newRow-1][0]; 
 }
 
-void diagonal_thread_memory_optimization (diag& a) {
+void diagonal_levenshtein_memory_optimization_thread (diag& a) {
     int newRow = a.row + a.col - 1;
 
     int chunkSize = ceil((double)(a.row)/a.n_total);
@@ -441,7 +441,7 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
         diag_structs[i].id = i+1;
         diag_structs[i].n_total = n_threads;
 
-        threads[i] = thread(diagonal_thread_memory_optimization, ref(diag_structs[i]));
+        threads[i] = thread(diagonal_levenshtein_memory_optimization_thread, ref(diag_structs[i]));
         
     }
 
@@ -462,15 +462,6 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
 
     return arrMemory[newRow-1][0]; 
 }
-
-
-
-
-
-
-
-
-
 
 //diagonal parallelization using the OpenMP library
 int diagonal_levenshtein_parallel_openmp (string str1, string str2, int row, int column) {
@@ -493,7 +484,7 @@ int diagonal_levenshtein_parallel_openmp (string str1, string str2, int row, int
         int antidiag = min(j, row-i-1);
 
         //parallell calculations of elements on current diagonal
-        #pragma omp parallel for num_threads (6)
+        #pragma omp parallel for num_threads (n_thr)
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
             int b = j - k;

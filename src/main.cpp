@@ -197,7 +197,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 30005;
+    int strLen = 20005;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -213,21 +213,28 @@ int main (int argc, char* argv[]) {
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein_parallel(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << diagonal_LCS(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_optimization(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS_parallel(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_optimization_parallel(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS_memory_optimization(str1, str2, row, column) << "\n";
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS_memory_optimization_parallel(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
