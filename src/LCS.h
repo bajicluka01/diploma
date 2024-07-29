@@ -23,7 +23,8 @@ struct diag {
     int n_total;
 };
 
-int n_thr = 8;
+//TODO fix bug: infinite loop (?) for n_thr = 1
+int n_thr = 6;
 barrier bar { n_thr };
 
 unsigned short int** arr;
@@ -34,6 +35,13 @@ int* arrBottom;
 
 //for diagonal memory optimization
 unsigned short int** arrMemory; 
+
+//for diagonal space optimization
+int arrDiag;
+
+int* diagTemp1;
+int* diagTemp2;
+int* diagCurrent;
 
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
@@ -459,6 +467,245 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
     cout << "Calculation: " << duration.count() << "\n";
 
     return arrMemory[newRow-1][0]; 
+}
+
+//memory optimization: diagonals are now represented as rows, so that we only need to access previous two rows in the memory, as opposed to every row
+int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    int temp1[column]; 
+    int temp2[column];
+    int current[column];
+
+    //initialize zeros
+    for (int i = 0; i < column; i++) {
+        temp1[i] = 0;
+        temp2[i] = 0;
+        current[i] = 0;
+    }
+
+    //upper triangle
+    for(int i = 2; i < column; i++) {
+
+        temp1[0] = 0;
+        temp1[i-2] = 0;
+        temp2[0] = 0;
+        temp2[i-1] = 0;
+        current[0] = 0;
+        current[i] = 0;
+
+        for(int j = 1; j < i; j++) {
+            if(str1[i-j-1] == str2[j-1])
+                current[j] = 1 + temp1[j-1];
+            else
+                current[j] = max(temp2[j-1], temp2[j]);
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    }
+
+    //middle
+    for(int i = column; i < row; i++) {
+        for(int j = 1; j < column; j++) {
+            if(str1[i-j-1] == str2[j-1])
+                current[j] = 1 + temp1[j-1];
+            else
+                current[j] = max(temp2[j], temp2[j-1]);
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    }
+
+
+    for(int j = 0; j < column - 1; j++) {
+        if(str1[row-j-2] == str2[j])
+            current[j] = 1 + temp1[j];
+        else
+            current[j] = max(temp2[j+1], temp2[j]);
+    }
+    //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    
+
+    //lower triangle
+    for(int i = row+1; i < newRow; i++) {
+        for(int j = 0; j < newRow - i; j++) {
+            if(str1[row-j-2] == str2[j+i-row])
+                current[j] = 1 + temp1[j+1];
+            else
+                current[j] = max(temp2[j+1], temp2[j]);
+        }
+        //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    }
+
+    return current[0]; 
+}
+
+void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
+    int newRow = a.row + a.col - 1;
+
+    int chunkSize = ceil((double)(a.row)/a.n_total);
+
+    //upper triangle
+    for(int i = 2; i < a.col; i++) {
+
+        //might not even be necessary here, TODO: verify
+        if(a.id == 1) {
+            diagTemp1[0] = 0;
+            diagTemp1[i-2] = 0;
+            diagTemp2[0] = 0;
+            diagTemp2[i-1] = 0;
+            diagCurrent[0] = 0;
+            diagCurrent[i] = 0;
+            
+        }
+
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize+1; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                diagCurrent[j] = 1 + diagTemp1[j-1];
+            else
+                diagCurrent[j] = max(diagTemp2[j-1], diagTemp2[j]);
+        }
+        bar.arrive_and_wait();
+        //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                diagTemp1[j] = diagTemp2[j];
+                diagTemp2[j] = diagCurrent[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    }
+
+    //middle
+    for(int i = a.col; i < a.row; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize+1; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                diagCurrent[j] = 1 + diagTemp1[j-1];
+            else
+                diagCurrent[j] = max(diagTemp2[j], diagTemp2[j-1]);
+        }
+        bar.arrive_and_wait();
+        //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                diagTemp1[j] = diagTemp2[j];
+                diagTemp2[j] = diagCurrent[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    }
+
+    bar.arrive_and_wait();
+    for(int j = (a.id-1)*chunkSize; j < a.col - 1 && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        if(a.s1[a.row-j-2] == a.s2[j])
+            diagCurrent[j] = 1 + diagTemp1[j];
+        else
+            diagCurrent[j] = max(diagTemp2[j+1], diagTemp2[j]);
+    }
+    bar.arrive_and_wait();
+    //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                diagTemp1[j] = diagTemp2[j];
+                diagTemp2[j] = diagCurrent[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    
+
+    //lower triangle
+    for(int i = a.row+1; i < newRow; i++) {
+        bar.arrive_and_wait();
+        for(int j = (a.id-1)*chunkSize; j < newRow - i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+            if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
+                diagCurrent[j] = 1 + diagTemp1[j+1];
+            else
+                diagCurrent[j] = max(diagTemp2[j+1], diagTemp2[j]);
+        }
+        bar.arrive_and_wait();
+        //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                diagTemp1[j] = diagTemp2[j];
+                diagTemp2[j] = diagCurrent[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    }
+
+
+    bar.arrive_and_wait();
+    arrDiag = diagCurrent[0];
+}
+
+//memory optimization + parallelization
+int diagonal_LCS_memory_and_space_optimization_parallel(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    diagTemp1 = new int[column];
+    diagTemp2 = new int[column];
+    diagCurrent = new int[column];
+
+    for(int i = 0; i < column; i++) {
+        diagTemp1[i] = 0;
+        diagTemp2[i] = 0;
+        diagCurrent[i] = 0;
+    }
+
+    int n_threads = n_thr;
+
+    thread threads[n_threads];
+    diag diag_structs[n_threads];
+
+    //bar = barrier(n_threads);
+
+    for(int i = 0; i < n_threads; i++) {
+
+        diag_structs[i].s1 = str1;
+        diag_structs[i].s2 = str2;
+        diag_structs[i].row = row;
+        diag_structs[i].col = column;
+        diag_structs[i].id = i+1;
+        diag_structs[i].n_total = n_threads;
+
+        threads[i] = thread(diagonal_LCS_memory_and_space_optimization_thread, ref(diag_structs[i]));
+        
+    }
+
+    for(int i = 0; i < n_threads; i++) 
+        threads[i].join();
+
+    return arrDiag; 
 }
 
 //diagonal parallelization using the OpenMP library

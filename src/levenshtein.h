@@ -340,6 +340,103 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
     return arrMemory[newRow-1][0]; 
 }
 
+//memory optimization: diagonals are now represented as rows, so that we only need to access previous two rows in the memory, as opposed to every row
+int diagonal_levenshtein_memory_and_space_optimization(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    int temp1[column]; 
+    int temp2[column];
+    int current[column];
+
+    //initialize zeros
+    for (int i = 0; i < column; i++) {
+        temp1[i] = 0;
+        temp2[i] = 0;
+        current[i] = 0;
+    }
+
+    //upper triangle
+    for (int i = 2; i < column; i++) {
+
+        temp1[0] = i-2;
+        temp1[i-2] = i-2;
+        temp2[0] = i-1;
+        temp2[i-1] = i-1;
+        current[0] = i;
+        current[i] = i;
+       
+
+        for(int j = 1; j < i; j++) {
+            if(str1[i-j-1] == str2[j-1])
+                current[j] = temp1[j-1];
+            else
+                current[j] = 1 + min(temp1[j-1], min(temp2[j-1], temp2[j]));
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    }
+
+    //middle
+    for(int i = column; i < row; i++) {
+        for(int j = 1; j < column; j++) {
+            if(str1[i-j-1] == str2[j-1])
+                current[j] = temp1[j-1];
+            else
+                current[j] = 1 + min(temp2[j], min(temp2[j-1], temp1[j-1]));
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    }
+
+
+    for(int j = 0; j < column - 1; j++) {
+        if(str1[row-j-2] == str2[j])
+            current[j] = temp1[j];
+        else
+            current[j] = 1 + min(temp1[j], min(temp2[j+1], temp2[j]));
+    }
+    //rewrite data
+    for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+    
+
+    //lower triangle
+    for(int i = row+1; i < newRow; i++) {
+        for(int j = 0; j < newRow - i; j++) {
+            if(str1[row-j-2] == str2[j+i-row])
+                current[j] = temp1[j+1];
+            else
+                current[j] = 1 + min(temp1[j+1], min(temp2[j+1], temp2[j]));
+        }
+
+        //rewrite data
+        for(int j = 0; j < column; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+           // cout<<"\n";
+    }
+
+    return current[0]; 
+}
+
 void diagonal_levenshtein_memory_optimization_thread (diag& a) {
     int newRow = a.row + a.col - 1;
 
@@ -461,6 +558,164 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
     cout << "Calculation: " << duration.count() << "\n";
 
     return arrMemory[newRow-1][0]; 
+}
+
+void diagonal_levenshtein_memory_and_space_optimization_thread (diag& a) {
+    int newRow = a.row + a.col - 1;
+    int chunkSize = ceil((double)(a.row)/a.n_total);
+    int startIndex = a.id * chunkSize;
+
+    int temp1[a.col]; 
+    int temp2[a.col];
+    int current[a.col];
+
+    //initialize zeros
+    if(a.id == 1)
+        for (int i = 0; i < a.col; i++) {
+            temp1[i] = 0;
+            temp2[i] = 0;
+            current[i] = 0;
+        }
+    bar.arrive_and_wait();
+
+    //upper triangle
+    for(int i = 2; i < a.col; i++) {
+
+        if(a.id == 1) {
+            temp1[0] = i-2;
+            temp1[i-2] = i-2;
+            temp2[0] = i-1;
+            temp2[i-1] = i-1;
+            current[0] = i;
+            current[i] = i;
+            
+        }
+
+        bar.arrive_and_wait();
+
+        for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                current[j] = temp1[j-1];
+            else
+                current[j] = 1 + min(temp1[j-1], min(temp2[j-1], temp2[j]));
+        }
+
+        bar.arrive_and_wait();
+        //rewrite data
+        if(a.id == 1) {
+            //cout<<"ID1: ";
+            for(int j = 0; j < a.col; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    }
+
+    //middle
+    for(int i = a.col; i < a.row; i++) {
+        bar.arrive_and_wait();
+        for(int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++) {
+            if(a.s1[i-j-1] == a.s2[j-1])
+                current[j] = temp1[j-1];
+            else
+                current[j] = 1 + min(temp2[j], min(temp2[j-1], temp1[j-1]));
+        }
+
+        bar.arrive_and_wait();
+        //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    }
+
+    bar.arrive_and_wait();
+    for(int j = startIndex; j < a.col - 1 && j < startIndex+chunkSize; j++) {
+        if(a.s1[a.row-j-2] == a.s2[j])
+            current[j] = temp1[j];
+        else
+            current[j] = 1 + min(temp1[j], min(temp2[j+1], temp2[j]));
+    }
+    bar.arrive_and_wait();
+    //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    
+
+    //lower triangle
+    for(int i = a.row+1; i < newRow; i++) {
+        bar.arrive_and_wait();
+        for(int j = startIndex; j < newRow - i && j < startIndex+chunkSize; j++) {
+            if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
+                current[j] = temp1[j+1];
+            else
+                current[j] = 1 + min(temp1[j+1], min(temp2[j+1], temp2[j]));
+        }
+
+        bar.arrive_and_wait();
+        //rewrite data
+        if(a.id == 1) {
+            for(int j = 0; j < a.col; j++) {
+                temp1[j] = temp2[j];
+                temp2[j] = current[j];
+                //cout<<current[j]<<" ";
+            }
+            //cout<<"\n";
+        }
+    }
+
+    bar.arrive_and_wait();
+    arrDiag = current[0];
+
+}
+
+//memory optimization + parallelization
+int diagonal_levenshtein_memory_and_space_optimization_parallel(string str1, string str2, int row, int column) {
+    int newRow = row + column - 1;
+
+    int n_threads = n_thr;
+
+    thread threads[n_threads];
+    diag diag_structs[n_threads];
+
+    //bar = barrier(n_threads);
+
+    for(int i = 0; i < n_threads; i++) {
+
+        diag_structs[i].s1 = str1;
+        diag_structs[i].s2 = str2;
+        diag_structs[i].row = row;
+        diag_structs[i].col = column;
+        diag_structs[i].id = i;
+        diag_structs[i].n_total = n_threads;
+
+        threads[i] = thread(diagonal_levenshtein_memory_and_space_optimization_thread, ref(diag_structs[i]));
+        
+    }
+
+    for(int i = 0; i < n_threads; i++) 
+        threads[i].join();
+
+    /*cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) 
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }*/
+
+    return arrDiag; 
 }
 
 //diagonal parallelization using the OpenMP library

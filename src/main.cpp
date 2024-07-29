@@ -197,7 +197,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 20005;
+    int strLen = 10000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -234,7 +234,14 @@ int main (int argc, char* argv[]) {
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS_memory_optimization_parallel(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS_memory_and_space_optimization(str1, str2, row, column) << "\n";
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+    cout << "Forward-backward Levenshtein solution: " << diagonal_LCS_memory_and_space_optimization_parallel(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
