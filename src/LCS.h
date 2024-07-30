@@ -573,7 +573,7 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
     for(int i = 2; i < a.col; i++) {
 
         //might not even be necessary here, TODO: verify
-        if(a.id == 1) {
+        /*if(a.id == 1) {
             diagTemp1[0] = 0;
             diagTemp1[i-2] = 0;
             diagTemp2[0] = 0;
@@ -581,10 +581,10 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
             diagCurrent[0] = 0;
             diagCurrent[i] = 0;
             
-        }
+        }*/
 
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize+1; j++) {
+        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 diagCurrent[j] = 1 + diagTemp1[j-1];
             else
@@ -605,7 +605,7 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
     //middle
     for(int i = a.col; i < a.row; i++) {
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize+1; j++) {
+        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 diagCurrent[j] = 1 + diagTemp1[j-1];
             else
