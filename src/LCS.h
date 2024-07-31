@@ -24,7 +24,7 @@ struct diag {
 };
 
 //TODO fix bug: infinite loop (?) for n_thr = 1
-int n_thr = 6;
+int n_thr = 8;
 barrier bar { n_thr };
 
 unsigned short int** arr;

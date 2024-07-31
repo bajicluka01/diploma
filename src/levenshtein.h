@@ -497,7 +497,7 @@ void diagonal_levenshtein_memory_optimization_thread (diag& a) {
 int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, int row, int column) {
     int newRow = row + column - 1;
 
-    auto start = high_resolution_clock::now();
+    //auto start = high_resolution_clock::now();
 
     //allocate
     arrMemory = new unsigned short int*[newRow];
@@ -515,12 +515,12 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
     //        arrMemory[i][j] = 0;
 
 
-    auto finish = high_resolution_clock::now();
+    /*auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "\nAllocation: " << duration.count() << "\n";
 
-    start = high_resolution_clock::now();
+    start = high_resolution_clock::now();*/
 
     int n_threads = n_thr;
 
@@ -552,10 +552,10 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
         cout<<"\n";
     }*/
 
-    finish = high_resolution_clock::now();
+    /*finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
-    cout << "Calculation: " << duration.count() << "\n";
+    cout << "Calculation: " << duration.count() << "\n";*/
 
     return arrMemory[newRow-1][0]; 
 }
