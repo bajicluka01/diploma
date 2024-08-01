@@ -567,7 +567,8 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
 void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
     int newRow = a.row + a.col - 1;
 
-    int chunkSize = ceil((double)(a.row)/a.n_total);
+    int chunkSize = ceil((double)(a.col)/a.n_total);
+    int startIndex = a.id * chunkSize;
 
     //upper triangle
     for(int i = 2; i < a.col; i++) {
@@ -584,7 +585,7 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         }*/
 
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 diagCurrent[j] = 1 + diagTemp1[j-1];
             else
@@ -592,20 +593,16 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         }
         bar.arrive_and_wait();
         //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+            diagTemp1[j] = diagTemp2[j];
+            diagTemp2[j] = diagCurrent[j];
         }
     }
 
     //middle
     for(int i = a.col; i < a.row; i++) {
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        for(int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 diagCurrent[j] = 1 + diagTemp1[j-1];
             else
@@ -613,18 +610,14 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         }
         bar.arrive_and_wait();
         //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+            diagTemp1[j] = diagTemp2[j];
+            diagTemp2[j] = diagCurrent[j];
         }
     }
 
     bar.arrive_and_wait();
-    for(int j = (a.id-1)*chunkSize; j < a.col - 1 && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+    for(int j = startIndex; j < a.col - 1 && j < startIndex+chunkSize; j++) {
         if(a.s1[a.row-j-2] == a.s2[j])
             diagCurrent[j] = 1 + diagTemp1[j];
         else
@@ -632,20 +625,16 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
     }
     bar.arrive_and_wait();
     //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
-        }
+    for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+        diagTemp1[j] = diagTemp2[j];
+        diagTemp2[j] = diagCurrent[j];
+    }
     
 
     //lower triangle
     for(int i = a.row+1; i < newRow; i++) {
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize; j < newRow - i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        for(int j = startIndex; j < newRow - i && j < startIndex+chunkSize; j++) {
             if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
                 diagCurrent[j] = 1 + diagTemp1[j+1];
             else
@@ -653,13 +642,9 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         }
         bar.arrive_and_wait();
         //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+            diagTemp1[j] = diagTemp2[j];
+            diagTemp2[j] = diagCurrent[j];
         }
     }
 

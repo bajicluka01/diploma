@@ -46,6 +46,8 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
             case 16: diagonal_levenshtein_parallel(str1, str2, row, column); break;
             case 17: diagonal_levenshtein_memory_optimization(str1, str2, row, column); break;
             case 18: diagonal_levenshtein_memory_optimization_parallel(str1, str2, row, column); break;
+            case 19: diagonal_levenshtein_memory_and_space_optimization(str1, str2, row, column); break;
+            case 20: diagonal_levenshtein_memory_and_space_optimization_parallel(str1, str2, row, column); break;
             default: return 0;
         }
 
@@ -199,7 +201,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 60000;
+    int strLen = 150000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -261,7 +263,7 @@ int main (int argc, char* argv[]) {
     //cout << "Forward-backward LCS space optimization: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
 
     //cout << "Diagonal Levenshtein: "<< avgExecutionTime(17, n_iter, str1, str2) <<"\n";
-    cout << "Diagonal Levenshtein Parallel: "<< avgExecutionTime(18, n_iter, str1, str2) <<"\n";
+    cout << "Diagonal Levenshtein Parallel: "<< avgExecutionTime(20, n_iter, str1, str2) <<"\n";
     
     //cout << "Forward Levenshtein: "<< avgExecutionTime(8, n_iter, str1, str2) <<"\n";
     //cout << "Forward Levenshtein space optimization: "<< avgExecutionTime(9, n_iter, str1, str2) <<"\n";

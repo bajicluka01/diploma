@@ -562,7 +562,7 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
 
 void diagonal_levenshtein_memory_and_space_optimization_thread (diag& a) {
     int newRow = a.row + a.col - 1;
-    int chunkSize = ceil((double)(a.row)/a.n_total);
+    int chunkSize = ceil((double)(a.col)/a.n_total);
     int startIndex = a.id * chunkSize;
 
     //upper triangle
@@ -589,14 +589,9 @@ void diagonal_levenshtein_memory_and_space_optimization_thread (diag& a) {
 
         bar.arrive_and_wait();
         //rewrite data
-        if(a.id == 1) {
-            //cout<<"ID1: ";
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+            diagTemp1[j] = diagTemp2[j];
+            diagTemp2[j] = diagCurrent[j];
         }
     }
 
@@ -612,13 +607,9 @@ void diagonal_levenshtein_memory_and_space_optimization_thread (diag& a) {
 
         bar.arrive_and_wait();
         //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+            diagTemp1[j] = diagTemp2[j];
+            diagTemp2[j] = diagCurrent[j];
         }
     }
 
@@ -631,14 +622,10 @@ void diagonal_levenshtein_memory_and_space_optimization_thread (diag& a) {
     }
     bar.arrive_and_wait();
     //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
-        }
+    for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+        diagTemp1[j] = diagTemp2[j];
+        diagTemp2[j] = diagCurrent[j];
+    }
     
 
     //lower triangle
@@ -653,13 +640,9 @@ void diagonal_levenshtein_memory_and_space_optimization_thread (diag& a) {
 
         bar.arrive_and_wait();
         //rewrite data
-        if(a.id == 1) {
-            for(int j = 0; j < a.col; j++) {
-                diagTemp1[j] = diagTemp2[j];
-                diagTemp2[j] = diagCurrent[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
+            diagTemp1[j] = diagTemp2[j];
+            diagTemp2[j] = diagCurrent[j];
         }
     }
 
