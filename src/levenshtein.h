@@ -344,39 +344,43 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
 int diagonal_levenshtein_memory_and_space_optimization(string str1, string str2, int row, int column) {
     int newRow = row + column - 1;
 
-    int temp1[column]; 
-    int temp2[column];
-    int current[column];
+    //int temp1[column]; 
+    //int temp2[column];
+    //int current[column];
+
+    temp1MS = new int[column];
+    temp2MS = new int[column];
+    currentMS = new int[column];
 
     //initialize zeros
     for (int i = 0; i < column; i++) {
-        temp1[i] = 0;
-        temp2[i] = 0;
-        current[i] = 0;
+        temp1MS[i] = 0;
+        temp2MS[i] = 0;
+        currentMS[i] = 0;
     }
 
     //upper triangle
     for (int i = 2; i < column; i++) {
 
-        temp1[0] = i-2;
-        temp1[i-2] = i-2;
-        temp2[0] = i-1;
-        temp2[i-1] = i-1;
-        current[0] = i;
-        current[i] = i;
+        temp1MS[0] = i-2;
+        temp1MS[i-2] = i-2;
+        temp2MS[0] = i-1;
+        temp2MS[i-1] = i-1;
+        currentMS[0] = i;
+        currentMS[i] = i;
        
 
         for(int j = 1; j < i; j++) {
             if(str1[i-j-1] == str2[j-1])
-                current[j] = temp1[j-1];
+                currentMS[j] = temp1MS[j-1];
             else
-                current[j] = 1 + min(temp1[j-1], min(temp2[j-1], temp2[j]));
+                currentMS[j] = 1 + min(temp1MS[j-1], min(temp2MS[j-1], temp2MS[j]));
         }
 
         //rewrite data
         for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
+                temp1MS[j] = temp2MS[j];
+                temp2MS[j] = currentMS[j];
                 //cout<<current[j]<<" ";
             }
             //cout<<"\n";
@@ -386,15 +390,15 @@ int diagonal_levenshtein_memory_and_space_optimization(string str1, string str2,
     for(int i = column; i < row; i++) {
         for(int j = 1; j < column; j++) {
             if(str1[i-j-1] == str2[j-1])
-                current[j] = temp1[j-1];
+                currentMS[j] = temp1MS[j-1];
             else
-                current[j] = 1 + min(temp2[j], min(temp2[j-1], temp1[j-1]));
+                currentMS[j] = 1 + min(temp2MS[j], min(temp2MS[j-1], temp1MS[j-1]));
         }
 
         //rewrite data
         for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
+                temp1MS[j] = temp2MS[j];
+                temp2MS[j] = currentMS[j];
                 //cout<<current[j]<<" ";
             }
             //cout<<"\n";
@@ -403,38 +407,38 @@ int diagonal_levenshtein_memory_and_space_optimization(string str1, string str2,
 
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
-            current[j] = temp1[j];
+            currentMS[j] = temp1MS[j];
         else
-            current[j] = 1 + min(temp1[j], min(temp2[j+1], temp2[j]));
+            currentMS[j] = 1 + min(temp1MS[j], min(temp2MS[j+1], temp2MS[j]));
     }
     //rewrite data
     for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+        temp1MS[j] = temp2MS[j];
+        temp2MS[j] = currentMS[j];
+        //cout<<current[j]<<" ";
+    }
+    //cout<<"\n";
     
 
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
         for(int j = 0; j < newRow - i; j++) {
             if(str1[row-j-2] == str2[j+i-row])
-                current[j] = temp1[j+1];
+                currentMS[j] = temp1MS[j+1];
             else
-                current[j] = 1 + min(temp1[j+1], min(temp2[j+1], temp2[j]));
+                currentMS[j] = 1 + min(temp1MS[j+1], min(temp2MS[j+1], temp2MS[j]));
         }
 
         //rewrite data
         for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
+                temp1MS[j] = temp2MS[j];
+                temp2MS[j] = currentMS[j];
                 //cout<<current[j]<<" ";
             }
            // cout<<"\n";
     }
 
-    return current[0]; 
+    return currentMS[0]; 
 }
 
 void diagonal_levenshtein_memory_optimization_thread (diag& a) {

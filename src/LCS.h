@@ -43,6 +43,11 @@ int* diagTemp1;
 int* diagTemp2;
 int* diagCurrent;
 
+//these variables could've been local, but for some reason I get segmentation fault for strLen = cca. 200000 or higher, making them global seems to fix the problem
+int* temp1MS;
+int* temp2MS;
+int* currentMS;
+
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
 

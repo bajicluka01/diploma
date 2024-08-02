@@ -11,10 +11,10 @@ diagonalLevenshteinMemory =         [0.239417, 0.943647, 2.102897, 3.743161, 5.9
 diagonalLevenshteinMemoryParallel = [0.831118, 1.856795, 2.899954, 3.889169, 5.475029, 7.340391] #8 threads
 
 forwardLevenshteinSpace =          [26.395551, 58.962033, 105.193894, 167.749272]
-backwardLevenshteinSpace =         [24.271178, 54.160883, 95.668674, 149.694305]
-fbLevenshteinSpace =               [13.435573, 30.358760, 53.150599, 83.564126]
-diagonalLevenshteinSpace =         [21.937390, 47.853701, 0, 0]
-diagonalLevenshteinSpaceParallel = [28.555087, 55.079079, 0, 134.133992] #8 threads
+backwardLevenshteinSpace =         [24.271178, 54.160883, 95.668674,  149.694305]
+fbLevenshteinSpace =               [13.435573, 30.358760, 53.150599,  83.564126]
+diagonalLevenshteinSpace =         [12.954458, 26.667030, 48.488514,  75.765589]
+diagonalLevenshteinSpaceParallel = [12.361829, 22.076464, 38.742937,  50.713466] #8 threads
 
 
 forwardLCS =  [0.319667, 1.429334, 3.211196, 6.018281, 10.109169, 12.394485]
