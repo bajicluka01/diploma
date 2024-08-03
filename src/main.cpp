@@ -17,7 +17,7 @@ string randomStringGenerator (int len, int seed) {
     return str;
 }
 
-//measure average execution time over n iterations
+//measures average execution time of a function over n iterations
 long long avgExecutionTime (int function, int n, string str1, string str2) {
     microseconds total = microseconds::zero();
 
@@ -106,17 +106,10 @@ void testLevenshteinForValues(int v1, int v2) {
             }
             if (tmp1 != tmp6) {
                 cout<<"Error: forward-backward ("<<i<<" "<<j<<")\n";
-                //return;
+                return;
             }
             if (tmp1 != tmp7) {
                 cout<<"Error: forward-backward space optimization ("<<i<<" "<<j<<")\n";
-                /*for(int i = 0; i < column; i++) 
-                    cout<<arrTop[i]<<" ";
-                cout<<"\n";
-                for(int i = 0; i < column; i++) 
-                    cout<<arrBottom[i]<<" ";
-                cout<<"\n";*/
-                //return;
             }
             if (tmp1 != tmp8) {
                 cout<<"Error: diagonal test ("<<i<<" "<<j<<")\n";
@@ -124,15 +117,6 @@ void testLevenshteinForValues(int v1, int v2) {
             }
             if (tmp1 != tmp9) {
                 cout<<"Error: diagonal memory optimization ("<<i<<" "<<j<<")\n";
-
-                /*for(int i = 0; i < row + column - 1; i++) {
-                    for(int j = 0; j < column; j++) {
-                        if(i < row && j > i)
-                            continue;
-                        cout<<arrMemory[i][j]<<" ";
-                    }
-                    cout<<"\n";
-                }*/
                 return;
             }
         }
@@ -182,13 +166,6 @@ void testLCSforValues(int v1, int v2) {
             }
             if (tmp1 != tmp7) {
                 cout<<"Error: forward-backward space optimization ("<<i<<" "<<j<<")\n";
-                for(int i = 0; i < column; i++) 
-                    cout<<arrTop[i]<<" ";
-                cout<<"\n";
-                for(int i = 0; i < column; i++) 
-                    cout<<arrBottom[i]<<" ";
-                cout<<"\n";
-                
                 return;
             }
         }
@@ -201,7 +178,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 100000;
+    int strLen = 10000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -230,27 +207,6 @@ int main (int argc, char* argv[]) {
 
     cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
 
-    /*start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_optimization(str1, str2, row, column) << "\n";
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
-
-    start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_and_space_optimization(str1, str2, row, column) << "\n";
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";
-
-    start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_and_space_optimization_parallel(str1, str2, row, column) << "\n";
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-    cout << "Forward-backward Levenshtein duration: " << duration.count() << "\n";*/
-
     int n_iter = 1;
 
     //time testing
@@ -272,37 +228,6 @@ int main (int argc, char* argv[]) {
     //cout << "Diagonal Levenshtein: "<< avgExecutionTime(12, n_iter, str1, str2) <<"\n";
     //cout << "Forward-backward Levenshtein: "<< avgExecutionTime(13, n_iter, str1, str2) <<"\n";
     //cout << "Forward-backward Levenshtein space optimization: "<< avgExecutionTime(14, n_iter, str1, str2) <<"\n";
-
-
-    
-    //test if all algorithms return same values
-    /*cout<<forward_levenshtein(str1, str2, row, column)<<"\n";
-    cout<<forward_levenshtein_space_optimization(str1, str2, row, column)<<"\n";
-    cout<<backward_levenshtein(str1, str2, row, column)<<"\n";
-    cout<<backward_levenshtein_space_optimization(str1, str2, row, column)<<"\n";
-    cout<<diagonal_levenshtein(str1, str2, row, column)<<"\n";
-    cout<<fb_levenshtein(str1, str2, row, column)<<"\n";
-    cout<<fb_levenshtein_space_optimization(str1, str2, row, column)<<"\n\n";*/
-
-    /*cout<<forward_LCS(str1, str2, row, column)<<"\n";
-    cout<<forward_LCS_space_optimization(str1, str2, row, column)<<"\n";
-    cout<<backward_LCS(str1, str2, row, column)<<"\n";
-    cout<<backward_LCS_space_optimization(str1, str2, row, column)<<"\n";
-    cout<<diagonal_LCS(str1, str2, row, column)<<"\n";
-    cout<<fb_LCS(str1, str2, row, column)<<"\n";
-    cout<<fb_LCS_space_optimization(str1, str2, row, column)<<"\n";*/
-
-
-    
-    //testLCSforValues(100, 25);
-    //cout<<forward_LCS(str1, str2, row, column)<<"\n";
-    //cout<<str1<<"\n"<<str2<<"\n";
-
-    //testLevenshteinForValues(100, 25);
-    //cout<<"\n"<<forward_levenshtein(str1, str2, row, column)<<"\n";
-    //cout<<fb_levenshtein(str1, str2, row, column)<<"\n";
-    //cout<<fb_levenshtein_space_optimization(str1, str2, row, column)<<"\n";
-    //cout<<str1<<" "<<str2;
 
     return 0;
 }

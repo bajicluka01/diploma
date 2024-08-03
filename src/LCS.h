@@ -43,14 +43,13 @@ int* diagTemp1;
 int* diagTemp2;
 int* diagCurrent;
 
-//these variables could've been local, but for some reason I get segmentation fault for strLen = cca. 200000 or higher, making them global seems to fix the problem
+//these variables could've been local, but for some reason I get segmentation fault for strLen = cca. 200000 or higher; making them global seems to fix the problem
 int* temp1MS;
 int* temp2MS;
 int* currentMS;
 
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
-
     //allocate
     arr = new unsigned short int*[row];
     for(int i = 0; i < row; i++)
@@ -75,7 +74,6 @@ int forward_LCS (string str1, string str2, int row, int column) {
 
 //space optimization: we only keep current two rows in memory
 int forward_LCS_space_optimization (string str1, string str2, int row, int column) {
-
     int temp1[column]; 
     int current[column];
 
@@ -86,7 +84,6 @@ int forward_LCS_space_optimization (string str1, string str2, int row, int colum
     }
 
     for(int i = 0; i < row; i++) {
-
         for(int j = 0; j < column; j++) {
             if (i == 0 || j == 0)
                 current[j] = 0;
@@ -131,7 +128,6 @@ int backward_LCS (string str1, string str2, int row, int column) {
 
 //space optimization: we only keep current two rows in memory
 int backward_LCS_space_optimization (string str1, string str2, int row, int column) {
-
     int temp1[column]; 
     int current[column];
 
@@ -162,18 +158,15 @@ int backward_LCS_space_optimization (string str1, string str2, int row, int colu
 
 //anti-diagonal approach
 int diagonal_LCS (string str1, string str2, int row, int column) {
-
     //allocate
     arr = new unsigned short int*[row];
     for (int i = 0; i < row; i++)
         arr[i] = new unsigned short int[column];
 
     //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-        }
-    }
 
     int i = 0;
     int j = 0;
@@ -204,7 +197,6 @@ int diagonal_LCS (string str1, string str2, int row, int column) {
     }
 
     return arr[row-1][column-1];
-
 }
 
 void diagonal_LCS_thread (diag& a) {
@@ -243,7 +235,6 @@ void diagonal_LCS_thread (diag& a) {
 
 //anti-diagonal approach with parallelization
 int diagonal_LCS_parallel (string str1, string str2, int row, int column) {
-    
     //allocate
     arr = new unsigned short int*[row];
     for (int i = 0; i < row; i++)
@@ -254,10 +245,7 @@ int diagonal_LCS_parallel (string str1, string str2, int row, int column) {
     thread threads[n_threads];
     diag diag_structs[n_threads];
 
-    //bar = barrier(n_threads);
-
     for(int i = 0; i < n_threads; i++) {
-
         diag_structs[i].s1 = str1;
         diag_structs[i].s2 = str2;
         diag_structs[i].row = row;
@@ -266,21 +254,12 @@ int diagonal_LCS_parallel (string str1, string str2, int row, int column) {
         diag_structs[i].n_total = n_threads;
 
         threads[i] = thread(diagonal_LCS_thread, ref(diag_structs[i]));
-        
     }
 
     for(int i = 0; i < n_threads; i++) 
         threads[i].join();
 
-    /*cout<<"\n";
-    for(int i = 0; i < row; i++) {
-        for (int j = 0; j < column; j++) 
-            cout<<arr[i][j]<<" ";
-        cout<<"\n";
-    }*/
-
     return arr[row-1][column-1];
-
 }
 
 //memory optimization: diagonals are now represented as rows, so that we only need to access previous two rows in the memory, as opposed to every row
@@ -294,14 +273,6 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
             arrMemory[i] = new unsigned short int[i+1];
         else
             arrMemory[i] = new unsigned short int[row + column - i - 1];
-
-    //for (int i = 0; i < newRow; i++) 
-    //    arrMemory[i] = new unsigned short int[column];
-        
-    //initialize zeros
-    //for (int i = 0; i < newRow; i++)
-    //    for (int j = 0; j < column; j++) 
-    //        arrMemory[i][j] = 0;
 
     //first row and column (row becomes a diagonal)
     for (int i = 0; i < row; i++)
@@ -329,7 +300,6 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         }
     }
 
-
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
             arrMemory[row][j] = 1 + arrMemory[row-2][j];
@@ -337,7 +307,6 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
             arrMemory[row][j] = max(arrMemory[row-1][j+1], arrMemory[row-1][j]);
     }
     
-
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
         for(int j = 0; j < newRow - i; j++) {
@@ -355,8 +324,6 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
     int newRow = a.row + a.col - 1;
 
     int chunkSize = ceil((double)(a.row)/a.n_total);
-
-    //cout<<"\n"<<(a.id-1)*chunkSize<<" "<<(a.id-1)*chunkSize+chunkSize<<"\n";
 
     //first row and column (row actually becomes a diagonal, because we tilt the array by 45degrees)
     for (int i = (a.id-1)*chunkSize; i < a.row && i < (a.id-1)*chunkSize+chunkSize; i++)
@@ -394,7 +361,6 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
             arrMemory[a.row][j] = max(arrMemory[a.row-1][j+1], arrMemory[a.row-1][j]);
     }
     
-
     //lower triangle
     for(int i = a.row+1; i < newRow; i++) {
         bar.arrive_and_wait();
@@ -411,8 +377,6 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
 int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row, int column) {
     int newRow = row + column - 1;
 
-    auto start = high_resolution_clock::now();
-
     //allocate
     arrMemory = new unsigned short int*[newRow];
 
@@ -422,29 +386,13 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
             arrMemory[i] = new unsigned short int[i+1];
         else
             arrMemory[i] = new unsigned short int[row + column - i - 1];
-        
-    //initialize zeros
-    //for (int i = 0; i < newRow; i++)
-    //    for (int j = 0; j < column; j++) 
-    //        arrMemory[i][j] = 0;
-
-
-    auto finish = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(finish - start);
-
-    cout << "\nAllocation: " << duration.count() << "\n";
-
-    start = high_resolution_clock::now();
 
     int n_threads = n_thr;
 
     thread threads[n_threads];
     diag diag_structs[n_threads];
 
-    //bar = barrier(n_threads);
-
     for(int i = 0; i < n_threads; i++) {
-
         diag_structs[i].s1 = str1;
         diag_structs[i].s2 = str2;
         diag_structs[i].row = row;
@@ -453,23 +401,10 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
         diag_structs[i].n_total = n_threads;
 
         threads[i] = thread(diagonal_LCS_memory_optimization_thread, ref(diag_structs[i]));
-        
     }
 
     for(int i = 0; i < n_threads; i++) 
         threads[i].join();
-
-    /*cout<<"\n";
-    for(int i = 0; i < row; i++) {
-        for (int j = 0; j < column; j++) 
-            cout<<arr[i][j]<<" ";
-        cout<<"\n";
-    }*/
-
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-    cout << "Calculation: " << duration.count() << "\n";
 
     return arrMemory[newRow-1][0]; 
 }
@@ -491,7 +426,6 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
 
     //upper triangle
     for(int i = 2; i < column; i++) {
-
         temp1[0] = 0;
         temp1[i-2] = 0;
         temp2[0] = 0;
@@ -508,11 +442,9 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
 
         //rewrite data
         for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+            temp1[j] = temp2[j];
+            temp2[j] = current[j];
+        }
     }
 
     //middle
@@ -526,13 +458,10 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
 
         //rewrite data
         for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+            temp1[j] = temp2[j];
+            temp2[j] = current[j];
+        }
     }
-
 
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
@@ -541,14 +470,11 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
             current[j] = max(temp2[j+1], temp2[j]);
     }
     //rewrite data
-        for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+    for(int j = 0; j < column; j++) {
+        temp1[j] = temp2[j];
+        temp2[j] = current[j];
+    }
     
-
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
         for(int j = 0; j < newRow - i; j++) {
@@ -559,11 +485,9 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
         }
         //rewrite data
         for(int j = 0; j < column; j++) {
-                temp1[j] = temp2[j];
-                temp2[j] = current[j];
-                //cout<<current[j]<<" ";
-            }
-            //cout<<"\n";
+            temp1[j] = temp2[j];
+            temp2[j] = current[j];
+        }
     }
 
     return current[0]; 
@@ -635,7 +559,6 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         diagTemp2[j] = diagCurrent[j];
     }
     
-
     //lower triangle
     for(int i = a.row+1; i < newRow; i++) {
         bar.arrive_and_wait();
@@ -652,7 +575,6 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
             diagTemp2[j] = diagCurrent[j];
         }
     }
-
 
     bar.arrive_and_wait();
     arrDiag = diagCurrent[0];
@@ -677,10 +599,7 @@ int diagonal_LCS_memory_and_space_optimization_parallel(string str1, string str2
     thread threads[n_threads];
     diag diag_structs[n_threads];
 
-    //bar = barrier(n_threads);
-
     for(int i = 0; i < n_threads; i++) {
-
         diag_structs[i].s1 = str1;
         diag_structs[i].s2 = str2;
         diag_structs[i].row = row;
@@ -688,8 +607,7 @@ int diagonal_LCS_memory_and_space_optimization_parallel(string str1, string str2
         diag_structs[i].id = i+1;
         diag_structs[i].n_total = n_threads;
 
-        threads[i] = thread(diagonal_LCS_memory_and_space_optimization_thread, ref(diag_structs[i]));
-        
+        threads[i] = thread(diagonal_LCS_memory_and_space_optimization_thread, ref(diag_structs[i])); 
     }
 
     for(int i = 0; i < n_threads; i++) 
@@ -700,7 +618,6 @@ int diagonal_LCS_memory_and_space_optimization_parallel(string str1, string str2
 
 //diagonal parallelization using the OpenMP library
 int diagonal_LCS_parallel_openmp (string str1, string str2, int row, int column) {
-
     //allocate
     arr = new unsigned short int*[row];
     for (int i = 0; i < row; i++)
@@ -721,9 +638,6 @@ int diagonal_LCS_parallel_openmp (string str1, string str2, int row, int column)
         int antidiag = min(j, row-i-1);
 
         //parallel calculation of all elements on current diagonal
-        //#pragma omp parallel for
-        //#pragma omp target teams distribute parallel for
-        //#pragma omp target teams loop
         #pragma omp parallel for num_threads (n_thr)
         for (int k = 0; k <= antidiag; ++k){
             int a = i + k;
@@ -747,7 +661,6 @@ int diagonal_LCS_parallel_openmp (string str1, string str2, int row, int column)
     }
 
     return arr[row-1][column-1];
-
 }
 
 //one thread calculates top half of table
@@ -790,7 +703,6 @@ int merge_LCS(int h, int row, int column) {
 
         if(temp > currentMax)
             currentMax = temp;
-
     }
 
     return currentMax;
@@ -821,12 +733,10 @@ void topHalf_LCS_space_optimization (args& a) {
         //rewrite data
         for(int j = 0; j < a.col+1; j++) 
             temp1[j] = current[j];
-
     }
 
     for(int i = 0; i < a.col+1; i++) 
         arrTop[i] = current[i];
-    
 }
 
 //space optimization: we only keep current two rows in memory
@@ -834,7 +744,6 @@ void bottomHalf_LCS_space_optimization (args& a) {
     int temp1[a.col+1]; 
     int current[a.col+1];
     
-
     //initialize zeros
     for (int i = 0; i <= a.col; i++) {
         temp1[i] = 0;
@@ -860,12 +769,10 @@ void bottomHalf_LCS_space_optimization (args& a) {
         //rewrite data
         for(int j = 0; j < a.col; j++) 
             temp1[j] = current[j];
-        
     }
 
     for(int i = 0; i < a.col; i++) 
         arrBottom[i] = current[i];
-
 }
 
 //merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
@@ -878,7 +785,6 @@ int merge_LCS_space_optimization(int column) {
 
         if(temp > currentMax)
             currentMax = temp;
-
     }
 
     return currentMax;
@@ -886,7 +792,6 @@ int merge_LCS_space_optimization(int column) {
 
 //forward-backward approach with two threads
 int fb_LCS (string str1, string str2, int row, int column) {
-
     //allocate
     arr = new unsigned short int*[row+1];
     for(int i = 0; i < row+1; i++)
@@ -918,7 +823,6 @@ int fb_LCS (string str1, string str2, int row, int column) {
 
 //forward-backward approach with two threads and with space optimization
 int fb_LCS_space_optimization (string str1, string str2, int row, int column) {
-
     int h = row / 2;
     struct args a; 
     a.s1 = str1;

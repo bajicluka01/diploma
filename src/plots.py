@@ -46,56 +46,37 @@ nThreads12 = [1.747410, 3.475634, 6.001397,  9.517540,  17.887280]
 
 plt.figure(1)
 plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein, diagonalLevenshteinMemory, diagonalLevenshteinMemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj', 'diagonalno', 'diagonalno paralelno (8 niti)'])
-plt.title('Levenshtein primerjava')
+plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje')
 plt.xlabel('dolžina niza')
 plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
 
-
 plt.figure(2)
-plt.plot(x, list(zip(forwardLCS, backwardLCS, fbLCS)), label=['forward', 'backward', 'forward-backward'])
-plt.title('LCS comparison')
-plt.xlabel('string length')
-plt.ylabel('average execution time (seconds)')
+plt.plot(x, list(zip(forwardLCS, backwardLCS, fbLCS)), label=['naprej', 'nazaj', 'naprej-nazaj'])
+plt.title('Primerjava algoritmov za računanje LCS')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
-
-
-plt.figure(3)
-plt.plot(x2, list(zip(forwardLevenshteinSpace, backwardLevenshteinSpace, fbLevenshteinSpace)), label=['forward', 'backward', 'forward-backward'])
-plt.title('Levenshtein comparison with space optimization')
-plt.xlabel('string length')
-plt.ylabel('average execution time (seconds)')
-plt.legend()
-
 
 plt.figure(4)
 plt.plot(x2, list(zip(forwardLevenshteinSpace, backwardLevenshteinSpace, fbLevenshteinSpace, diagonalLevenshteinSpace, diagonalLevenshteinSpaceParallel)), label=['naprej', 'nazaj', 'naprej nazaj', 'diagonalno', 'diagonalno paralelno (8 niti)'])
-plt.title('Levenshtein primerjava')
+plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje s prostorsko optimizacijo')
 plt.xlabel('dolžina niza')
 plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
 
-
 plt.figure(5)
-plt.plot(x3, list(zip(diagonalLevenshtein, diagonalLevenshteinParallel)), label=['diagonal', 'diagonal parallel'])
-plt.title('Diagonal Levenshtein comparison')
-plt.xlabel('string length')
-plt.ylabel('average execution time (seconds)')
+plt.plot(x3, list(zip(diagonalLevenshtein, diagonalLevenshteinParallel)), label=['diagonalno', 'diagonalno paralelno'])
+plt.title('Levenshteinova razdalja, diagonalno')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
-
 
 plt.figure(6)
-plt.plot(x3, list(zip(diagonalLevenshtein, nThreads2, nThreads3, nThreads4, nThreads5, nThreads6, nThreads7, nThreads8, nThreads9, nThreads10, nThreads11, nThreads12)), label=['baseline (1 thread)', '2 threads', '3 threads', '4 threads', '5 threads', '6 threads', '7 threads', '8 threads', '9 threads', '10 threads', '11 threads', '12 threads'])
-plt.title('Diagonal Levenshtein comparison with various numbers of threads')
-plt.xlabel('string length')
-plt.ylabel('average execution time (seconds)')
-plt.legend()
-
-plt.figure(7)
-plt.plot(x3, list(zip(diagonalLevenshtein, nThreads3, nThreads4, nThreads5, nThreads6, nThreads7, nThreads8, nThreads9, nThreads10, nThreads11, nThreads12)), label=['baseline (1 thread)', '3 threads', '4 threads', '5 threads', '6 threads', '7 threads', '8 threads', '9 threads', '10 threads', '11 threads', '12 threads'])
-plt.title('Diagonal Levenshtein comparison with various numbers of threads')
-plt.xlabel('string length')
-plt.ylabel('average execution time (seconds)')
+plt.plot(x3, list(zip(diagonalLevenshtein, nThreads3, nThreads4, nThreads5, nThreads6, nThreads7, nThreads8, nThreads9, nThreads10, nThreads11, nThreads12)), label=['osnovni algoritem (1 nit)', '3 niti', '4 niti', '5 niti', '6 niti', '7 niti', '8 niti', '9 niti', '10 niti', '11 niti', '12 niti'])
+plt.title('Levenshteinova razdalja, diagonalni pristop: primerjava glede na število niti')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
 
 plt.show()
