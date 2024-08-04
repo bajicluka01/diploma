@@ -48,6 +48,10 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
             case 18: diagonal_levenshtein_memory_optimization_parallel(str1, str2, row, column); break;
             case 19: diagonal_levenshtein_memory_and_space_optimization(str1, str2, row, column); break;
             case 20: diagonal_levenshtein_memory_and_space_optimization_parallel(str1, str2, row, column); break;
+            case 21: diagonal_LCS_memory_optimization(str1, str2, row, column); break;
+            case 22: diagonal_LCS_memory_optimization_parallel(str1, str2, row, column); break;
+            case 23: diagonal_LCS_memory_and_space_optimization(str1, str2, row, column); break;
+            case 24: diagonal_LCS_memory_and_space_optimization_parallel(str1, str2, row, column); break;
             default: return 0;
         }
 
@@ -178,7 +182,7 @@ int main (int argc, char* argv[]) {
     string str1 = "abcbcbj";
     string str2 = "abccacj";
 
-    int strLen = 10000;
+    int strLen = 400000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -194,7 +198,7 @@ int main (int argc, char* argv[]) {
     int column = str2.length()+1;
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein_memory_and_space_optimization(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << backward_levenshtein_space_optimization(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
@@ -214,7 +218,7 @@ int main (int argc, char* argv[]) {
     //cout << "Forward LCS space optimization: "<< avgExecutionTime(2, n_iter, str1, str2) <<"\n";
     //cout << "Backward LCS: "<< avgExecutionTime(3, n_iter, str1, str2) <<"\n";
     //cout << "Backward LCS space optimization: "<< avgExecutionTime(4, n_iter, str1, str2) <<"\n";
-    //cout << "Diagonal LCS: "<< avgExecutionTime(5, n_iter, str1, str2) <<"\n";
+    //cout << "Diagonal LCS memory: "<< avgExecutionTime(24, n_iter, str1, str2) <<"\n";
     //cout << "Forward-backward LCS: "<< avgExecutionTime(6, n_iter, str1, str2) <<"\n";
     //cout << "Forward-backward LCS space optimization: "<< avgExecutionTime(7, n_iter, str1, str2) <<"\n";
 

@@ -40,9 +40,8 @@ int forward_levenshtein (string str1, string str2, int row, int column) {
 
 //space optimization: we only keep current two rows in memory
 int forward_levenshtein_space_optimization (string str1, string str2, int row, int column) {
-
-    int temp1[column]; 
-    int current[column];
+    temp1 = new int[column];
+    current = new int[column];
 
     //initialize zeros
     for (int i = 0; i < column; i++) {
@@ -104,8 +103,8 @@ int backward_levenshtein (string str1, string str2, int row, int column) {
 
 //space optimization: we only keep current two rows in memory
 int backward_levenshtein_space_optimization (string str1, string str2, int row, int column) {
-    int temp1[column]; 
-    int current[column];
+    temp1 = new int[column];
+    current = new int[column];
 
     //initialize zeros
     for (int i = 0; i < column; i++) {
@@ -398,18 +397,19 @@ int diagonal_levenshtein_memory_and_space_optimization(string str1, string str2,
 void diagonal_levenshtein_memory_optimization_thread (diag& a) {
     int newRow = a.row + a.col - 1;
 
-    int chunkSize = ceil((double)(a.row)/a.n_total);
+    int chunkSize = ceil((double)(a.col)/a.n_total);
+    int startIndex = a.id * chunkSize;
 
     //first row and column (row actually becomes a diagonal, because we tilt the array by 45degrees)
-    for (int i = (a.id-1)*chunkSize; i < a.row && i < (a.id-1)*chunkSize+chunkSize; i++)
+    for (int i = startIndex; i < a.row && i < startIndex+chunkSize; i++)
         arrMemory[i][0] = i;
-    for (int j = (a.id-1)*chunkSize; j < a.col && j < (a.id-1)*chunkSize+chunkSize; j++)
+    for (int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++)
         arrMemory[j][j] = j;
 
     //upper triangle
     for(int i = 2; i < a.col; i++) {
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize+1; j < i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 arrMemory[i][j] = arrMemory[i-2][j-1];
             else
@@ -420,7 +420,7 @@ void diagonal_levenshtein_memory_optimization_thread (diag& a) {
     //middle
     for(int i = a.col; i < a.row; i++) {
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize+1; j < a.col && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        for(int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 arrMemory[i][j] = arrMemory[i-2][j-1];
             else
@@ -429,7 +429,7 @@ void diagonal_levenshtein_memory_optimization_thread (diag& a) {
     }
 
     bar.arrive_and_wait();
-    for(int j = (a.id-1)*chunkSize; j < a.col - 1 && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+    for(int j = startIndex; j < a.col - 1 && j < startIndex+chunkSize; j++) {
         if(a.s1[a.row-j-2] == a.s2[j])
             arrMemory[a.row][j] = arrMemory[a.row-2][j];
         else
@@ -439,7 +439,7 @@ void diagonal_levenshtein_memory_optimization_thread (diag& a) {
     //lower triangle
     for(int i = a.row+1; i < newRow; i++) {
         bar.arrive_and_wait();
-        for(int j = (a.id-1)*chunkSize; j < newRow - i && j <= (a.id-1)*chunkSize+chunkSize; j++) {
+        for(int j = startIndex; j < newRow - i && j < startIndex+chunkSize; j++) {
             if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
                 arrMemory[i][j] = arrMemory[i-2][j+1];
             else
@@ -479,7 +479,7 @@ int diagonal_levenshtein_memory_optimization_parallel(string str1, string str2, 
         diag_structs[i].s2 = str2;
         diag_structs[i].row = row;
         diag_structs[i].col = column;
-        diag_structs[i].id = i+1;
+        diag_structs[i].id = i;
         diag_structs[i].n_total = n_threads;
 
         threads[i] = thread(diagonal_levenshtein_memory_optimization_thread, ref(diag_structs[i]));
@@ -720,47 +720,41 @@ int merge_levenshtein (int h, int row, int column) {
 
 //space optimization: we only keep current two rows in memory
 void topHalf_levenshtein_space_optimization(args& a) {
-    int temp1[a.col+1]; 
-    int current[a.col+1];
-    
     //initialize zeros
     for (int i = 0; i <= a.col; i++) {
-        temp1[i] = 0;
-        current[i] = 0;
-        arrTop[i] = 0;
+        temp1Top[i] = 0;
+        currentTop[i] = 0;
+        //arrTop[i] = 0;
     }
 
     for(int i = 0; i <= a.row; i++) {
         for(int j = 0; j < a.col; j++) {
             if (i == 0)
-                current[j] = j;
+                currentTop[j] = j;
             else if (j == 0)
-                current[j] = i;
+                currentTop[j] = i;
             else if (a.s1[i-1] == a.s2[j-1])
-                current[j] = temp1[j-1];
+                currentTop[j] = temp1Top[j-1];
             else 
-                current[j] = 1 + min(current[j-1], min(temp1[j], temp1[j-1]));
+                currentTop[j] = 1 + min(currentTop[j-1], min(temp1Top[j], temp1Top[j-1]));
         }
 
         //rewrite data
         for(int j = 0; j < a.col+1; j++) 
-            temp1[j] = current[j];
+            temp1Top[j] = currentTop[j];
     }
 
-    for(int i = 0; i < a.col+1; i++) 
-        arrTop[i] = current[i];
+    //for(int i = 0; i < a.col+1; i++) 
+    //    arrTop[i] = current[i];
 }
 
 //space optimization: we only keep current two rows in memory
 void bottomHalf_levenshtein_space_optimization(args& a) {
-    int temp1[a.col+1]; 
-    int current[a.col+1];
-    
     //initialize zeros
     for (int i = 0; i < a.col+1; i++) {
-        temp1[i] = 0;
-        current[i] = 0;
-        arrBottom[i] = 0;
+        temp1Bottom[i] = 0;
+        currentBottom[i] = 0;
+        //arrBottom[i] = 0;
     }
 
     int nrows = a.s1.length()+1;
@@ -772,22 +766,22 @@ void bottomHalf_levenshtein_space_optimization(args& a) {
     for(int i = nrows-1; i >= a.row; i--) {
         for (int j = a.col-1; j >= 0; j--) {   
             if (i == nrows-1)
-                current[j+1] = a.col-j-1;
+                currentBottom[j+1] = a.col-j-1;
             else if (j == a.col-1)
-                current[j+1] = nrows-i-1;
+                currentBottom[j+1] = nrows-i-1;
             else if (a.s1[i] == a.s2[j])
-                current[j+1] = temp1[j+2];
+                currentBottom[j+1] = temp1Bottom[j+2];
             else 
-                current[j+1] = 1 + min(current[j+2], min(temp1[j+1], temp1[j+2])); 
+                currentBottom[j+1] = 1 + min(currentBottom[j+2], min(temp1Bottom[j+1], temp1Bottom[j+2])); 
         }
 
         //rewrite data
         for(int j = 0; j < a.col+1; j++) 
-            temp1[j] = current[j]; 
+            temp1Bottom[j] = currentBottom[j]; 
     }
 
-    for(int i = 0; i < a.col+1; i++) 
-        arrBottom[i] = current[i];
+    //for(int i = 0; i < a.col+1; i++) 
+    //    arrBottom[i] = current[i];
 }
 
 //merges topHalf_levenshtein_space_optimization and bottomHalf_levenshtein_space_optimization
@@ -797,7 +791,7 @@ int merge_levenshtein_space_optimization (int column) {
     int currentMin = INT_MAX;
 
     for(int i = 1; i <= column; i++) {
-        temp = arrTop[i-1] + arrBottom[i];
+        temp = currentTop[i-1] + currentBottom[i];
 
         if(temp < currentMin)
             currentMin = temp;
@@ -846,8 +840,10 @@ int fb_levenshtein_space_optimization (string str1, string str2, int row, int co
     a.row = h;
     a.col = column;
 
-    arrTop = new int[column+1];
-    arrBottom = new int[column+1];
+    temp1Top = new int[column+1];
+    temp1Bottom = new int[column+1];
+    currentTop = new int[column+1];
+    currentBottom = new int[column+1];
 
     thread t1(topHalf_levenshtein_space_optimization, ref(a));
     thread t2(bottomHalf_levenshtein_space_optimization, ref(a));
