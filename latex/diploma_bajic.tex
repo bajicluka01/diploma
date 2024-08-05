@@ -208,7 +208,6 @@ sorting=nty,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \begin{document}
 \selectlanguage{slovene}
 \frontmatter
@@ -304,14 +303,11 @@ V diplomski nalogi \cite{diplomaPremk} je študent preizkusil različne tehnike 
 
 %\bigskip
 %\noindent\textbf{Title:} Parallel algorithm engineering
-
 %\bigskip
 %\noindent\textbf{Description:}\\
 %opis diplome v angleščini
 
 \vfill
-
-
 
 \vspace{2cm}
 
@@ -336,13 +332,11 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 % prazna stran
 \clearemptydoublepage
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % kazalo
 \pagestyle{empty}
 \def\thepage{}% preprečimo težave s številkami strani v kazalu
 \tableofcontents{}
-
 
 % prazna stran
 \clearemptydoublepage
@@ -358,7 +352,6 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
   {\bf JSON} & JavaScript Object Notation & JavaScript objektna notacija \\
 %  \dots & \dots & \dots \\
 \end{tabular}
-
 
 % prazna stran
 \clearemptydoublepage
@@ -414,7 +407,7 @@ Zahvaljujem se mentorju doc. dr. Juriju Miheliču za pomoč pri izdelavi diploms
 
 \chapter{Uvod}
 
-V diplomskem delu so opisani različni pristopi za optimizacijo algoritmov za računanje Levenshteinove razdalje in najdaljšega skupnega podzaporedja (angl. Longest Common Subsequence - LCS) z uporabo vzporednega procesiranja. Gre za dva zelo pogosto uporabljena algoritma za potrebe primerjave nizov oziroma iskanje razdalje med nizi, ki ju običajno rešujemo z dinamičnim programiranjem (za potrebe tega diplomskega dela smo se omejili na razdalje med točno dvema nizoma, ki je tudi najpogosteje uporabljena v praktičnih aplikacijah). S pomočjo koncepta večnitnosti smo razvili več različic algoritmov, ki dosežejo časovno pohitritev v primerjavi z osnovno implementacijo. Pri tem smo uporabili dva različna načina povzporejanja: diagonalni in naprej-nazaj. Meritve smo izvajali na naključno generiranih nizih, velikosti med 10000 in 250000 znakov. Poleg časovne pohitritve, smo iskali tudi možnosti za prostorske optimizacije, torej algoritme, ki zasedejo čimmanjšo količino delovnega pomnilnika, kar je uporabno predvsem za vhodne podatke ogromne velikosti, ki jih ni smiselno, oziroma pogosto celo nemogoče v celoti hraniti v delovnem pomnilniku. 
+V diplomskem delu so opisani različni pristopi za optimizacijo algoritmov za računanje Levenshteinove razdalje in najdaljšega skupnega podzaporedja (angl. Longest Common Subsequence - LCS) z uporabo vzporednega procesiranja. Gre za dva zelo pogosto uporabljena algoritma za potrebe primerjave nizov oziroma iskanje razdalje med nizi, ki ju običajno rešujemo z dinamičnim programiranjem (za potrebe tega diplomskega dela smo se omejili na razdalje med točno dvema nizoma, ki je tudi najpogosteje uporabljena v praktičnih aplikacijah). S pomočjo koncepta večnitnosti smo razvili več različic algoritmov, ki dosežejo časovno pohitritev v primerjavi z osnovno implementacijo. Pri tem smo uporabili dva različna načina povzporejanja: diagonalni in naprej-nazaj. Meritve smo izvajali na naključno generiranih nizih, velikosti med 10000 in 400000 znakov. Poleg časovne pohitritve, smo iskali tudi možnosti za prostorske optimizacije, torej algoritme, ki zasedejo čimmanjšo količino delovnega pomnilnika, kar je uporabno predvsem za vhodne podatke ogromne velikosti, ki jih ni smiselno, oziroma pogosto celo nemogoče v celoti hraniti v delovnem pomnilniku. 
 
 \section{Motivacija}
 
@@ -430,16 +423,13 @@ V tem poglavju je predstavljena algoritmična paradigma dinamičnega programiran
 
 \section{Dinamično programiranje}
 
-Dinamično programiranje je algoritmična paradigma, s katero skušamo optimizirati izvajanje problemov, ki imajo takoimenovano optimalno podstrukturo, kar pomeni, da je do rešitve problema možno priti preko optimalne rešitve njihovih podproblemov. Za to obstajata dva glavna načina: rekurzivni (z uporabo memoizacije) in iterativni (z uporabo tabeliranja). Za našo implementacijo smo uporabili iterativni pristop, kar pomeni, da hranimo vmesne rezultate v tabeli velikosti \begin{math}n \text{ x } m\end{math}. Problem primerjanja dveh nizov smo tako razbili na enostavnejše podprobleme primerjanja dveh znakov. Končni rezultat se nahaja v celici \begin{math}(n,m)\end{math}, vendar lahko iz preostanka tabele tudi rekonstruiramo pot, po kateri smo prišli do rezultata. 
-
+Dinamično programiranje je algoritmična paradigma, s katero skušamo optimizirati izvajanje problemov, ki imajo takoimenovano optimalno podstrukturo, kar pomeni, da je do rešitve problema možno priti preko optimalne rešitve njihovih podproblemov. Za to obstajata dva glavna načina: rekurzivni (z uporabo memoizacije) in iterativni (z uporabo tabeliranja). Za našo implementacijo smo uporabili iterativni pristop, kar pomeni, da hranimo vmesne rezultate v tabeli velikosti $n \times m$. Problem primerjanja dveh nizov smo tako razbili na enostavnejše podprobleme primerjanja dveh znakov. Končni rezultat se nahaja v celici $(n,m)$, vendar lahko iz preostanka tabele tudi rekonstruiramo pot, po kateri smo prišli do rezultata. 
 
 \section{Levenshteinova razdalja}
 
 Predpostavimo, da lahko nad vsakim znakom v nizu izvedemo tri osnovne operacije: brisanje, vstavljanje in spreminjanje. Hipotetično lahko posameznim operacijam dodelimo tudi uteži \cite{weightedLevenshtein}, vendar ker to nima občutnega vpliva na časovno zahtevnost algoritma, v nadaljevanju sklepamo, da imajo vse tri enako utež. S tem naborom operacij obstaja teoretično neskončno možnih načinov za transformacijo nekega niza v poljuben drugi niz, Levenshteinova razdalja pa predstavlja dolžino najkrajše tovrstne transformacije. 
 
-Izračunamo jo tako, da najprej inicializiramo prvo vrstico in stolpec matrike. Ker gre tukaj dejansko za primerjavo niza s praznim nizom, je ta korak trivialen in vedno enak: v prvo vrstico vnesemo vrednosti spremenljivke j, v prvi stolpec pa vrednosti spremenljivke i, kot je prikazano na sliki (\ref{levenshteinExample}) v rdečem fontu.
-
-
+Izračunamo jo tako, da najprej inicializiramo prvo vrstico in stolpec matrike. Ker gre tukaj dejansko za primerjavo niza s praznim nizom, je ta korak trivialen in vedno enak: v prvo vrstico vnesemo vrednosti spremenljivke $j$, v prvi stolpec pa vrednosti spremenljivke $i$, kot je prikazano na sliki (\ref{levenshteinExample}) v rdečem fontu.
 
 \begin{figure}[htb]
 \begin{center}
@@ -457,8 +447,7 @@ z  & \textcolor{red}{3} & 3 & 3 & \cellcolor{blue!15}3 & \cellcolor{blue!25}4 \\
 \label{levenshteinExample}
 \end{figure}
 
-
-Nato vrednosti za preostale celice v matriki izračunamo po formuli (\ref{LevenshteinEquation}), za \begin{math}i=1,...,n\end{math} in \begin{math}j=1,...,m\end{math}, kjer \begin{math}s1\end{math} in \begin{math}s2\end{math} predstavljata vhodna niza dolžin \begin{math}n\end{math} in \begin{math}m\end{math}. Končni rezultat dobimo v celici na poziciji \begin{math}(n, m)\end{math}. 
+Nato vrednosti za preostale celice v matriki izračunamo po formuli (\ref{LevenshteinEquation}), za $i=1,...,n$ in $j=1,...,m$, kjer $s1$ in $s2$ predstavljata vhodna niza dolžin $n$ in $m$. Končni rezultat dobimo v celici na poziciji $(n, m)$. 
 
 \bigskip \bigskip
 
@@ -475,8 +464,7 @@ M(i, j) =
 
 \bigskip \bigskip
 
-Sama implementacija je precej intuitivna - z dvojno zanko iteriramo po globalni tabeli in računamo vrednosti po formuli glede na enakost trenutnih dveh znakov v vhodnih nizih str1 in str2, pri čemer moramo biti pozorni, da pri indeksiranju upoštevamo dodatno vrstico in stolpec, ki smo ju vstavili za inicializacijo začetnih vrednosti (vrstica 8 v kodi \ref{LevenshteinNaprej}). \bigskip \bigskip
-
+Sama implementacija je precej intuitivna - z dvojno zanko iteriramo po globalni tabeli in računamo vrednosti po formuli glede na enakost trenutnih dveh znakov v vhodnih nizih $str1$ in $str2$, pri čemer moramo biti pozorni, da pri indeksiranju upoštevamo dodatno vrstico in stolpec, ki smo ju vstavili za inicializacijo začetnih vrednosti (vrstica 8 v kodi \ref{LevenshteinNaprej}). \bigskip \bigskip
 
 \begin{lstlisting}[language=C++, caption={Algoritem za izračun Levenshteinove razdalje}, captionpos=b, label=LevenshteinNaprej]
 int forward_levenshtein (string str1, string str2, int row, int column) {
@@ -497,18 +485,15 @@ int forward_levenshtein (string str1, string str2, int row, int column) {
 }
 \end{lstlisting}
 
-
 \subsection{Primer uporabe}
 
 Avtorja članka \cite{documentsimilarity} sta razvila svojo zgoščevalno funkcijo za potrebe primerjanja podobnosti med dvema datotekama. Ideja je, da algoritem datoteki, ki sta potencialno dolžine več megabajtov, skrči na neko manjšo velikost (npr. nekaj kilobajtov) in na koncu nad tema krajšima reprezentacijama požene iskanje Levenshteinove razdalje. Dejansko gre torej za aproksimacijo razlike oz. podobnosti med datotekama, vendar se izkaže, da je ta zadnji korak (torej dejansko iskanje podobnosti) kljub vsemu ozko grlo celotnega procesa, tako da je čimbolj optimalna implementacija algoritma za iskanje Levenshteinove razdalje ključnega pomena. 
 
-
 \section{LCS}
 
-Podsekvenco definiramo kot zaporedje znakov, ki se nahajajo v nizu, v istem vrstnem redu, vendar ne nujno zaporedno. Torej, niz "ABCD" vsebuje podsekvenco "ACD", ne vsebuje pa podsekvence "DCB". Najdaljša skupna podsekvenca, oziroma LCS, predstavlja najdaljšo možno podsekvenco, ki se nahaja v dveh (ali več) vhodnih nizih, v naših algoritmih pa iščemo dolžino te podsekvence. 
+Podsekvenco definiramo kot zaporedje znakov, ki se nahajajo v nizu, v istem vrstnem redu, vendar ne nujno zaporedno. Torej, niz $"ABCD"$ vsebuje podsekvenco $"ACD"$, ne vsebuje pa podsekvence $"DCB"$. Najdaljša skupna podsekvenca, oziroma LCS, predstavlja najdaljšo možno podsekvenco, ki se nahaja v dveh (ali več) vhodnih nizih, v naših algoritmih pa iščemo dolžino te podsekvence. 
 
-
-Pristop reševanja tega problema je podoben kot za Levenshteinovo razdaljo v prejšnjem poglavju: začetne vrednosti za prvo vrstico in prvi stolpec so v tem primeru kar ničle, saj je pri praznem nizu dolžina podsekvence vedno 0. Preostanek tabele pa izračunamo po formuli (\ref{LCSequation}), za \begin{math}i=1,...,n\end{math} in \begin{math}j=1,...,m\end{math}, kjer \begin{math}s1\end{math} in \begin{math}s2\end{math} predstavljata vhodna niza dolžin \begin{math}n\end{math} in \begin{math}m\end{math}. Končni rezultat ponovno dobimo v celici \begin{math}(n, m)\end{math}, kot je prikazano na sliki \ref{LCSexample}. 
+Pristop reševanja tega problema je podoben kot za Levenshteinovo razdaljo v prejšnjem poglavju: začetne vrednosti za prvo vrstico in prvi stolpec so v tem primeru kar ničle, saj je pri praznem nizu dolžina podsekvence vedno 0. Preostanek tabele pa izračunamo po formuli (\ref{LCSequation}), za $i=1,...,n$ in $j=1,...,m$, kjer $s1$ in $s2$ predstavljata vhodna niza dolžin $n$ in $m$. Končni rezultat ponovno dobimo v celici $(n, m)$, kot je prikazano na sliki \ref{LCSexample}. 
 
 \begin{equation}
 \label{LCSequation}
@@ -522,7 +507,6 @@ M(i, j) =
 \end{equation}
 
 \bigskip \bigskip
-
 
 \begin{figure}[htb]
 \begin{center}
@@ -539,12 +523,9 @@ a  & \textcolor{red}{0} & 1 & 1 & 2 & \cellcolor{blue!25}2 \\ \hline
 \label{LCSexample}
 \end{figure}
 
-
-
 Implementacija algoritma je prav tako podobna Levenshteinovi (\ref{LevenshteinNaprej}), razlika je le v formuli za izračun vrednosti v posameznih celicah. V tem primeru bi lahko celo izpustili inicializacijo začetnih vrednosti (vrstici 4 in 5 v kodi \ref{LCSnaprej}), če bi bili prepričani, da je prazna tabela že predhodno napolnjena z ničlami. 
 
 \bigskip \bigskip
-
 
 \begin{lstlisting}[language=C++, caption={Algoritem za izračun LCS}, captionpos=b, label=LCSnaprej]
 int forward_LCS (string str1, string str2, int row, int column) {
@@ -561,13 +542,11 @@ int forward_LCS (string str1, string str2, int row, int column) {
 }
 \end{lstlisting}
 
-
-
 \chapter{Vzporedni algoritmi}
 
-Osnovna struktura vzporednega algoritma za oba problema je enaka kot njuna rešitev iz prejšnjega poglavja - še vedno uporabljamo dvodimenzionalno tabelo za hranjenje vmesnih vrednosti, torej je prostorska zahtevnost enaka - \begin{math}O(n*m)\end{math}. Razlika je samo v tem, da vrednosti, ki niso medsebojno odvisne, lahko računamo vzporedno z uporabo koncepta večnitnosti (angl. multithreading). Za to obstajata dva glavna pristopa - diagonalni in naprej-nazaj. Poleg tega smo razvili tudi prostorsko optimizirane algoritme, ki ne hranijo celotne tabele v pomnilniku, temveč samo trenutno in prejšnjo vrstico. 
+Osnovna struktura vzporednega algoritma za oba problema je enaka kot njuna rešitev iz prejšnjega poglavja - še vedno uporabljamo dvodimenzionalno tabelo za hranjenje vmesnih vrednosti, torej je prostorska zahtevnost enaka - $O(n \times m)$. Razlika je samo v tem, da vrednosti, ki niso medsebojno odvisne, lahko računamo vzporedno z uporabo koncepta večnitnosti (angl. multithreading). Za to obstajata dva glavna pristopa - diagonalni in naprej-nazaj. Poleg tega smo razvili tudi prostorsko optimizirane algoritme, ki ne hranijo celotne tabele v pomnilniku, temveč samo trenutno in prejšnjo vrstico. 
 
-Vsega skupaj smo implementirali 16 različic algoritmov:
+Vsega skupaj smo implementirali 20 različic algoritmov:
 \begin{itemize}
   \item LCS naprej 
   \item LCS naprej s prostorsko optimizacijo
@@ -575,8 +554,10 @@ Vsega skupaj smo implementirali 16 različic algoritmov:
   \item LCS nazaj s prostorsko optimizacijo
   \item LCS naprej-nazaj (2 niti)
   \item LCS naprej-nazaj s prostorsko optimizacijo (2 niti)
-  \item LCS diagonalno 
+  \item LCS diagonalno
+  \item LCS diagonalno s prostorsko optimizacijo
   \item LCS diagonalno vzporedno (poljubno število niti)
+  \item LCS diagonalno vzporedno s prostorsko optimizacijo (poljubno število niti)
   \item Levenshteinova razdalja naprej 
   \item Levenshteinova razdalja naprej s prostorsko optimizacijo
   \item Levenshteinova razdalja nazaj 
@@ -584,12 +565,14 @@ Vsega skupaj smo implementirali 16 različic algoritmov:
   \item Levenshteinova razdalja naprej-nazaj (2 niti)
   \item Levenshteinova razdalja naprej-nazaj s prostorsko optimizacijo (2 niti)
   \item Levenshteinova razdalja diagonalno
+  \item Levenshteinova razdalja diagonalno s prostorsko optimizacijo
   \item Levenshteinova razdalja diagonalno vzporedno (poljubno število niti)
+  \item Levenshteinova razdalja diagonalno vzporedno s prostorsko optimizacijo (poljubno število niti)
 \end{itemize}
 
 \section{Pristop naprej-nazaj}
 
-Pristop naprej smo že srečali v poglavjih 2.2 in 2.3, ko smo po tabeli iterirali od leve proti desni, ter od vrha navzdol, torej za \begin{math}i = 0, 1, ..., n\end{math} in \begin{math}j = 0, 1, ..., m\end{math}, nakar smo prišli do končne rešitve na poziciji \begin{math}(n, m)\end{math}. Brez težav lahko počnemo ravno obratno - iteriramo od \begin{math}i = n, n-1, ... 0\end{math} in \begin{math}j = m, m-1, ..., 0\end{math} in v tem primeru dobimo rešitev na poziciji \begin{math}(0, 0)\end{math} - temu rečemo pristop nazaj (\ref{levenshteinBackwardExample}). 
+Pristop naprej smo že srečali v poglavjih 2.2 in 2.3, ko smo po tabeli iterirali od leve proti desni, ter od vrha navzdol, torej za $i = 0, 1, ..., n$ in $j = 0, 1, ..., m$, nakar smo prišli do končne rešitve na poziciji $(n, m)$. Brez težav lahko počnemo ravno obratno - iteriramo od $i = n, n-1, ... 0$ in $j = m, m-1, ..., 0$ in v tem primeru dobimo rešitev na poziciji $(0, 0)$ - temu rečemo pristop nazaj (\ref{levenshteinBackwardExample}). 
 
 \begin{figure}[htb]
 \begin{center}
@@ -606,7 +589,6 @@ z  & 4 & 3 & 2 & \cellcolor{blue!15}1 & \textcolor{red}{1} \\ \hline
 \caption{Primer izračunane matrike za iskanje Levenshteinove razdalje s pristopom nazaj}
 \label{levenshteinBackwardExample}
 \end{figure}
-
 
 Izkaže se, da lahko z uporabo dveh niti poženemo oba pristopa istočasno (\ref{fbLCS}). 
 
@@ -687,10 +669,9 @@ c  & / & 1 & 1 & 1 & 1 & 1 & 1 & \textcolor{red}{0} \\ \hline
 \label{fbLCSresult}
 \end{figure}
 
-Da dobimo končno razdaljo, moramo še združiti zadnjo vrstico prve niti z zadnjo vrstico druge niti z združevalno funkcijo, ki pa je časovne zahtevnosti \begin{math}O(n)\end{math}, ker gre dejansko samo za dve enodimenzionalni tabeli, tako da nima bistvenega vpliva na čas izvajanja celotnega algoritma. 
+Da dobimo končno razdaljo, moramo še združiti zadnjo vrstico prve niti z zadnjo vrstico druge niti z združevalno funkcijo, ki pa je časovne zahtevnosti $O(n)$, ker gre dejansko samo za dve enodimenzionalni tabeli, tako da nima bistvenega vpliva na čas izvajanja celotnega algoritma. 
 
 Za združevanje pri Levenshteinovi razdalji iščemo najmanjšo vsoto istoležnih elementov po diagonali, kot je prikazano v kodi (\ref{merge}), pri LCS pa največjo. 
-
 
 \bigskip
 \begin{lstlisting}[language=C++, caption={Združevalna funkcija za Levenshteinovo razdaljo}, captionpos=b, label=merge]
@@ -709,9 +690,6 @@ int merge_levenshtein (int h, int row, int column) {
 }
 \end{lstlisting}
 
-
-
-
 \section{Prostorska optimizacija}
 
 Pri delu z ogromno količino vhodnih podatkov se lahko zgodi da velikost tabele presega kapaciteto pomnilnika. Že za 2 niza dolžine 20000 se izkaže, da če želimo hraniti celotno dvodimenzionalno tabelo v pomnilniku, mora biti velikost le-tega približno 16GB, če predpostavimo da spremenljivke podatkovnega tipa int zasedejo 4 bajte na danem sistemu. Pri naših meritvah, ki so podrobneje opisane v poglavju 4, smo se temu problemu izognili z uporabo spremenljivk podatkovnega tipa unsigned short int, ki zasedajo samo 2 bajta v pomnilniku. Pri tem smo morali biti pozorni, da ne pride do preliva (angl. overflow), saj lahko z dvema bajtoma hranimo maksimalno vrednost 65535, vendar ker vemo, da je tako za LCS kot za Levenshteinovo razdaljo zgornja meja rezultata manjša ali enaka dolžini daljšega izmed vhodnih nizov, je ta pristop vsekakor smiselen za vhodne nize krajše od dolžine 65536. 
@@ -720,7 +698,6 @@ Vseeno pa je smiselno najti splošnejšo rešitev. Izkaže se, da pri pristopu n
 
 \bigskip
 \bigskip
-
 
 \begin{lstlisting}[language=C++, caption={Prostorska optimizacija}, captionpos=b, label=spaceOptimization]
 int backward_levenshtein_space_optimization (string str1, string str2, int row, int column) {
@@ -748,7 +725,6 @@ int backward_levenshtein_space_optimization (string str1, string str2, int row, 
         //rewrite data
         for(int j = 0; j < column; j++) 
             temp1[j] = current[j];
-
     }
 
     return current[0];
@@ -759,7 +735,13 @@ int backward_levenshtein_space_optimization (string str1, string str2, int row, 
 
 Pomanjkljivost pristopa naprej-nazaj je, da dejansko uporablja samo dve niti, oziroma ga je težko dodatno paralelizirati, ker se morajo niti v tem primeru med seboj čakati in ne dosežemo maksimalne optimalnosti, oziroma se čas morda celo poslabša zaradi prevelikega overheada. 
 
-Zato če želimo uporabiti več kot dve niti, raje koristimo diagonalni pristop, ki nam teoretično omogoča hkratno uporabo do k niti (k = dolžina diagonale = dolžina krajšega izmed dveh nizov). Ta pristop deluje, ker se izkaže, da so elementi na diagonalah vedno medsebojno neodvisni, algoritem namreč dostopa samo do podatkov v celicah (i, j-1), (i-1, j) in (i-1, j-1), paziti moramo samo, da se diagonale računajo v pravem vrstnem redu, torej da začnemo s celico (0, 0) in končamo s celico (n, m). To najlažje dosežemo tako, da z zunanjo zanko iteriramo po diagonalah (teh je vedno n+m-1) in nato v vsaki iteraciji vzporedno računamo vrednosti vseh celic na posamezni diagonali. 
+Zato če želimo uporabiti več kot dve niti, raje koristimo diagonalni pristop, ki nam teoretično omogoča hkratno uporabo do $k$ niti ($k$ = dolžina diagonale = dolžina krajšega izmed dveh nizov). Ta pristop deluje, ker se izkaže, da so elementi na diagonalah vedno medsebojno neodvisni, algoritem namreč dostopa samo do podatkov v celicah $(i, j-1)$, $(i-1, j)$ in $(i-1, j-1)$, paziti moramo samo, da se diagonale računajo v pravem vrstnem redu, torej da začnemo s celico $(0, 0)$ in končamo s celico $(n, m)$. To najlažje dosežemo tako, da z zunanjo zanko iteriramo po diagonalah (teh je vedno $n+m-1$) in nato v vsaki iteraciji vzporedno računamo vrednosti vseh celic na posamezni diagonali. 
+
+\section{Optimizacija pomnilniških dostopov}
+
+Prednost diagonalnega pristopa v primerjavi z naprej-nazaj je, da deluje s poljubnim številom niti namesto s samo dvema, vendar se izkaže, da pride pri tem do nepričakovanega ozkega grla pri dostopih do delovnega pomnilnika. Namreč, ko računamo celice na posamezni diagonali, je potrebno za izračun iz delovnega pomnilnika v predpomnilnik prenesti celice, ki se nahajajo levo, nad in levo diagonalno nad trenutnim elementom. Večina modernih računalniških arhitektur iz glavnega pomnilnika v predpomnilnik prenese blok določene dolžine, težava pri tem pa je, da ker se premikamo po diagonali, ostale niti potrebujejo v danem trenutku vsebine celic, ki se nahajajo v nekem čisto drugem delu glavnega pomnilnika, zato mora vsaka nit v večini iteracij prenašati svoj blok v predpomnilnik, kar je zelo časovno potratno v primerjavi s samimi izračuni. 
+
+Temu problemu se izognemo tako, da matriko zarotiramo v desno za 45 stopinj in s tem dosežemo, da je vsaka diagonala iz stare matrike zdaj predstavljena kot vrstica v novi matriki, kot je prikazano na sliki (\ref{matrixTransformation}). Prikazane niso izračunane vrednosti, temveč samo intuitivne oznake posameznih celic, da jasno vidimo, kam se posamezna celica preslika. 
 
 \begin{figure}[htb]
 
@@ -798,21 +780,168 @@ d  & \textcolor{red}{21} & \textcolor{brown}{17} & \textcolor{purple}{13} & \tex
 \end{center}
 \end{subfigure}%
 
-\caption{Primer preoblikovanja matrike za optimizacijo predpomnilnika za dva niza dolžine 4}
+\caption{Primer preoblikovanja matrike za optimizacijo pomnilniških dostopov za dva niza dolžine 4}
 \label{matrixTransformation}
 \end{figure}
 
+Hitro opazimo, da se je število vrstic podvojilo, vendar se dejanska prostorska zahtevnost ni poslabšala, saj dejansko še vedno hranimo enako število celic. Potrebno je le, da v programski kodi pri inicializaciji tabele upoštevamo nove dolžine stolpcev glede na indeks vrstice. To dosežemo na sledeč način (\ref{optimizedMatrix}): 
 
+\begin{lstlisting}[language=C++, caption={Inicializacija optimizirane tabele}, captionpos=b, label=optimizedMatrix]
+int newRow = row + column - 1;
 
+arrMemory = new unsigned short int*[newRow];
 
+for (int i = 0; i < newRow; i++) 
+    if(i < row)
+        arrMemory[i] = new unsigned short int[i+1];
+    else
+        arrMemory[i] = new unsigned short int[row + column - i - 1];
+\end{lstlisting}
 
+Ker smo spremenili strukturo tabele, moramo temu primerno prilagoditi tudi programsko kodo. Namesto da iteriramo po diagonalah, zdaj iteriramo po vrsticah, vendar moramo upoštevati, da so indeksi soležnih celic, ki jih potrebujemo za računanje vrednosti v posamezni celici zdaj drugačni oziroma celice dejansko niti niso več soležne. Indeksi se razlikujejo tudi glede na to, v katerem delu tabele se trenutno nahajamo, zato je najbolj smiselno razdeliti kodo na štiri dele:
+\begin{itemize}
+    \item Prva vrstica in stolpec (vrstica je zdaj dejansko diagonala)
+    
+        \begin{figure}[htb]
+        \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\cline{3-6}
+  \multicolumn{2}{c|}{}  & x & y & z & w\\ \cline{2-6}
+ \multicolumn{1}{c|}{} & \cellcolor{blue!15}\textcolor{red}{0} & \multicolumn{4}{c}{} \\ \cline{1-3}
+a  & \cellcolor{blue!15}\textcolor{red}{0} & \cellcolor{blue!15}\textcolor{red}{0} &  \multicolumn{3}{c}{} \\ \cline{1-4}
+b  & \cellcolor{blue!15}\textcolor{red}{0} & \textcolor{blue}{} & \cellcolor{blue!15}\textcolor{red}{0} & \multicolumn{2}{c}{}  \\ \cline{1-5}
+c  & \cellcolor{blue!15}\textcolor{red}{0} & \textcolor{purple}{} & \textcolor{blue}{} & \cellcolor{blue!15}\textcolor{red}{0} & \multicolumn{1}{c}{} \\ \cline{1-6}
+d  & \cellcolor{blue!15}\textcolor{red}{0} & \textcolor{brown}{} & \textcolor{purple}{} & \textcolor{blue}{} & \cellcolor{blue!15}\textcolor{red}{0} \\ \hline
+ \multicolumn{1}{c|}{} &  & \textcolor{brown}{} & \textcolor{purple}{} & \textcolor{blue}{} & \multicolumn{1}{c}{}  \\ \cline{2-5}
+\multicolumn{1}{c|}{}  &  & \textcolor{brown}{} & \textcolor{purple}{} & \multicolumn{2}{c}{}   \\ \cline{2-4}
+\multicolumn{1}{c|}{}  &  & \textcolor{brown}{} &  \multicolumn{3}{c}{}   \\ \cline{2-3}
+\multicolumn{1}{c|}{}  &  & \multicolumn{4}{c}{}  \\ \cline{2-2}
+\end{tabular}
+        \end{center}
+        \caption{Začetne vrednosti}
+        \label{diagMemory1}
+        \end{figure}
 
+        \begin{lstlisting}[language=C++, caption={Inicializacija začetnih vrednosti za LCS}, captionpos=b, label=diagonalMemory1]
+        for (int i = 0; i < row; i++)
+            arrMemory[i][0] = 0;
+        for (int j = 1; j < column; j++)
+            arrMemory[j][j] = 0;
+        \end{lstlisting}
+    
+    \item Zgornji trikotnik
+    
+        \begin{figure}[htb]
+        \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\cline{3-6}
+  \multicolumn{2}{c|}{}  & x & y & z & w\\ \cline{2-6}
+ \multicolumn{1}{c|}{} & \textcolor{red}{0} & \multicolumn{4}{c}{} \\ \cline{1-3}
+a  & \textcolor{red}{0} & \textcolor{red}{0} &  \multicolumn{3}{c}{} \\ \cline{1-4}
+b  & \textcolor{red}{0} & \cellcolor{blue!15} & \textcolor{red}{0} & \multicolumn{2}{c}{}  \\ \cline{1-5}
+c  & \textcolor{red}{0} & \cellcolor{blue!15} & \cellcolor{blue!15} & \textcolor{red}{0} & \multicolumn{1}{c}{} \\ \cline{1-6}
+d  & \textcolor{red}{0} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \textcolor{red}{0} \\ \hline
+ \multicolumn{1}{c|}{} &  & \textcolor{brown}{} & \textcolor{purple}{} & \textcolor{blue}{} & \multicolumn{1}{c}{}  \\ \cline{2-5}
+\multicolumn{1}{c|}{}  &  & \textcolor{brown}{} & \textcolor{purple}{} & \multicolumn{2}{c}{}   \\ \cline{2-4}
+\multicolumn{1}{c|}{}  &  & \textcolor{brown}{} &  \multicolumn{3}{c}{}   \\ \cline{2-3}
+\multicolumn{1}{c|}{}  &  & \multicolumn{4}{c}{}  \\ \cline{2-2}
+\end{tabular}
+        \end{center}
+        \caption{Zgornji trikotnik}
+        \label{diagMemory2}
+        \end{figure}
+        
+        \begin{lstlisting}[language=C++, caption={Izračun zgornjega trikotnika za LCS}, captionpos=b, label=diagonalMemory2]
+        for(int i = 2; i < column; i++) {
+            for(int j = 1; j < i; j++) {
+                if(str1[i-j-1] == str2[j-1])
+                    arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
+                else
+                    arrMemory[i][j] = max(arrMemory[i-1][j-1], arrMemory[i-1][j]);
+            }
+        }
+        \end{lstlisting}
 
+    \item Vmesne vrednosti
+    
+        \begin{figure}[htb]
+        \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\cline{3-6}
+  \multicolumn{2}{c|}{}  & x & y & z & w\\ \cline{2-6}
+ \multicolumn{1}{c|}{} & \textcolor{red}{0} & \multicolumn{4}{c}{} \\ \cline{1-3}
+a  & \textcolor{red}{0} & \textcolor{red}{0} &  \multicolumn{3}{c}{} \\ \cline{1-4}
+b  & \textcolor{red}{0} & \textcolor{blue}{} & \textcolor{red}{0} & \multicolumn{2}{c}{}  \\ \cline{1-5}
+c  & \textcolor{red}{0} & \textcolor{purple}{} & \textcolor{blue}{} & \textcolor{red}{0} & \multicolumn{1}{c}{} \\ \cline{1-6}
+d  & \textcolor{red}{0} & \textcolor{brown}{} & \textcolor{purple}{} & \textcolor{blue}{} & \textcolor{red}{0} \\ \hline
+ \multicolumn{1}{c|}{} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \multicolumn{1}{c}{}  \\ \cline{2-5}
+\multicolumn{1}{c|}{}  &  & \textcolor{brown}{} & \textcolor{purple}{} & \multicolumn{2}{c}{}   \\ \cline{2-4}
+\multicolumn{1}{c|}{}  &  & \textcolor{brown}{} &  \multicolumn{3}{c}{}   \\ \cline{2-3}
+\multicolumn{1}{c|}{}  &  & \multicolumn{4}{c}{}  \\ \cline{2-2}
+\end{tabular}
+        \end{center}
+        \caption{Vmesne vrednosti}
+        \label{diagMemory3}
+        \end{figure}
+        
+        \begin{lstlisting}[language=C++, caption={Izračun vmesnih vrednosti za LCS}, captionpos=b, label=diagonalMemory3]
+        for(int i = column; i < row; i++) {
+            for(int j = 1; j < column; j++) {
+                if(str1[i-j-1] == str2[j-1])
+                    arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
+                else
+                    arrMemory[i][j] = max(arrMemory[i-1][j], arrMemory[i-1][j-1]);
+            }
+        }
+        
+        for(int j = 0; j < column - 1; j++) {
+            if(str1[row-j-2] == str2[j])
+                arrMemory[row][j] = 1 + arrMemory[row-2][j];
+            else
+                arrMemory[row][j] = max(arrMemory[row-1][j+1], arrMemory[row-1][j]);
+        }
+        \end{lstlisting}
 
+    \item Spodnji trikotnik
+    
+        \begin{figure}[htb]
+        \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\cline{3-6}
+  \multicolumn{2}{c|}{}  & x & y & z & w\\ \cline{2-6}
+ \multicolumn{1}{c|}{} & \textcolor{red}{0} & \multicolumn{4}{c}{} \\ \cline{1-3}
+a  & \textcolor{red}{0} & \textcolor{red}{0} &  \multicolumn{3}{c}{} \\ \cline{1-4}
+b  & \textcolor{red}{0} &  &  & \multicolumn{2}{c}{}  \\ \cline{1-5}
+c  & \textcolor{red}{0} & \textcolor{purple}{} & \textcolor{blue}{} & \textcolor{red}{0} & \multicolumn{1}{c}{} \\ \cline{1-6}
+d  & \textcolor{red}{0} & \textcolor{brown}{} & \textcolor{purple}{} & \textcolor{blue}{} & \textcolor{red}{0} \\ \hline
+ \multicolumn{1}{c|}{} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \multicolumn{1}{c}{}  \\ \cline{2-5}
+\multicolumn{1}{c|}{}  & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \multicolumn{2}{c}{}   \\ \cline{2-4}
+\multicolumn{1}{c|}{}  & \cellcolor{blue!15} & \cellcolor{blue!15} &  \multicolumn{3}{c}{}   \\ \cline{2-3}
+\multicolumn{1}{c|}{}  & \cellcolor{blue!15} & \multicolumn{4}{c}{}  \\ \cline{2-2}
+\end{tabular}
+        \end{center}
+        \caption{Spodnji trikotnik}
+        \label{diagMemory4}
+        \end{figure}
+
+        \begin{lstlisting}[language=C++, caption={Izračun spodnjega trikotnika za LCS}, captionpos=b, label=diagonalMemory4]
+        for(int i = row+1; i < newRow; i++) {
+            for(int j = 0; j < newRow - i; j++) {
+                if(str1[row-j-2] == str2[j+i-row])
+                    arrMemory[i][j] = 1 + arrMemory[i-2][j+1];
+                else
+                    arrMemory[i][j] = max(arrMemory[i-1][j+1], arrMemory[i-1][j]);
+            }
+        }
+        \end{lstlisting}
+    
+\end{itemize}
 
 \chapter{Rezultati}
 
-V tem poglavju so prikazane meritve časov izvajanja za posamezne algoritme in medsebojna primerjava le-teh. Glede na to, da je večnitenje zelo odvisno od same arhitekture sistema na katerem izvajamo programsko kodo, pa tudi od raznih zunanjih dejavnikov (npr. časovno razvrščanje operacijskega sistema), je predvsem pri tabelah manjših velikosti smiselno, da posamezno funkcijo kličemo večkrat in kot končni rezultat vzamemo povprečje vseh meritev. 
+V tem poglavju najprej predstavimo postopek generiranja podatkov in na kratko opišemo sistem, na katerem smo izvajali testne meritve, nato pa prikažemo meritve časov izvajanja za posamezne algoritme in medsebojno primerjavo le-teh. Glede na to, da je večnitenje zelo odvisno od same arhitekture sistema na katerem izvajamo programsko kodo, kot tudi od raznih zunanjih dejavnikov (npr. časovno razvrščanje operacijskega sistema), je predvsem pri tabelah manjših velikosti smiselno, da posamezno funkcijo kličemo večkrat in kot končni rezultat vzamemo povprečje vseh meritev. 
+
+Algoritmi seveda pravilno delujejo za vhodne podatke različnih dimenzij (dolžin), vendar smo za potrebe enostavnejših oziroma bolj preglednih grafičnih prikazov rezultatov meritve izvajali samo nad dvema nizoma enake dolžine. Drugače povedano, na $x$ osi v vseh grafikonih v naslednih podpoglavjih je navedena samo ena dolžina niza, kar pa dejansko pomeni, da smo algoritme izvajali nad dvema nizoma te dolžine. Pri prostorsko optimiziranih algoritmih to pomeni, da delamo z dvema oziroma tremi tabelami dolžine $n$, pri ostalih pa gre za matriko velikosti $n \times n$. 
 
 \section{Generiranje podatkov}
 
@@ -834,83 +963,80 @@ Vse mertive, ki so predstavljene v naslednjih podpoglavjih, smo izvajali na s si
 
 Za vizualizacijo rezultatov smo uporabili knjižnico Matplotlib, v programskem jeziku Python, preostanek programske kode (torej implementacija vseh 16 različic algoritmov in generiranje naključnih podatkov) je spisan v programskem jeziku C++20. Kot urejevalnik smo uporabljali Visual Studio Code, ki ima vgrajen prevajalnik gcc, verzije 13.2.0. Ključnega pomena je, da prevajalniku dodamo optimizacijsko stikalo -O3 \cite{compilerFlag} v JSON datoteki tasks.json. S tem nekoliko povečamo čas prevajanja, vendar je čas dejanskega izvajanja programa občutno hitrejši. 
 
-
-
-
 \section{Primerjava algoritmov za LCS}
 
-Za implementacije, ki hranijo celotno tabelo v delovnem pomnilniku smo meritve izvedli za nize dolžin med 10000 in 60000, s korakom 10000, za implemetacije s prostorsko optimizacijo pa za nize dolžin med 100000 in 250000, s korakom 50000. 
+Za implementacije, ki hranijo celotno tabelo v delovnem pomnilniku smo meritve izvedli za nize dolžin med 10000 in 60000, s korakom 10000, za implemetacije s prostorsko optimizacijo pa za nize dolžin med 100000 in 400000, s korakom 50000. \bigskip
 
-Kot smo pričakovali, je čas izvajanja za pristopa naprej in nazaj praktično enak, s pristopom naprej-nazaj pa dosežemo pohitritev že na meritvi z nizi dolžine 10000 (\ref{comparison1}). Izkaže pa se, da pohitritev ni ravno dvakratna, kot bi teoretično pričakovali pri uporabi dveh niti. 
+Kot smo pričakovali, je čas izvajanja za pristopa naprej in nazaj praktično enak, ker gre dejansko za isti algoritem, le z različnim vrstnim redom računanja celic. S pristopom naprej-nazaj pa dosežemo pohitritev že na meritvi z nizi dolžine 10000 (\ref{comparison1}). Izkaže pa se, da pohitritev ni ravno dvakratna, kot bi teoretično pričakovali pri uporabi dveh niti. 
 
+Zanimiva ugotovitev je tudi, da se diagonalni algoritem dobro izkaže že brez paralelizacije in je celo hitrejši od vzporednega algoritma s 6 nitmi za nize do velikosti približno 50000. \bigskip 
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{plots/LCS_comparison.png}
+\includegraphics[width=1.0\textwidth]{plots/LCStotal.png}
 \end{center}
-\caption{Primerjava LCS algoritmov naprej, nazaj in naprej-nazaj}
+\caption{Primerjava časov izvajanja LCS algoritmov brez prostorske optimizacije}
 \label{comparison1}
 \end{figure}
 
-
 Pri primerjavi prostorsko optimiziranih funkcij (\ref{comparison2}) ravno tako vidimo, da ne obstaja bistvena razlika med pristopoma naprej in nazaj, je pa tukaj pristop naprej-nazaj res skoraj dvakrat hitrejši, iz česar lahko sklepamo, da je ozko grlo pri prenašanju dvodimenzionalnih tabel v predpomnilnik. 
+
+Pri nizih dolžine približno 200000 začnemo opažati občutno razliko med tremi osnovnimi algoritmi (naprej, nazaj in diagonalno) in vzporednima algoritmoma (naprej-nazaj in diagonalno paralelno). Nekoliko presenetljiv rezultat je, da je tudi na relativno velikih dolžinah vhodnih podatkih pristop naprej-nazaj rahlo hitrejši od diagonalnega. Tukaj gre dejansko za primerjavo med algoritmom z dvema nitima, ki sta medseboj neodvisni (torej ločeno računata vsaka svojo polovico tabele) in algoritmom s šestimi nitmi, ki se morajo sinhronizirati na koncu vsake vrstice, pri čemer neizogibno pride do medsebojnega čakanja. 
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{plots/LCS_comparison_space.png}
+\includegraphics[width=1.0\textwidth]{plots/LCSspace.png}
 \end{center}
-\caption{Primerjava LCS algoritmov s prostorsko optimizacijo}
+\caption{Primerjava časov izvajanja LCS algoritmov s prostorsko optimizacijo}
 \label{comparison2}
 \end{figure}
 
+\bigskip 
+Vseeno pa smo pričakovali, da obstaja neka točka na kateri bo diagonalni algoritem postal hitrejši od naprej-nazaj, zato smo izvedli dodatne teste na še večjih dolžinah vhodnih nizov. Ker gre za metode s prostorsko optimizacijo tukaj nismo pretirano zaskrbljeni glede porabe pomnilnika: za tri enodimenzionalne tabele dolžine 700000 potrebujemo približno 8GB pomnilniškega prostora (če podatkovni tip int zasede 4 bajte v pomnilniku), kar je sprejemljivo za specifikacije naprave na kateri smo izvajali teste. 
 
-
-
-
-
-\section{Primerjava algoritmov za Levenshteinovo razdaljo}
-
-Ker sta algoritma za iskanje LCS in Levenshteinove razdalje konceptualno zelo podobna, lahko pričakujemo, da bo to razvidno tudi iz praktičnih meritev. Izkaže se, da če primerjamo \ref{comparison1} in \ref{comparison3} oziroma \ref{comparison2} in \ref{comparison4} res vidimo podobne rezultate za enake dolžine vhodnih nizov. 
-
-
+Kot je razvidno iz slike (\ref{comparison3}), smo res našli točko kjer je cena sinhronizacije 6 niti dovolj majhna, da postane diagonalni algoritem hitejši od dveh neodvisnih niti - ta je približno med 500000 in 600000, pri 700000 pa je vzporedni algoritem hitrejši že za skoraj pol minute. 
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{plots/Levenshtein_comparison.png}
+\includegraphics[width=1.0\textwidth]{plots/LCSextended.png}
 \end{center}
-\caption{Primerjava algoritmov za iskanje Levenshteinove razdalje naprej, nazaj in naprej-nazaj}
+\caption{Dodatna primerjava časov izvajanja LCS algoritmov s prostorsko optimizacijo}
 \label{comparison3}
 \end{figure}
 
+\section{Primerjava algoritmov za Levenshteinovo razdaljo}
+
+Ker sta algoritma za iskanje LCS in Levenshteinove razdalje konceptualno zelo podobna, lahko pričakujemo, da bo to razvidno tudi iz praktičnih meritev. Že na prvi pogled vidimo, da so razmerja med krivuljami res približno enaka (\ref{comparison4}). Dejanski časi izvajanja so tukaj nekoliko daljši, predvidoma zaradi gnezdenega klica funkcije $min()$, ki ni prisoten v algoritmu za računanje LCS. 
+
+Zaradi daljših časov izvajanja se tudi izkaže, da občutimo uporabnost vzporednih algoritmov že na krajših dolžinah vhodnih nizov. Primer: pri LCS algoritmih (\ref{comparison1}) je osnovni diagonalni algoritem hitrejši od vzporednega do nizov dolžine približno 50000, pri Levenshteinovi razdalji (\ref{comparison4}) pa sta časa izvajanja približno enaka že pri nizih dolžine 40000. 
+
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{plots/Levenshtein_comparison_space.png}
+\includegraphics[width=1.0\textwidth]{plots/LevenshteinTotal.png}
 \end{center}
-\caption{Primerjava algoritmov za iskanje Levenshteinove razdalje s prostorsko optimizacijo naprej, nazaj in naprej-nazaj}
+\caption{Primerjava časov izvajanja algoritmov za iskanje Levenshteinove razdalje brez prostorske optimizacije}
 \label{comparison4}
 \end{figure}
 
+Na tem mestu je smiselno, da si ogledamo še primerjavo časov izvajanja diagonalnega algoritma glede na število niti (\ref{comparison5}). Iz specifikacij sistema vemo, da lahko hkrati poganjamo največ 8 niti, vendar vidimo, da je tudi večje število niti (npr. 12) še vedno hitrejše od osnovnega algoritma. Ker pride v tem primeru do dodatnega čakanja med nitmi, seveda to ni smiselno, zato smo za meritve za Levenshteinovo razdaljo uporabljali 8 niti, za LCS pa se v povprečju bolje izkaže samo 6 niti. 
 
-
-%TODO: primerjava diagonalni, pohitritve v %
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{plots/Levenshtein_diagonal_comparison.png}
+\includegraphics[width=1.0\textwidth]{plots/nThreads.png}
 \end{center}
-\caption{Primerjava diagonalnih algoritmov za iskanje Levenshteinove razdalje}
+\caption{Primerjava časov izvajanja diagonalnih algoritmov glede na število niti}
 \label{comparison5}
 \end{figure}
 
+Na sliki (\ref{comparison6}) je prikazana še primerjava časov izvajanja algoritmov s prostorsko optimizacijo. Ponovno vidimo, da je diagonalni vzporedni algoritem občutno hitrejši na bistveno krajših dolžinah nizov kot pri LCS (250000 proti 600000), zato tukaj niti ni potrebno, da izvajamo dodatne meritve nad dolžinami 400000. 
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{plots/Levenshtein_thread_number.png}
+\includegraphics[width=1.0\textwidth]{plots/LevenshteinSpace.png}
 \end{center}
-\caption{Primerjava diagonalnih algoritmov za iskanje Levenshteinove razdalje glede na število niti}
+\caption{Primerjava časov izvajanja algoritmov za iskanje Levenshteinove razdalje s prostorsko optimizacijo}
 \label{comparison6}
 \end{figure}
-
-
 
 \chapter{Zaključki}
 
@@ -920,13 +1046,18 @@ V tem poglavju predstavimo sklepne ugotovitve diplomskega dela in predlagamo nek
 
 Izkaže se, da obstajajo različni možni načini povzporejanja algoritmov za računanje dolžine LCS in Levenshteinove razdalje, kljub temu, da pri obeh problemih obstaja velika medsebojna odvisnost med izračunanimi rezultati v matriki. 
 
-Veliko pohitritev dosežemo že z uporabo dveh niti, s pristopom naprej-nazaj. Izboljšave so vidne že na relativno majhnih vhodnih podatkih. Če nas zanima samo dolžina LCS ali Levenshteinove razdalje, in nas ne zanima rekonstrukcija poti, po kateri smo prišli do rezultata, pa lahko implementiramo še občutno izboljšano porabo prostora v pomnilniku, s tem da se izognemo uporabi dvodimenzionalnih matrik. Prostorsko zahtevnost tako izboljšamo iz \begin{math}O(n^2)\end{math} na \begin{math}O(n)\end{math}. 
+Veliko pohitritev dosežemo že z uporabo dveh niti, s pristopom naprej-nazaj. Izboljšave so vidne že na relativno majhnih vhodnih podatkih. Če nas zanima samo dolžina LCS ali Levenshteinove razdalje, in nas ne zanima rekonstrukcija poti, po kateri smo prišli do rezultata, pa lahko implementiramo še občutno izboljšano porabo prostora v pomnilniku, s tem da se izognemo uporabi dvodimenzionalnih matrik. Prostorsko zahtevnost tako izboljšamo iz $O(n^2)$ na $O(n)$. 
 
 Za vzporedno izvajanje več kot dveh niti, se moramo poslužiti diagonalnega pristopa, pri katerem lahko izberemo poljubno število niti glede na omejitve strojne opreme na sistemu, na katerem se izvaja programska koda, ali pa glede na velikost vhodnih podatkov. 
 
 \section{Nadaljnji razvoj}
 
 Z vzporednimi algoritmi smo dosegli občutno pohitritev že na običajnih osebnih računalnikih. V nadaljnje bi bilo zanimivo preveriti ali je čas izvajanja morda še krajši na zmogljivejših sistemih z ogromno kolilčino jeder, oziroma ali je mogoče algoritme še dodatno prilagoditi za tovrstne sisteme. 
+
+Zanimivo bi bilo tudi ugotoviti, ali je algoritme mogoče preurediti tako, da na nek način upoštevajo dolžine vhodnih nizov, predvsem če pride do situacije, ko je en niz bistveno krajši od drugega. Predvidevamo, da bi bilo v tem primeru smiselno krajši niz postaviti v vrstice, daljši niz pa v stolpce matrike, da bi s tem zmanjšali število sinhronizacij niti pri diagonalnem pristopu. 
+
+%https://www.researchgate.net/publication/299366231_Computing_a_Longest_Common_Subsequence_for_Multiple_Sequences
+%https://colab.ws/articles/10.1007%2F978-3-662-07675-0_8
 
 
 %\cleardoublepage
@@ -946,4 +1077,3 @@ Z vzporednimi algoritmi smo dosegli občutno pohitritev že na običajnih osebni
 \printbibliography[heading=bibintoc,title={Literatura}]
 
 \end{document}
-
