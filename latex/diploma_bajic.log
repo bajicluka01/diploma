@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  5 AUG 2024 10:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  6 AUG 2024 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -959,7 +959,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.25 ...{\numberline {5}Zaključki}{33}{chapter.5}
+l.25 ...{\numberline {5}Zaključki}{35}{chapter.5}
                                                   % [9
 
 ])
@@ -1035,17 +1035,17 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
-[2]
+[2] [3] [4
+
+]
 Poglavje 2.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [3
-
-]
+ [5]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4]
+ [6]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
@@ -1056,87 +1056,87 @@ File: lstlang1.sty 2023/02/27 1.9 listings language file
 File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 469.
+nput line 471.
 
-[5] [6] [7] [8
+[7] [8] [9] [10
 
 ]
 Poglavje 3.
-[9] [10] [11] [12]
+[11] [12] [13] [14]
 Underfull \vbox (badness 1867) has occurred while \output is active []
 
- [13]
-[14] [15] [16] [17] [18] [19] [20] [21] [22
+ [15]
+[16] [17] [18] [19] [20] [21] [22] [23] [24
 
 ]
 Poglavje 4.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [23]
-[24]
-Overfull \hbox (5.6445pt too wide) in paragraph at lines 970--971
+ [25]
+[26]
+Overfull \hbox (5.6445pt too wide) in paragraph at lines 972--973
 \OT1/cmr/m/n/12 enak, ker gre de-jan-sko za isti al-go-ri-tem, le z razli^^Tcni
 m vr-stnim re-dom ra^^Tcunanja
  []
 
-<plots/LCStotal.png, id=511, 462.528pt x 346.896pt>
+<plots/LCStotal.png, id=525, 462.528pt x 346.896pt>
 File: plots/LCStotal.png Graphic file (type png)
 <use plots/LCStotal.png>
-Package pdftex.def Info: plots/LCStotal.png  used on input line 976.
+Package pdftex.def Info: plots/LCStotal.png  used on input line 978.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
-<plots/LCSspace.png, id=514, 462.528pt x 346.896pt>
+<plots/LCSspace.png, id=528, 462.528pt x 346.896pt>
 File: plots/LCSspace.png Graphic file (type png)
 <use plots/LCSspace.png>
-Package pdftex.def Info: plots/LCSspace.png  used on input line 988.
+Package pdftex.def Info: plots/LCSspace.png  used on input line 990.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
-[25]
-<plots/LCSextended.png, id=522, 462.528pt x 346.896pt>
+[27]
+<plots/LCSextended.png, id=537, 462.528pt x 346.896pt>
 File: plots/LCSextended.png Graphic file (type png)
 <use plots/LCSextended.png>
-Package pdftex.def Info: plots/LCSextended.png  used on input line 1001.
+Package pdftex.def Info: plots/LCSextended.png  used on input line 1003.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26 <./plots/LCStotal.png>]
+ [28 <./plots/LCStotal.png>]
 Underfull \vbox (badness 2913) has occurred while \output is active []
 
- [27 <./plots/LCSspace.png>]
-<plots/LevenshteinTotal.png, id=539, 462.528pt x 346.896pt>
+ [29 <./plots/LCSspace.png>]
+<plots/LevenshteinTotal.png, id=553, 462.528pt x 346.896pt>
 File: plots/LevenshteinTotal.png Graphic file (type png)
 <use plots/LevenshteinTotal.png>
-Package pdftex.def Info: plots/LevenshteinTotal.png  used on input line 1015.
+Package pdftex.def Info: plots/LevenshteinTotal.png  used on input line 1017.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
-<plots/nThreads.png, id=541, 497.2176pt x 346.896pt>
+<plots/nThreads.png, id=555, 497.2176pt x 346.896pt>
 File: plots/nThreads.png Graphic file (type png)
 <use plots/nThreads.png>
-Package pdftex.def Info: plots/nThreads.png  used on input line 1025.
+Package pdftex.def Info: plots/nThreads.png  used on input line 1027.
 (pdftex.def)             Requested size: 390.0pt x 272.10751pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [28 <./plots/LCSextended.png>]
-<plots/LevenshteinSpace.png, id=550, 559.3698pt x 346.896pt>
+ [30 <./plots/LCSextended.png>]
+<plots/LevenshteinSpace.png, id=564, 559.3698pt x 346.896pt>
 File: plots/LevenshteinSpace.png Graphic file (type png)
 <use plots/LevenshteinSpace.png>
-Package pdftex.def Info: plots/LevenshteinSpace.png  used on input line 1035.
+Package pdftex.def Info: plots/LevenshteinSpace.png  used on input line 1037.
 (pdftex.def)             Requested size: 390.0pt x 241.86746pt.
- [29 <./plots/LevenshteinTotal.png>] [30 <./plots/nThreads.png>] [31 <./plots/L
-evenshteinSpace.png>] [32
+ [31 <./plots/LevenshteinTotal.png>] [32 <./plots/nThreads.png>] [33 <./plots/L
+evenshteinSpace.png>] [34
 
 ]
 Poglavje 5.
-[33] [34]
+[35] [36] [37
+
+]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 )
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
-) [35
-
-] (diploma_bajic.aux)
+) [38] (diploma_bajic.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
@@ -1148,10 +1148,10 @@ Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 24403 strings out of 474486
- 421621 string characters out of 5743755
+ 24423 strings out of 474486
+ 422496 string characters out of 5743755
  2194542 words of memory out of 5000000
- 46115 multiletter control sequences out of 15000+600000
+ 46129 multiletter control sequences out of 15000+600000
  570314 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,17n,81p,1861b,2296s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1174,9 +1174,9 @@ pe1/public/amsfonts/cm/cmti10.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX
 ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/bajic/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/bajic/App
 Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (51 pages, 626396 bytes).
+Output written on diploma_bajic.pdf (54 pages, 634215 bytes).
 PDF statistics:
- 718 PDF objects out of 1000 (max. 8388607)
- 261 named destinations out of 1000 (max. 500000)
+ 740 PDF objects out of 1000 (max. 8388607)
+ 267 named destinations out of 1000 (max. 500000)
  234 words of extra memory for PDF output out of 10000 (max. 10000000)
 

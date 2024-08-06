@@ -51,6 +51,15 @@ nThreads12 = [1.747410, 3.475634, 6.001397,  9.517540,  17.887280]
 
 #Levenshtein
 
+f = plt.figure(7)
+ax = f.add_subplot(111)
+ax.yaxis.tick_right()
+plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein, diagonalLevenshteinMemory, diagonalLevenshteinMemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj', 'diagonalno', 'diagonalno paralelno (8 niti)'])
+plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
+plt.legend()
+
 plt.figure(1)
 plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein, diagonalLevenshteinMemory, diagonalLevenshteinMemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj', 'diagonalno', 'diagonalno paralelno (8 niti)'])
 plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje')

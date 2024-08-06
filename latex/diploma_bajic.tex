@@ -411,11 +411,13 @@ V diplomskem delu so opisani različni pristopi za optimizacijo algoritmov za ra
 
 \section{Motivacija}
 
-Iskanje podobnosti med nizi se na prvi pogled zdi dokaj enostaven problem, vendar gre v resnici za obsežno in raznoliko skupino algoritmov, ki služijo kot gradniki aplikacij na številnih področjih in v različnih domenah, v katerih se običajno srečujemo z zelo specifičnimi potrebami oz. zahtevami. Tipičen primer je bioinformatika ali genetika \cite{LCSpracticalUse}, kjer pogosto naletimo na probleme z ozkim naborom znakov in lahko algoritme temu primerno tudi prilagodimo. Kot drugi primer vzamemo orodja za kontrolo različic. Tukaj lahko pričakujemo, da bosta dve datoteki, ki ju primerjamo, večinoma zelo podobni, morda samo z nekaj spremenjenimi vrsticami, posledično lahko razvijemo algoritem, ki bo tovrstna pričakovanja upošteval in se morda na nek način obnašal bolj uporabniku prijazno (npr. z nekimi hitrimi, vmesnimi aproksimacijami, če je celotno izvajanje preveč dolgotrajno). Vsekakor pa vemo, da je vsaka optimizacija algoritmov za primerjavo nizov zelo koristna, zato smo v tem diplomskem delu preučili nekaj tovrstnih pristopov za algoritma za računanje LCS in Levenshteinove razdalje. 
+Iskanje podobnosti med nizi se na prvi pogled zdi dokaj enostaven problem, vendar gre v resnici za obsežno in raznoliko skupino algoritmov, ki služijo kot gradniki aplikacij na številnih področjih in v različnih domenah, v katerih se običajno srečujemo z zelo specifičnimi potrebami oz. zahtevami. Tipičen primer je bioinformatika ali genetika \cite{LCSpracticalUse}, kjer pogosto naletimo na probleme z ozkim naborom znakov in lahko algoritme temu primerno tudi prilagodimo. Kot drugi primer vzamemo orodja za kontrolo različic \cite{levenshteinMotivation}. Tukaj lahko pričakujemo, da bosta dve datoteki, ki ju primerjamo, večinoma zelo podobni, morda samo z nekaj spremenjenimi vrsticami, posledično lahko razvijemo algoritem, ki bo tovrstna pričakovanja upošteval in se morda na nek način obnašal bolj uporabniku prijazno (npr. z nekimi hitrimi, vmesnimi aproksimacijami, če je celotno izvajanje preveč dolgotrajno). 
+
+Iz tovrstnih praktičnih uporab vidimo, da je vsaka optimizacija algoritmov za iskanje razdalje med nizi zelo koristna, zato smo v tem diplomskem delu preučili nekaj tovrstnih pristopov za algoritma za računanje LCS in Levenshteinove razdalje. Omenjeni primeri so sicer zelo odvisni od specifične domene, v našem delu pa smo se osredotočili na iskanje splošnih rešitev, ki pridejo v poštev ne glede na tip vhodnih podatkov, predpostavljamo samo, da naprava na kateri algoritme izvajamo, omogoča večnitnost. 
 
 \section{Struktura}
 
-Diplomsko delo je razdeljeno na pet poglavij. Po uvodnem delu sledi opis obeh temeljnjih algoritmov, njune praktične uporabnosti in njunih implementacij z uporabo dinamičnega programiranja. Tretje poglavje predstavi dva glavna pristopa povzporejanja - diagonalni in naprej-nazaj. Pri slednjem je prikazan tudi primer prostorske optimizacije. V četrtem poglavju so predstavljeni rezultati meritev na različnih velikostih vhodnih podatkov in primerjave časov izvajanja posameznih različic algoritmov. V petem poglavju sledijo še sklepi in ideje za nadaljnji razvoj. 
+Diplomsko delo je razdeljeno na pet poglavij. Po uvodnem delu sledi opis obeh temeljnjih algoritmov, njune praktične uporabnosti in njunih implementacij z uporabo dinamičnega programiranja. Tretje poglavje predstavi dva glavna pristopa povzporejanja - diagonalni in naprej-nazaj. Pri diagonalnem je predstavljen tudi način optimizacije prenosov iz glavnega pomnilnika v predpomnilnik, ki je dejansko ključen za hitro delovanje algoritma. Poleg tega za vsako implementacijo opišemo še primer prostorske optimizacije. V četrtem poglavju so predstavljeni rezultati meritev na različnih velikostih vhodnih podatkov in primerjave časov izvajanja posameznih različic algoritmov. V petem poglavju sledijo še sklepne ugotovitve in morebitne ideje za nadaljnji razvoj. 
 
 \chapter{Metode in paradigme}
 
@@ -491,7 +493,7 @@ Avtorja članka \cite{documentsimilarity} sta razvila svojo zgoščevalno funkci
 
 \section{LCS}
 
-Podsekvenco definiramo kot zaporedje znakov, ki se nahajajo v nizu, v istem vrstnem redu, vendar ne nujno zaporedno. Torej, niz $"ABCD"$ vsebuje podsekvenco $"ACD"$, ne vsebuje pa podsekvence $"DCB"$. Najdaljša skupna podsekvenca, oziroma LCS, predstavlja najdaljšo možno podsekvenco, ki se nahaja v dveh (ali več) vhodnih nizih, v naših algoritmih pa iščemo dolžino te podsekvence. 
+Podsekvenco definiramo kot zaporedje znakov, ki se nahajajo v nizu, v istem vrstnem redu, vendar ne nujno zaporedno. Torej, niz $"ABCD"$ vsebuje podsekvenco $"ACD"$, ne vsebuje pa podsekvence $"DCB"$. Najdaljša skupna podsekvenca, oziroma LCS, predstavlja najdaljšo možno podsekvenco, ki se nahaja v dveh (ali več \cite{LCSmultipleSequences}) vhodnih nizih, v naših algoritmih pa iščemo dolžino te podsekvence. 
 
 Pristop reševanja tega problema je podoben kot za Levenshteinovo razdaljo v prejšnjem poglavju: začetne vrednosti za prvo vrstico in prvi stolpec so v tem primeru kar ničle, saj je pri praznem nizu dolžina podsekvence vedno 0. Preostanek tabele pa izračunamo po formuli (\ref{LCSequation}), za $i=1,...,n$ in $j=1,...,m$, kjer $s1$ in $s2$ predstavljata vhodna niza dolžin $n$ in $m$. Končni rezultat ponovno dobimo v celici $(n, m)$, kot je prikazano na sliki \ref{LCSexample}. 
 
@@ -739,7 +741,7 @@ Zato če želimo uporabiti več kot dve niti, raje koristimo diagonalni pristop,
 
 \section{Optimizacija pomnilniških dostopov}
 
-Prednost diagonalnega pristopa v primerjavi z naprej-nazaj je, da deluje s poljubnim številom niti namesto s samo dvema, vendar se izkaže, da pride pri tem do nepričakovanega ozkega grla pri dostopih do delovnega pomnilnika. Namreč, ko računamo celice na posamezni diagonali, je potrebno za izračun iz delovnega pomnilnika v predpomnilnik prenesti celice, ki se nahajajo levo, nad in levo diagonalno nad trenutnim elementom. Večina modernih računalniških arhitektur iz glavnega pomnilnika v predpomnilnik prenese blok določene dolžine, težava pri tem pa je, da ker se premikamo po diagonali, ostale niti potrebujejo v danem trenutku vsebine celic, ki se nahajajo v nekem čisto drugem delu glavnega pomnilnika, zato mora vsaka nit v večini iteracij prenašati svoj blok v predpomnilnik, kar je zelo časovno potratno v primerjavi s samimi izračuni. 
+Prednost diagonalnega pristopa v primerjavi z naprej-nazaj je, da deluje s poljubnim številom niti namesto s samo dvema, vendar se izkaže, da pride pri tem do nepričakovanega ozkega grla pri dostopih do delovnega pomnilnika. Namreč, ko računamo celice na posamezni diagonali, je potrebno za izračun iz delovnega pomnilnika v predpomnilnik prenesti celice, ki se nahajajo levo, nad in levo diagonalno nad trenutnim elementom. Večina modernih računalniških arhitektur iz glavnega pomnilnika v predpomnilnik prenese blok določene dolžine, težava pri tem pa je, da ker se premikamo po diagonali, ostale niti potrebujejo v danem trenutku vsebine celic, ki se nahajajo v nekem čisto drugem delu glavnega pomnilnika, zato mora vsaka nit v večini iteracij prenašati svoj blok v predpomnilnik, kar je zelo časovno potratno v primerjavi s samimi izračuni \cite{bottleneck}. 
 
 Temu problemu se izognemo tako, da matriko zarotiramo v desno za 45 stopinj in s tem dosežemo, da je vsaka diagonala iz stare matrike zdaj predstavljena kot vrstica v novi matriki, kot je prikazano na sliki (\ref{matrixTransformation}). Prikazane niso izračunane vrednosti, temveč samo intuitivne oznake posameznih celic, da jasno vidimo, kam se posamezna celica preslika. 
 
@@ -911,7 +913,7 @@ d  & \textcolor{red}{0} & \textcolor{brown}{} & \textcolor{purple}{} & \textcolo
   \multicolumn{2}{c|}{}  & x & y & z & w\\ \cline{2-6}
  \multicolumn{1}{c|}{} & \textcolor{red}{0} & \multicolumn{4}{c}{} \\ \cline{1-3}
 a  & \textcolor{red}{0} & \textcolor{red}{0} &  \multicolumn{3}{c}{} \\ \cline{1-4}
-b  & \textcolor{red}{0} &  &  & \multicolumn{2}{c}{}  \\ \cline{1-5}
+b  & \textcolor{red}{0} &  & \textcolor{red}{0} & \multicolumn{2}{c}{} \\ \cline{1-5}
 c  & \textcolor{red}{0} & \textcolor{purple}{} & \textcolor{blue}{} & \textcolor{red}{0} & \multicolumn{1}{c}{} \\ \cline{1-6}
 d  & \textcolor{red}{0} & \textcolor{brown}{} & \textcolor{purple}{} & \textcolor{blue}{} & \textcolor{red}{0} \\ \hline
  \multicolumn{1}{c|}{} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \cellcolor{blue!15} & \multicolumn{1}{c}{}  \\ \cline{2-5}

@@ -7,22 +7,22 @@
 \contentsline {chapter}{\numberline {1}Uvod}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Motivacija}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Struktura}{2}{section.1.2}%
-\contentsline {chapter}{\numberline {2}Metode in paradigme}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Dinamično programiranje}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Levenshteinova razdalja}{4}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Primer uporabe}{6}{subsection.2.2.1}%
-\contentsline {section}{\numberline {2.3}LCS}{6}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Vzporedni algoritmi}{9}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Pristop naprej-nazaj}{10}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Prostorska optimizacija}{14}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Diagonalni pristop}{15}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Optimizacija pomnilniških dostopov}{16}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Rezultati}{23}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Generiranje podatkov}{24}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Delovno okolje}{24}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Primerjava algoritmov za LCS}{25}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Primerjava algoritmov za Levenshteinovo razdaljo}{27}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Zaključki}{33}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Sklepi}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Nadaljnji razvoj}{34}{section.5.2}%
-\contentsline {chapter}{Literatura}{35}{chapter*.22}%
+\contentsline {chapter}{\numberline {2}Metode in paradigme}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Dinamično programiranje}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Levenshteinova razdalja}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Primer uporabe}{8}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}LCS}{8}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Vzporedni algoritmi}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Pristop naprej-nazaj}{12}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Prostorska optimizacija}{16}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Diagonalni pristop}{17}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Optimizacija pomnilniških dostopov}{18}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Rezultati}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Generiranje podatkov}{26}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Delovno okolje}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Primerjava algoritmov za LCS}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Primerjava algoritmov za Levenshteinovo razdaljo}{29}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Zaključki}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Sklepi}{35}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Nadaljnji razvoj}{36}{section.5.2}%
+\contentsline {chapter}{Literatura}{37}{chapter*.22}%
