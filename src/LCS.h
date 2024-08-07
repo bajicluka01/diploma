@@ -294,6 +294,20 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         }
     }
 
+    cout<<"\nUpper triangle\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+    }
+
     //middle
     for(int i = column; i < row; i++) {
         for(int j = 1; j < column; j++) {
@@ -310,6 +324,20 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         else
             arrMemory[row][j] = max(arrMemory[row-1][j+1], arrMemory[row-1][j]);
     }
+
+        cout<<"\nMiddle\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+    }
     
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
@@ -318,6 +346,20 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
                 arrMemory[i][j] = 1 + arrMemory[i-2][j+1];
             else
                 arrMemory[i][j] = max(arrMemory[i-1][j+1], arrMemory[i-1][j]);
+        }
+    }
+
+        cout<<"\nLower\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
         }
     }
 

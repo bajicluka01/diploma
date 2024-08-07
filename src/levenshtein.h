@@ -35,6 +35,13 @@ int forward_levenshtein (string str1, string str2, int row, int column) {
         }
     }
 
+    cout<<"\nForward\n";
+    for(int i = 0; i < row; i++) {
+        for(int j = 0; j < column; j++)
+            cout<<arr[i][j]<<" ";
+        cout<<"\n";
+    }
+
     return arr[row-1][column-1];
 }
 
@@ -269,6 +276,20 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
     for (int j = 1; j < column; j++)
         arrMemory[j][j] = j;
 
+        cout<<"\nInit\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+    }
+
     //upper triangle
     for(int i = 2; i < column; i++) {
         for(int j = 1; j < i; j++) {
@@ -276,6 +297,20 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
                 arrMemory[i][j] = arrMemory[i-2][j-1];
             else
                 arrMemory[i][j] = 1 + min(arrMemory[i-2][j-1], min(arrMemory[i-1][j-1], arrMemory[i-1][j]));
+        }
+    }
+
+    cout<<"\nUpper\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
         }
     }
 
@@ -289,11 +324,39 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
         }
     }
 
+    cout<<"\nMiddle1\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+    }
+
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
             arrMemory[row][j] = arrMemory[row-2][j];
         else
             arrMemory[row][j] = 1 + min(arrMemory[row-2][j], min(arrMemory[row-1][j+1], arrMemory[row-1][j]));
+    }
+
+    cout<<"\nMiddle2\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
     }
     
     //lower triangle
@@ -303,6 +366,20 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
                 arrMemory[i][j] = arrMemory[i-2][j+1];
             else
                 arrMemory[i][j] = 1 + min(arrMemory[i-2][j+1], min(arrMemory[i-1][j+1], arrMemory[i-1][j]));
+        }
+    }
+
+    cout<<"\nLower\n";
+    for (int i = 0; i < newRow; i++) {
+        if(i < row) {
+            for(int j = 0; j < i+1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
+        }
+        else {
+            for(int j = 0; j < row + column - i - 1; j++) 
+                cout<<arrMemory[i][j]<<" ";
+            cout<<"\n";
         }
     }
 
