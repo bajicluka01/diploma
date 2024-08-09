@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
+import numpy as np 
 
 x = [10000, 20000, 30000, 40000, 50000, 60000]
 x2 = [100000, 150000, 200000, 250000, 300000, 350000, 400000]
 x3 = [10000, 20000, 30000, 40000, 50000]
 x4 = [100000, 200000, 300000, 400000, 500000, 600000, 700000]
+
+x5 = np.arange(7) 
 
 forwardLevenshtein =                [0.345842, 1.519301, 3.626702, 6.293141, 9.199267, 13.429229]
 backwardLevenshtein =               [0.338444, 1.529102, 3.404311, 6.001849, 9.053014, 13.321899]
@@ -104,5 +107,19 @@ plt.title('Primerjava algoritmov za računanje LCS s prostorsko optimizacijo')
 plt.xlabel('dolžina niza')
 plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
+
+
+width = 0.1
+plt.figure(8)
+plt.bar(x5-0.2, forwardLevenshteinSpace, width, color='brown') 
+plt.bar(x5-0.1, backwardLevenshteinSpace, width, color='gray') 
+plt.bar(x5, fbLevenshteinSpace, width, color='pink') 
+plt.bar(x5+0.1, diagonalLevenshteinSpace, width, color='olive') 
+plt.bar(x5+0.2, diagonalLevenshteinSpaceParallel, width, color='cyan') 
+plt.xticks(x5, x2) 
+plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje s prostorsko optimizacijo')
+plt.xlabel("dolžina niza") 
+plt.ylabel("čas izvajanja (sekunde)") 
+plt.legend(['naprej', 'nazaj', 'naprej-nazaj', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
 
 plt.show()
