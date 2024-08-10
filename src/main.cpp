@@ -10,7 +10,7 @@ using namespace std::chrono;
 
 //generates random string of length len consisting of English alphabet characters
 string randomStringGenerator (int len, int seed) {
-    srand(seed);
+    //srand(seed);
     string str = "";
     for(int i = 0; i < len; i++)
         str += 'a' + rand()%26;
@@ -178,9 +178,49 @@ void testLCSforValues(int v1, int v2) {
     cout<<"OK!";
 }
 
+//searching for potential bugs in merge
+void mergeTestLCS(int n) {
+
+    for(int i = 0; i < n; i++) {
+        string s1 = randomStringGenerator(50, time(NULL));
+        string s2 = randomStringGenerator(45, time(NULL));
+        int row = s1.length()+1;
+        int column = s2.length()+1;
+
+        int res1 = forward_LCS(s1, s2, row, column);
+        int res2 = fb_LCS(s1, s2, row, column);
+        
+        if(res1 != res2)
+            cout<<"Error for strings: "<<s1<<" "<<s2<<"\nResults: "<<res1<<" "<<res2;
+    }
+
+    cout<<"OK!";
+}
+
+//searching for potential bugs in merge
+void mergeTestLevenshtein(int n) {
+
+    for(int i = 0; i < n; i++) {
+        string s1 = randomStringGenerator(50, time(NULL));
+        string s2 = randomStringGenerator(45, time(NULL));
+        int row = s1.length()+1;
+        int column = s2.length()+1;
+
+        int res1 = forward_levenshtein(s1, s2, row, column);
+        int res2 = fb_levenshtein(s1, s2, row, column);
+        
+        if(res1 != res2)
+            cout<<"Error for strings: "<<s1<<" "<<s2<<"\nResults: "<<res1<<" "<<res2;
+    }
+
+    cout<<"OK!";
+}
+
 int main (int argc, char* argv[]) {
     string str1 = "abcd";
     string str2 = "xyzw";
+
+    srand(time(NULL));
 
     int strLen = 400000;
 
@@ -196,8 +236,11 @@ int main (int argc, char* argv[]) {
 
     int row = str1.length()+1;
     int column = str2.length()+1;
+
+    mergeTestLCS(8000);
+    //mergeTestLevenshtein(8000);
    
-    auto start = high_resolution_clock::now();
+    /*auto start = high_resolution_clock::now();
     cout << "Sequential Levenshtein solution: " << diagonal_levenshtein_memory_optimization(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
@@ -210,7 +253,7 @@ int main (int argc, char* argv[]) {
      column = str2.length()+1;
     forward_levenshtein(str1, str2, row, column);
 
-    /*start = high_resolution_clock::now();
+    start = high_resolution_clock::now();
     cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_and_space_optimization_parallel(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
