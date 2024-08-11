@@ -222,10 +222,10 @@ int main (int argc, char* argv[]) {
 
     srand(time(NULL));
 
-    int strLen = 400000;
+    int strLen = 50000;
 
-    //str1 = randomStringGenerator(strLen, 42);
-    //str2 = randomStringGenerator(strLen, 101);
+    str1 = randomStringGenerator(strLen, 42);
+    str2 = randomStringGenerator(strLen, 101);
 
     //diagonal approach requires len(str1) >= len(str2)
     if(str2.length() > str1.length()) {
@@ -237,17 +237,17 @@ int main (int argc, char* argv[]) {
     int row = str1.length()+1;
     int column = str2.length()+1;
 
-    mergeTestLCS(8000);
+    //mergeTestLCS(8000);
     //mergeTestLevenshtein(8000);
    
-    /*auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein_memory_optimization(str1, str2, row, column) << "\n";
+    auto start = high_resolution_clock::now();
+    cout << "Sequential Levenshtein solution: " << diagonal_LCS_memory_optimization_parallel(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
-     str1 = "xyz";
+     /*str1 = "xyz";
      str2 = "abcd";
      row = str1.length()+1;
      column = str2.length()+1;

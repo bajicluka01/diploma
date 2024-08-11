@@ -294,7 +294,7 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         }
     }
 
-    cout<<"\nUpper triangle\n";
+    /*cout<<"\nUpper triangle\n";
     for (int i = 0; i < newRow; i++) {
         if(i < row) {
             for(int j = 0; j < i+1; j++) 
@@ -306,7 +306,7 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
                 cout<<arrMemory[i][j]<<" ";
             cout<<"\n";
         }
-    }
+    }*/
 
     //middle
     for(int i = column; i < row; i++) {
@@ -325,7 +325,7 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
             arrMemory[row][j] = max(arrMemory[row-1][j+1], arrMemory[row-1][j]);
     }
 
-        cout<<"\nMiddle\n";
+    /*    cout<<"\nMiddle\n";
     for (int i = 0; i < newRow; i++) {
         if(i < row) {
             for(int j = 0; j < i+1; j++) 
@@ -337,7 +337,7 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
                 cout<<arrMemory[i][j]<<" ";
             cout<<"\n";
         }
-    }
+    }*/
     
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
@@ -349,7 +349,7 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         }
     }
 
-        cout<<"\nLower\n";
+       /* cout<<"\nLower\n";
     for (int i = 0; i < newRow; i++) {
         if(i < row) {
             for(int j = 0; j < i+1; j++) 
@@ -361,7 +361,7 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
                 cout<<arrMemory[i][j]<<" ";
             cout<<"\n";
         }
-    }
+    }*/
 
     return arrMemory[newRow-1][0]; 
 }
@@ -381,7 +381,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
 
     //upper triangle
     for(int i = 2; i < a.col; i++) {
-        bar.arrive_and_wait();
+        //bar.arrive_and_wait();
         for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
@@ -392,7 +392,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
 
     //middle
     for(int i = a.col; i < a.row; i++) {
-        bar.arrive_and_wait();
+        //bar.arrive_and_wait();
         for(int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
@@ -401,7 +401,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
         }
     }
 
-    bar.arrive_and_wait();
+    //bar.arrive_and_wait();
     for(int j = startIndex; j < a.col - 1 && j < startIndex+chunkSize; j++) {
         if(a.s1[a.row-j-2] == a.s2[j])
             arrMemory[a.row][j] = 1 + arrMemory[a.row-2][j];
@@ -411,7 +411,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
     
     //lower triangle
     for(int i = a.row+1; i < newRow; i++) {
-        bar.arrive_and_wait();
+        //bar.arrive_and_wait();
         for(int j = startIndex; j < newRow - i && j < startIndex+chunkSize; j++) {
             if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
                 arrMemory[i][j] = 1 + arrMemory[i-2][j+1];
@@ -440,6 +440,9 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
     thread threads[n_threads];
     diag diag_structs[n_threads];
 
+    
+    
+
     for(int i = 0; i < n_threads; i++) {
         diag_structs[i].s1 = str1;
         diag_structs[i].s2 = str2;
@@ -451,8 +454,17 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
         threads[i] = thread(diagonal_LCS_memory_optimization_thread, ref(diag_structs[i]));
     }
 
-    for(int i = 0; i < n_threads; i++) 
+    
+
+    
+
+    for(int i = 0; i < n_threads; i++) {
+        auto start = high_resolution_clock::now();
         threads[i].join();
+        auto finish = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(finish - start);
+        cout << "\nThread: " << i<< " "<<duration.count() << "\n";
+    }
 
     return arrMemory[newRow-1][0]; 
 }
