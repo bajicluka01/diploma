@@ -179,11 +179,11 @@ void testLCSforValues(int v1, int v2) {
 }
 
 //searching for potential bugs in merge
-void mergeTestLCS(int n) {
+void mergeTestLCS(int n, int size1, int size2) {
 
     for(int i = 0; i < n; i++) {
-        string s1 = randomStringGenerator(50, time(NULL));
-        string s2 = randomStringGenerator(45, time(NULL));
+        string s1 = randomStringGenerator(size1, time(NULL));
+        string s2 = randomStringGenerator(size2, time(NULL));
         int row = s1.length()+1;
         int column = s2.length()+1;
 
@@ -198,11 +198,11 @@ void mergeTestLCS(int n) {
 }
 
 //searching for potential bugs in merge
-void mergeTestLevenshtein(int n) {
+void mergeTestLevenshtein(int n, int size1, int size2) {
 
     for(int i = 0; i < n; i++) {
-        string s1 = randomStringGenerator(50, time(NULL));
-        string s2 = randomStringGenerator(45, time(NULL));
+        string s1 = randomStringGenerator(size1, time(NULL));
+        string s2 = randomStringGenerator(size2, time(NULL));
         int row = s1.length()+1;
         int column = s2.length()+1;
 
@@ -222,10 +222,12 @@ int main (int argc, char* argv[]) {
 
     srand(time(NULL));
 
-    int strLen = 50000;
+    int strLen = 5;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
+
+    cout<<str1<<" "<<str2;
 
     //diagonal approach requires len(str1) >= len(str2)
     if(str2.length() > str1.length()) {
@@ -237,17 +239,20 @@ int main (int argc, char* argv[]) {
     int row = str1.length()+1;
     int column = str2.length()+1;
 
-    //mergeTestLCS(8000);
-    //mergeTestLevenshtein(8000);
+    //mergeTestLCS(8000, 5, 5);
+    //mergeTestLevenshtein(8000, 5, 5);
+
+    //example from excel
+    cout << "Sequential Levenshtein solution: " << fb_levenshtein("abcccb", "abccabb", 7, 8);
    
-    auto start = high_resolution_clock::now();
+    /*auto start = high_resolution_clock::now();
     cout << "Sequential Levenshtein solution: " << diagonal_LCS_memory_optimization_parallel(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
-     /*str1 = "xyz";
+     str1 = "xyz";
      str2 = "abcd";
      row = str1.length()+1;
      column = str2.length()+1;

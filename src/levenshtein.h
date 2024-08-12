@@ -905,6 +905,14 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     //merge results to find the distance
     int ret = merge_levenshtein(h, row, column);
 
+    cout<<"\n";
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j++) {
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+
     return ret;
 }
 
