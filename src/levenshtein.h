@@ -780,16 +780,23 @@ void bottomHalf_levenshtein (args& a) {
 }
 
 //merges last rows of topHalf_levenshtein and bottomHalf_levenshtein
-int merge_levenshtein (int h, int row, int column) {
+int merge_levenshtein (int h, int row, int column, string str1, string str2) {
     int temp = 0;
-    int temp2 = 0;
     int currentMin = INT_MAX;
-
-    for(int i = 1; i <= column; i++) {
-        temp = arr[h][i-1] + arr[h+1][i];
+    cout<<h<<"\n";
+    for(int i = 2; i <= column; i++) {
+        if(str1[h-1] == str2[i-2]) {
+            temp = arr[h][i-1] + arr[h+1][i];
+            cout<<i<<" "<<temp<<" "<<str1[h-1]<<" "<<str2[i-2]<<" "<<arr[h][i-1]<<" "<<arr[h+1][i]<<"\n";
+        }
+        else {
+            temp = arr[h][i-1] + arr[h+1][i-1];
+            cout<<i<<" "<<temp<<" "<<str1[h-1]<<" "<<str2[i-2]<<" "<<arr[h][i-1]<<" "<<arr[h+1][i-1]<<"\n";
+        }
 
         if(temp < currentMin)
             currentMin = temp;
+        
     }
 
     return currentMin;
@@ -903,12 +910,15 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     t2.join();
 
     //merge results to find the distance
-    int ret = merge_levenshtein(h, row, column);
+    int ret = merge_levenshtein(h, row, column, str1, str2);
 
     cout<<"\n";
-    for(int i = 0; i < row; i++) {
-        for (int j = 0; j < column; j++) {
-            cout<<arr[i][j]<<" ";
+    for(int i = 0; i < row+1; i++) {
+        for (int j = 0; j < column+1; j++) {
+            if(arr[i][j] < 10)
+                cout<<arr[i][j]<<"  ";
+            else
+                cout<<arr[i][j]<<" ";
         }
         cout<<"\n";
     }

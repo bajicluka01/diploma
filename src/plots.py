@@ -14,9 +14,9 @@ diagonalLevenshteinMemory =         [0.239417, 0.943647, 2.102897, 3.743161, 5.9
 fbLevenshtein =                     [0.258670, 1.187424, 2.500014, 4.317889, 6.505424, 9.554413] #2 threads
 diagonalLevenshteinMemoryParallel = [0.831118, 1.856795, 2.899954, 3.889169, 5.475029, 7.340391] #8 threads
 
-forwardLevenshteinSpace =          [12.817226, 29.442941, 51.170906, 79.912627, 118.889369, 159.856438, 210.639703]
+forwardLevenshteinSpace =          [12.817226, 28.685217, 51.170906, 79.912627, 118.889369, 159.856438, 210.639703]
 backwardLevenshteinSpace =         [12.366502, 27.420466, 50.098321, 77.801877, 112.954502, 153.924200, 201.562494]
-diagonalLevenshteinSpace =         [12.954458, 26.667030, 48.488514, 75.765589, 113.369859, 150.815187, 197.959408]
+diagonalLevenshteinSpace =         [12.954458, 27.830952, 48.488514, 75.765589, 113.369859, 150.815187, 197.959408]
 fbLevenshteinSpace =               [8.291492,  18.413865, 33.197180, 50.139865, 81.362590,  109.328794, 144.999530] #2 threads
 diagonalLevenshteinSpaceParallel = [12.361829, 22.076464, 38.742937, 50.713466, 69.038534,  94.300314,  117.904765] #8 threads
 
@@ -29,8 +29,8 @@ diagonalLCSmemoryParallel = [0.841188, 1.865099, 3.037416, 4.297242, 5.603433,  
 forwardLCSspace =          [11.047188, 23.489699, 41.342735, 65.269299, 104.050567, 141.976719, 188.242982]
 backwardLCSspace =         [10.564286, 23.267623, 42.785099, 68.833067, 98.918783,  132.945592, 176.712915]
 diagonalLCSspace =         [11.285618, 24.405456, 44.325217, 69.097606, 101.582317, 138.790737, 177.593065]
-fbLCSspace =               [6.365848,  14.281909, 26.146862, 40.857753, 64.107716,  86.491611,  114.585233] #2 threads
-diagonalLCSspaceParallel = [11.613160, 21.806565, 34.844932, 50.740788, 70.534725,  93.739369,  119.876094] #6 threads
+fbLCSspace =               [7.070183,  16.195188, 28.638051, 40.857753, 64.107716,  86.491611,  114.585233] #2 threads
+diagonalLCSspaceParallel = [11.613160, 21.806565, 34.844932, 50.740788, 71.648717,  93.739369,  119.876094] #6 threads
 
 fbLCSspaceExtended =               [6.365848,  26.146862, 64.107716, 114.585233, 178.351895, 260.908079, 357.052496]
 diagonalLCSspaceParallelExtended = [11.613160, 34.844932, 70.534725, 119.876094, 190.159906, 254.635486, 329.583547]
@@ -121,5 +121,45 @@ plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje s prostor
 plt.xlabel("dolžina niza") 
 plt.ylabel("čas izvajanja (sekunde)") 
 plt.legend(['naprej', 'nazaj', 'naprej-nazaj', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
+
+
+accelForwardLevenshtein = np.array(forwardLevenshtein) / np.array(forwardLevenshtein)
+accelFbLevenshtein = np.array(forwardLevenshtein) / np.array(fbLevenshtein)
+accelDiagLevenshtein = np.array(forwardLevenshtein) / np.array(diagonalLevenshteinMemory)
+accelDiagParLevenshtein = np.array(forwardLevenshtein) / np.array(diagonalLevenshteinMemoryParallel)
+
+plt.figure(9)
+plt.plot(x, list(zip(accelForwardLevenshtein, accelFbLevenshtein, accelDiagLevenshtein, accelDiagParLevenshtein)), label=['naprej', 'naprej nazaj', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
+plt.title('Primerjava pohitritev algoritmov za računanje Levenshteinove razdalje')
+plt.xlabel('dolžina niza')
+plt.ylabel('pohitritev')
+plt.legend()
+
+
+accelForwardLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(forwardLevenshteinSpace)
+accelFbLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(fbLevenshteinSpace)
+accelDiagLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(diagonalLevenshteinSpace)
+accelDiagParLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(diagonalLevenshteinSpaceParallel)
+
+plt.figure(10)
+plt.plot(x2, list(zip(accelForwardLevenshteinSpace, accelFbLevenshteinSpace, accelDiagLevenshteinSpace, accelDiagParLevenshteinSpace)), label=['naprej', 'naprej nazaj', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
+plt.title('Primerjava pohitritev algoritmov za računanje Levenshteinove razdalje s prostorsko optimizacijo')
+plt.xlabel('dolžina niza')
+plt.ylabel('pohitritev')
+plt.legend()
+
+
+accelForwardLCSspace = np.array(forwardLCSspace) / np.array(forwardLCSspace)
+accelFbLCSspace = np.array(forwardLCSspace) / np.array(fbLCSspace)
+accelDiagLCSspace = np.array(forwardLCSspace) / np.array(diagonalLCSspace)
+accelDiagParLCSspace = np.array(forwardLCSspace) / np.array(diagonalLCSspaceParallel)
+
+plt.figure(11)
+plt.plot(x2, list(zip(accelForwardLCSspace, accelFbLCSspace, accelDiagLCSspace, accelDiagParLCSspace)), label=['naprej', 'naprej nazaj', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
+plt.title('Primerjava pohitritev LCS algoritmov s prostorsko optimizacijo')
+plt.xlabel('dolžina niza')
+plt.ylabel('pohitritev')
+plt.legend()
+
 
 plt.show()

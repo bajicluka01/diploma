@@ -381,7 +381,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
 
     //upper triangle
     for(int i = 2; i < a.col; i++) {
-        //bar.arrive_and_wait();
+        bar.arrive_and_wait();
         for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
@@ -392,7 +392,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
 
     //middle
     for(int i = a.col; i < a.row; i++) {
-        //bar.arrive_and_wait();
+        bar.arrive_and_wait();
         for(int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
                 arrMemory[i][j] = 1 + arrMemory[i-2][j-1];
@@ -401,7 +401,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
         }
     }
 
-    //bar.arrive_and_wait();
+    bar.arrive_and_wait();
     for(int j = startIndex; j < a.col - 1 && j < startIndex+chunkSize; j++) {
         if(a.s1[a.row-j-2] == a.s2[j])
             arrMemory[a.row][j] = 1 + arrMemory[a.row-2][j];
@@ -411,7 +411,7 @@ void diagonal_LCS_memory_optimization_thread (diag& a) {
     
     //lower triangle
     for(int i = a.row+1; i < newRow; i++) {
-        //bar.arrive_and_wait();
+        bar.arrive_and_wait();
         for(int j = startIndex; j < newRow - i && j < startIndex+chunkSize; j++) {
             if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
                 arrMemory[i][j] = 1 + arrMemory[i-2][j+1];
