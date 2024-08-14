@@ -783,22 +783,12 @@ void bottomHalf_levenshtein (args& a) {
 int merge_levenshtein (int h, int row, int column, string str1, string str2) {
     int temp = 0;
     int currentMin = INT_MAX;
-    cout<<h<<"\n";
-    for(int i = 2; i <= column; i++) {
-        if(str1[h-1] == str2[i-2]) {
-            temp = arr[h][i-1] + arr[h+1][i];
-            cout<<i<<" "<<temp<<" "<<str1[h-1]<<" "<<str2[i-2]<<" "<<arr[h][i-1]<<" "<<arr[h+1][i]<<"\n";
-        }
-        else {
-            temp = arr[h][i-1] + arr[h+1][i-1];
-            cout<<i<<" "<<temp<<" "<<str1[h-1]<<" "<<str2[i-2]<<" "<<arr[h][i-1]<<" "<<arr[h+1][i-1]<<"\n";
-        }
 
+    for(int i = 1; i <= column; i++) {
+        temp = arr[h][i-1] + arr[h+1][i];
         if(temp < currentMin)
             currentMin = temp;
-        
     }
-
     return currentMin;
 }
 

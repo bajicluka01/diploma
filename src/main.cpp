@@ -247,8 +247,8 @@ int main (int argc, char* argv[]) {
     //str1 = "dijreffdsjrw";
     //str2 = "ygwsiebhvuundivrspefpokuz";
 
-    str1 = "jqtmcf";
-    str2 = "phdzxgf";
+    str1 = "aaabbb";
+    str2 = "bbb";
     row = str1.length()+1;
     column = str2.length()+1;
     cout << "\nSequential Levenshtein solution: " << forward_levenshtein(str1, str2, row, column)<<"\n";
