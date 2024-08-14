@@ -24,7 +24,7 @@ struct diag {
 };
 
 //TODO fix bug: infinite loop (?) for n_thr = 1
-int n_thr = 6;
+int n_thr = 8;
 barrier bar { n_thr };
 
 unsigned short int** arr;
@@ -54,6 +54,8 @@ int* current;
 
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
+
+    auto start = high_resolution_clock::now();
     //allocate
     arr = new unsigned short int*[row];
     for(int i = 0; i < row; i++)
@@ -63,6 +65,11 @@ int forward_LCS (string str1, string str2, int row, int column) {
     for (int i = 0; i < row; i++)
         for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
+
+            auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    //cout << "Allocation: " << duration.count() << "\n";
 
     for(int i = 0; i < row; i++) 
         for (int j = 0; j < column; j++) 
@@ -463,7 +470,7 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
         threads[i].join();
         auto finish = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(finish - start);
-        cout << "\nThread: " << i<< " "<<duration.count() << "\n";
+        //cout << "\nThread: " << i<< " "<<duration.count() << "\n";
     }
 
     return arrMemory[newRow-1][0]; 
@@ -806,6 +813,8 @@ void bottomHalf_LCS_space_optimization (args& a) {
     //in case there's nothing for this thread to do
     if(nrows == 1)
         return;
+    
+    int actualTotal = 0;
 
     for(int i = nrows+1; i > a.row; i--) {
         for(int j = a.col; j > 0; j--)  
@@ -816,10 +825,22 @@ void bottomHalf_LCS_space_optimization (args& a) {
             else 
                 currentBottom[j] = max(currentBottom[j+1], temp1Bottom[j]);
 
+
+        auto start = high_resolution_clock::now();
         //rewrite data
         for(int j = 0; j < a.col; j++) 
             temp1Bottom[j] = currentBottom[j];
+
+        auto finish = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(finish - start);
+
+        //cout << "bottom rewrite: " << duration.count() << "\n";
+
+
+        actualTotal += (int)duration.count();
     }
+
+    cout<<"Rewrites (bottom): "<<actualTotal<<"\n";
 }
 
 //merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
@@ -839,6 +860,7 @@ int merge_LCS_space_optimization(int column) {
 
 //forward-backward approach with two threads
 int fb_LCS (string str1, string str2, int row, int column) {
+    auto start = high_resolution_clock::now();
     //allocate
     arr = new unsigned short int*[row+1];
     for(int i = 0; i < row+1; i++)
@@ -849,6 +871,11 @@ int fb_LCS (string str1, string str2, int row, int column) {
         for (int j = 0; j < column+1; j++) 
             arr[i][j] = 0;
 
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+   // cout << "Allocation: " << duration.count() << "\n";
+
     int h = row / 2;
     struct args a; 
     a.s1 = str1;
@@ -856,14 +883,35 @@ int fb_LCS (string str1, string str2, int row, int column) {
     a.row = h;
     a.col = column;
 
+    start = high_resolution_clock::now();
+
     thread t1(topHalf_LCS, ref(a));
     thread t2(bottomHalf_LCS, ref(a));
+
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+   // cout << "thread creation: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
     
     t1.join();
     t2.join();
 
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+    //cout << "sync: " << duration.count() << "\n";
+
+    start = high_resolution_clock::now();
+
     //merge results to find the actual distance
     int ret = merge_LCS(h, row, column);
+
+    finish = high_resolution_clock::now();
+    duration = duration_cast<microseconds>(finish - start);
+
+   // cout << "merge: " << duration.count() << "\n";
 
     return ret;
 }
@@ -877,10 +925,17 @@ int fb_LCS_space_optimization (string str1, string str2, int row, int column) {
     a.row = h;
     a.col = column;
 
+    auto start = high_resolution_clock::now();
+
     temp1Top = new int[column+1];
     temp1Bottom = new int[column+1];
     currentTop = new int[column+1];
     currentBottom = new int[column+1];
+
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Allocation: " << duration.count() << "\n";
 
     thread t1(topHalf_LCS_space_optimization, ref(a));
     thread t2(bottomHalf_LCS_space_optimization, ref(a));

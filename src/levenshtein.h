@@ -9,7 +9,8 @@ using namespace std::chrono;
 
 //dynamic programming solution
 int forward_levenshtein (string str1, string str2, int row, int column) {
-
+    auto start = high_resolution_clock::now();
+    
     //allocate
     arr = new unsigned short int*[row];
     for(int i = 0; i < row; i++)
@@ -21,6 +22,11 @@ int forward_levenshtein (string str1, string str2, int row, int column) {
             arr[i][j] = 0;
         }
     }
+
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {    
@@ -276,20 +282,6 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
     for (int j = 1; j < column; j++)
         arrMemory[j][j] = j;
 
-        cout<<"\nInit\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-    }
-
     //upper triangle
     for(int i = 2; i < column; i++) {
         for(int j = 1; j < i; j++) {
@@ -297,20 +289,6 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
                 arrMemory[i][j] = arrMemory[i-2][j-1];
             else
                 arrMemory[i][j] = 1 + min(arrMemory[i-2][j-1], min(arrMemory[i-1][j-1], arrMemory[i-1][j]));
-        }
-    }
-
-    cout<<"\nUpper\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
         }
     }
 
@@ -324,39 +302,11 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
         }
     }
 
-    cout<<"\nMiddle1\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-    }
-
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
             arrMemory[row][j] = arrMemory[row-2][j];
         else
             arrMemory[row][j] = 1 + min(arrMemory[row-2][j], min(arrMemory[row-1][j+1], arrMemory[row-1][j]));
-    }
-
-    cout<<"\nMiddle2\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
     }
     
     //lower triangle
@@ -366,20 +316,6 @@ int diagonal_levenshtein_memory_optimization(string str1, string str2, int row, 
                 arrMemory[i][j] = arrMemory[i-2][j+1];
             else
                 arrMemory[i][j] = 1 + min(arrMemory[i-2][j+1], min(arrMemory[i-1][j+1], arrMemory[i-1][j]));
-        }
-    }
-
-    cout<<"\nLower\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
         }
     }
 
@@ -876,6 +812,9 @@ int merge_levenshtein_space_optimization (int column) {
 
 //forward-backward approach with two threads
 int fb_levenshtein (string str1, string str2, int row, int column) {
+
+    auto start = high_resolution_clock::now();
+    
     //allocate
     arr = new unsigned short int*[row];
     for(int i = 0; i < row+1; i++)
@@ -885,6 +824,11 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     for (int i = 0; i < row+1; i++)
         for (int j = 0; j < column+1; j++) 
             arr[i][j] = 0;
+
+    auto finish = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(finish - start);
+
+    cout << "Allocation: " << duration.count() << "\n";
         
     int h = row / 2;
     struct args a; 
@@ -902,7 +846,7 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
     //merge results to find the distance
     int ret = merge_levenshtein(h, row, column, str1, str2);
 
-    cout<<"\n";
+    /*cout<<"\n";
     for(int i = 0; i < row+1; i++) {
         for (int j = 0; j < column+1; j++) {
             if(arr[i][j] < 10)
@@ -911,7 +855,7 @@ int fb_levenshtein (string str1, string str2, int row, int column) {
                 cout<<arr[i][j]<<" ";
         }
         cout<<"\n";
-    }
+    }*/
 
     return ret;
 }

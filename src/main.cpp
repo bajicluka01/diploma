@@ -222,7 +222,7 @@ int main (int argc, char* argv[]) {
 
     srand(time(NULL));
 
-    int strLen = 100000;
+    int strLen = 250000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -247,28 +247,28 @@ int main (int argc, char* argv[]) {
     //str1 = "dijreffdsjrw";
     //str2 = "ygwsiebhvuundivrspefpokuz";
 
-    str1 = "aaabbb";
+    /*str1 = "aaabbb";
     str2 = "bbb";
     row = str1.length()+1;
     column = str2.length()+1;
     cout << "\nSequential Levenshtein solution: " << forward_levenshtein(str1, str2, row, column)<<"\n";
-    cout << "Sequential Levenshtein solution: " << fb_levenshtein(str1, str2, row, column);
+    cout << "Sequential Levenshtein solution: " << fb_levenshtein(str1, str2, row, column);*/
    
-    /*auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << diagonal_levenshtein_memory_and_space_optimization(str1, str2, row, column) << "\n";
+    auto start = high_resolution_clock::now();
+    cout << "Sequential Levenshtein solution: " << fb_LCS_space_optimization(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
-     str1 = "xyz";
+     /*str1 = "xyz";
      str2 = "abcd";
      row = str1.length()+1;
      column = str2.length()+1;
     forward_levenshtein(str1, str2, row, column);
 
     start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << diagonal_levenshtein_memory_and_space_optimization_parallel(str1, str2, row, column) << "\n";
+    cout << "Forward-backward Levenshtein solution: " << forward_levenshtein(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 
