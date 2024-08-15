@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  9 AUG 2024 12:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.21)  14 AUG 2024 14:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -874,17 +874,17 @@ Package biblatex Info: Reference segment=0 on input line 211.
 
 
 {C:/Users/bajic/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-<cc_cc_30.pdf, id=105, 25.27844pt x 25.27844pt>
+<cc_cc_30.pdf, id=109, 25.27844pt x 25.27844pt>
 File: cc_cc_30.pdf Graphic file (type pdf)
 <use cc_cc_30.pdf>
 Package pdftex.def Info: cc_cc_30.pdf  used on input line 264.
 (pdftex.def)             Requested size: 18.74585pt x 18.74585pt.
-<cc_by_30.pdf, id=106, 18.74034pt x 18.73953pt>
+<cc_by_30.pdf, id=110, 18.74034pt x 18.73953pt>
 File: cc_by_30.pdf Graphic file (type pdf)
 <use cc_by_30.pdf>
 Package pdftex.def Info: cc_by_30.pdf  used on input line 264.
 (pdftex.def)             Requested size: 18.74028pt x 18.73947pt.
-<cc_sa_30.pdf, id=107, 18.73955pt x 18.73994pt>
+<cc_sa_30.pdf, id=111, 18.73955pt x 18.73994pt>
 File: cc_sa_30.pdf Graphic file (type pdf)
 <use cc_sa_30.pdf>
 Package pdftex.def Info: cc_sa_30.pdf  used on input line 264.
@@ -968,7 +968,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.26 ...{\numberline {5}Zaključki}{41}{chapter.5}
+l.26 ...{\numberline {5}Zaključki}{43}{chapter.5}
                                                   % [9
 
 ])
@@ -1048,8 +1048,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ]
 Poglavje 2.
-[5]
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
+Underfull \vbox (badness 4217) has occurred while \output is active []
 
  [6]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
@@ -1073,25 +1076,26 @@ Poglavje 3.
 [11
 
 ] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21]
-Overfull \hbox (19.35855pt too wide) detected at line 883
+Overfull \hbox (19.35855pt too wide) detected at line 886
 [][][][][]
  []
 
-[22] [23]
-Overfull \hbox (18.96942pt too wide) detected at line 955
+[22]
+Underfull \vbox (badness 4543) has occurred while \output is active []
+
+ [23]
+Overfull \hbox (18.96942pt too wide) detected at line 958
 [][][][][]
  []
 
-[24] [25]
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26]
-[27]
-Overfull \hbox (25.49007pt too wide) in paragraph at lines 1042--1043
-[][]\OT1/cmr/m/n/12 3.7[][]). Izra^^Tcunane vre-dno-sti shra-nju-jemo v 3 eno-d
-i-men-zi-o-nalne ta-bele $\OML/cmm/m/it/12 diagCurrent$\OT1/cmr/m/n/12 ,
- []
+ [24]
+[25] [26]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [27]
 [28] [29] [30
 
 ]
@@ -1101,56 +1105,74 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [31]
 [32]
-<plots/LCStotal.png, id=603, 462.528pt x 346.896pt>
+<plots/LCStotal.png, id=607, 462.528pt x 346.896pt>
 File: plots/LCStotal.png Graphic file (type png)
 <use plots/LCStotal.png>
-Package pdftex.def Info: plots/LCStotal.png  used on input line 1100.
+Package pdftex.def Info: plots/LCStotal.png  used on input line 1103.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
  [33 <./plots/LCStotal.png>]
-<plots/LCSspace.png, id=614, 462.528pt x 346.896pt>
+<plots/LCSspace.png, id=618, 462.528pt x 346.896pt>
 File: plots/LCSspace.png Graphic file (type png)
 <use plots/LCSspace.png>
-Package pdftex.def Info: plots/LCSspace.png  used on input line 1111.
+Package pdftex.def Info: plots/LCSspace.png  used on input line 1116.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
- [34 <./plots/LCSspace.png>]
-<plots/LCSextended.png, id=623, 462.528pt x 346.896pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [34]
+Underfull \vbox (badness 3000) has occurred while \output is active []
+
+ [35 <./plots/LCSspace.png>]
+<plots/LCSextended.png, id=631, 462.528pt x 346.896pt>
 File: plots/LCSextended.png Graphic file (type png)
 <use plots/LCSextended.png>
-Package pdftex.def Info: plots/LCSextended.png  used on input line 1129.
+Package pdftex.def Info: plots/LCSextended.png  used on input line 1131.
+(pdftex.def)             Requested size: 390.0pt x 292.5128pt.
+ [36 <./plots/LCSextended.png>]
+<plots/LCSacceleration.png, id=640, 462.528pt x 346.896pt>
+File: plots/LCSacceleration.png Graphic file (type png)
+<use plots/LCSacceleration.png>
+Package pdftex.def Info: plots/LCSacceleration.png  used on input line 1142.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [35]
-<plots/LevenshteinTotal.png, id=631, 462.528pt x 346.896pt>
+ [37 <./plots/LCSacceleration.png>]
+<plots/LevenshteinTotal.png, id=649, 462.528pt x 346.896pt>
 File: plots/LevenshteinTotal.png Graphic file (type png)
 <use plots/LevenshteinTotal.png>
-Package pdftex.def Info: plots/LevenshteinTotal.png  used on input line 1144.
+Package pdftex.def Info: plots/LevenshteinTotal.png  used on input line 1155.
 (pdftex.def)             Requested size: 390.0pt x 292.5128pt.
-
-[36 <./plots/LCSextended.png>]
-<plots/nThreads.png, id=640, 513.117pt x 346.896pt>
+ [38 <./plots/LevenshteinTotal.png>]
+<plots/nThreads.png, id=658, 513.117pt x 346.896pt>
 File: plots/nThreads.png Graphic file (type png)
 <use plots/nThreads.png>
-Package pdftex.def Info: plots/nThreads.png  used on input line 1153.
+Package pdftex.def Info: plots/nThreads.png  used on input line 1164.
 (pdftex.def)             Requested size: 390.0pt x 263.67015pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [37 <./plots/LevenshteinTotal.png>]
-<plots/LevenshteinSpace.png, id=647, 552.1428pt x 346.896pt>
+<plots/LevenshteinSpace.png, id=660, 546.3612pt x 346.896pt>
 File: plots/LevenshteinSpace.png Graphic file (type png)
 <use plots/LevenshteinSpace.png>
-Package pdftex.def Info: plots/LevenshteinSpace.png  used on input line 1162.
-(pdftex.def)             Requested size: 390.0pt x 245.03279pt.
+Package pdftex.def Info: plots/LevenshteinSpace.png  used on input line 1173.
+(pdftex.def)             Requested size: 390.0pt x 247.62117pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [38 <./plots/nThreads.png>] [39 <./plots/LevenshteinSpace.png>] [40
+ [39 <./plots/nThreads.png>]
+<plots/LevenshteinAcceleration.png, id=671, 615.7404pt x 346.896pt>
+File: plots/LevenshteinAcceleration.png Graphic file (type png)
+<use plots/LevenshteinAcceleration.png>
+Package pdftex.def Info: plots/LevenshteinAcceleration.png  used on input line 
+1182.
+(pdftex.def)             Requested size: 390.0pt x 219.72072pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [40 <./plots/LevenshteinSpace.png>] [41 <./plots/LevenshteinAcceleration.png>]
+ [42
 
 ]
 Poglavje 5.
-[41] [42] [43
+[43] [44] [45
 
 ]
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
@@ -1159,22 +1181,22 @@ File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
 (C:\Users\bajic\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
 ef
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
-) [44] (diploma_bajic.aux)
+) [46] (diploma_bajic.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `diploma_bajic.out' has not changed.
-(rerunfilecheck)             Checksum: 3927E122D73B84C77F41CC234748030B;3307.
+(rerunfilecheck)             Checksum: 4255012D64CF01E64FA57ED33DD075CE;3596.
 Package logreq Info: Writing requests to 'diploma_bajic.run.xml'.
 \openout1 = `diploma_bajic.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 24554 strings out of 474486
- 424503 string characters out of 5743755
- 2238542 words of memory out of 5000000
- 46221 multiletter control sequences out of 15000+600000
+ 24575 strings out of 474486
+ 425089 string characters out of 5743755
+ 2282542 words of memory out of 5000000
+ 46238 multiletter control sequences out of 15000+600000
  570146 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,17n,81p,1861b,2296s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1196,9 +1218,9 @@ e1/public/amsfonts/cm/cmti12.pfb><C:/Users/bajic/AppData/Local/Programs/MiKTeX/
 fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/bajic/AppData/Local/Programs
 /MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/bajic/AppData/Local
 /Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on diploma_bajic.pdf (60 pages, 655487 bytes).
+Output written on diploma_bajic.pdf (62 pages, 729380 bytes).
 PDF statistics:
- 823 PDF objects out of 1000 (max. 8388607)
- 303 named destinations out of 1000 (max. 500000)
- 234 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 848 PDF objects out of 1000 (max. 8388607)
+ 307 named destinations out of 1000 (max. 500000)
+ 252 words of extra memory for PDF output out of 10000 (max. 10000000)
 
