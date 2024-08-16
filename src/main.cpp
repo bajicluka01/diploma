@@ -180,7 +180,6 @@ void testLCSforValues(int v1, int v2) {
 
 //searching for potential bugs in merge
 void mergeTestLCS(int n, int size1, int size2) {
-
     for(int i = 0; i < n; i++) {
         string s1 = randomStringGenerator(size1, time(NULL));
         string s2 = randomStringGenerator(size2, time(NULL));
@@ -199,7 +198,6 @@ void mergeTestLCS(int n, int size1, int size2) {
 
 //searching for potential bugs in merge
 void mergeTestLevenshtein(int n, int size1, int size2) {
-
     for(int i = 0; i < n; i++) {
         string s1 = randomStringGenerator(size1, time(NULL));
         string s2 = randomStringGenerator(size2, time(NULL));
@@ -261,10 +259,10 @@ int main (int argc, char* argv[]) {
 
     cout << "Sequential Levenshtein duration: " << duration.count() << "\n";
 
-     /*str1 = "xyz";
-     str2 = "abcd";
-     row = str1.length()+1;
-     column = str2.length()+1;
+    /*str1 = "xyz";
+    str2 = "abcd";
+    row = str1.length()+1;
+    column = str2.length()+1;
     forward_levenshtein(str1, str2, row, column);
 
     start = high_resolution_clock::now();

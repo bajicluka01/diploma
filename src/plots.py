@@ -5,7 +5,6 @@ x = [10000, 20000, 30000, 40000, 50000, 60000]
 x2 = [100000, 150000, 200000, 250000, 300000, 350000, 400000]
 x3 = [10000, 20000, 30000, 40000, 50000]
 x4 = [100000, 200000, 300000, 400000, 500000, 600000, 700000]
-
 x5 = np.arange(7) 
 
 forwardLevenshtein =                [0.345842, 1.519301, 3.626702, 6.293141, 9.199267, 13.429229]
@@ -35,7 +34,6 @@ diagonalLCSspaceParallel = [11.613160, 21.806565, 34.844932, 49.269140, 71.64871
 fbLCSspaceExtended =               [6.365848,  26.146862, 64.107716, 114.585233, 178.351895, 260.908079, 357.052496]
 diagonalLCSspaceParallelExtended = [11.613160, 34.844932, 70.534725, 119.876094, 190.159906, 254.635486, 329.583547]
 
-
 #the old function, not relevant anymore
 diagonalLevenshtein =         [0.766702, 3.249734, 7.991920, 16.164053, 35.703142]
 diagonalLevenshteinParallel = [1.018414, 2.634201, 5.033297, 8.543985,  17.881329]
@@ -53,15 +51,6 @@ nThreads11 = [1.669980, 3.346404, 5.933924,  9.661376,  17.336488]
 nThreads12 = [1.747410, 3.475634, 6.001397,  9.517540,  17.887280]
 
 #Levenshtein
-
-f = plt.figure(7)
-ax = f.add_subplot(111)
-ax.yaxis.tick_right()
-plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein, diagonalLevenshteinMemory, diagonalLevenshteinMemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
-plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje')
-plt.xlabel('dolžina niza')
-plt.ylabel('čas izvajanja (sekunde)')
-plt.legend()
 
 plt.figure(1)
 plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein, diagonalLevenshteinMemory, diagonalLevenshteinMemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
@@ -84,64 +73,24 @@ plt.xlabel('dolžina niza')
 plt.ylabel('čas izvajanja (sekunde)')
 plt.legend()
 
-
-# LCS
-
-plt.figure(4)
-plt.plot(x, list(zip(forwardLCS, backwardLCS, fbLCS, diagonalLCSmemory, diagonalLCSmemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
-plt.title('Primerjava algoritmov za računanje LCS')
-plt.xlabel('dolžina niza')
-plt.ylabel('čas izvajanja (sekunde)')
-plt.legend()
-
-plt.figure(5)
-plt.plot(x2, list(zip(forwardLCSspace, backwardLCSspace, fbLCSspace, diagonalLCSspace, diagonalLCSspaceParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
-plt.title('Primerjava algoritmov za računanje LCS s prostorsko optimizacijo')
-plt.xlabel('dolžina niza')
-plt.ylabel('čas izvajanja (sekunde)')
-plt.legend()
-
-plt.figure(6)
-plt.plot(x4, list(zip(fbLCSspaceExtended, diagonalLCSspaceParallelExtended)), label=['naprej-nazaj (2 niti)', 'diagonalni vzporedni (6 niti)'])
-plt.title('Primerjava algoritmov za računanje LCS s prostorsko optimizacijo')
-plt.xlabel('dolžina niza')
-plt.ylabel('čas izvajanja (sekunde)')
-plt.legend()
-
-
-width = 0.1
-plt.figure(8)
-plt.bar(x5-0.2, forwardLevenshteinSpace, width, color='brown') 
-plt.bar(x5-0.1, backwardLevenshteinSpace, width, color='gray') 
-plt.bar(x5, fbLevenshteinSpace, width, color='pink') 
-plt.bar(x5+0.1, diagonalLevenshteinSpace, width, color='olive') 
-plt.bar(x5+0.2, diagonalLevenshteinSpaceParallel, width, color='cyan') 
-plt.xticks(x5, x2) 
-plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje s prostorsko optimizacijo')
-plt.xlabel("dolžina niza") 
-plt.ylabel("čas izvajanja (sekunde)") 
-plt.legend(['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
-
-
 accelForwardLevenshtein = np.array(forwardLevenshtein) / np.array(forwardLevenshtein)
 accelFbLevenshtein = np.array(forwardLevenshtein) / np.array(fbLevenshtein)
 accelDiagLevenshtein = np.array(forwardLevenshtein) / np.array(diagonalLevenshteinMemory)
 accelDiagParLevenshtein = np.array(forwardLevenshtein) / np.array(diagonalLevenshteinMemoryParallel)
 
-plt.figure(9)
+plt.figure(4)
 plt.plot(x, list(zip(accelForwardLevenshtein, accelFbLevenshtein, accelDiagLevenshtein, accelDiagParLevenshtein)), label=['naprej', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
 plt.title('Primerjava pohitritev algoritmov za računanje Levenshteinove razdalje')
 plt.xlabel('dolžina niza')
 plt.ylabel('pohitritev')
 plt.legend()
 
-
 accelForwardLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(forwardLevenshteinSpace)
 accelFbLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(fbLevenshteinSpace)
 accelDiagLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(diagonalLevenshteinSpace)
 accelDiagParLevenshteinSpace = np.array(forwardLevenshteinSpace) / np.array(diagonalLevenshteinSpaceParallel)
 
-plt.figure(10)
+plt.figure(5)
 plt.plot(x2, list(zip(accelForwardLevenshteinSpace, accelFbLevenshteinSpace, accelDiagLevenshteinSpace, accelDiagParLevenshteinSpace)), label=['naprej', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
 plt.title('Primerjava pohitritev algoritmov za računanje Levenshteinove razdalje s prostorsko optimizacijo')
 plt.xlabel('dolžina niza')
@@ -149,17 +98,39 @@ plt.ylabel('pohitritev')
 plt.legend()
 
 
+# LCS
+
+plt.figure(6)
+plt.plot(x, list(zip(forwardLCS, backwardLCS, fbLCS, diagonalLCSmemory, diagonalLCSmemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
+plt.title('Primerjava algoritmov za računanje LCS')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
+plt.legend()
+
+plt.figure(7)
+plt.plot(x2, list(zip(forwardLCSspace, backwardLCSspace, fbLCSspace, diagonalLCSspace, diagonalLCSspaceParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
+plt.title('Primerjava algoritmov za računanje LCS s prostorsko optimizacijo')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
+plt.legend()
+
+plt.figure(8)
+plt.plot(x4, list(zip(fbLCSspaceExtended, diagonalLCSspaceParallelExtended)), label=['naprej-nazaj (2 niti)', 'diagonalni vzporedni (6 niti)'])
+plt.title('Primerjava algoritmov za računanje LCS s prostorsko optimizacijo')
+plt.xlabel('dolžina niza')
+plt.ylabel('čas izvajanja (sekunde)')
+plt.legend()
+
 accelForwardLCSspace = np.array(forwardLCSspace) / np.array(forwardLCSspace)
 accelFbLCSspace = np.array(forwardLCSspace) / np.array(fbLCSspace)
 accelDiagLCSspace = np.array(forwardLCSspace) / np.array(diagonalLCSspace)
 accelDiagParLCSspace = np.array(forwardLCSspace) / np.array(diagonalLCSspaceParallel)
 
-plt.figure(11)
+plt.figure(9)
 plt.plot(x2, list(zip(accelForwardLCSspace, accelFbLCSspace, accelDiagLCSspace, accelDiagParLCSspace)), label=['naprej', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
 plt.title('Primerjava pohitritev LCS algoritmov s prostorsko optimizacijo')
 plt.xlabel('dolžina niza')
 plt.ylabel('pohitritev')
 plt.legend()
-
 
 plt.show()

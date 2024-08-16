@@ -54,8 +54,6 @@ int* current;
 
 //dynamic programming solution
 int forward_LCS (string str1, string str2, int row, int column) {
-
-    auto start = high_resolution_clock::now();
     //allocate
     arr = new unsigned short int*[row];
     for(int i = 0; i < row; i++)
@@ -65,11 +63,6 @@ int forward_LCS (string str1, string str2, int row, int column) {
     for (int i = 0; i < row; i++)
         for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-
-            auto finish = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(finish - start);
-
-    //cout << "Allocation: " << duration.count() << "\n";
 
     for(int i = 0; i < row; i++) 
         for (int j = 0; j < column; j++) 
@@ -160,7 +153,6 @@ int backward_LCS_space_optimization (string str1, string str2, int row, int colu
         //rewrite data
         for(int j = 0; j < column; j++) 
             temp1[j] = current[j];
-
     }
 
     return current[0];
@@ -185,7 +177,7 @@ int diagonal_LCS (string str1, string str2, int row, int column) {
 
         int antidiag = min(j, row-i-1);
 
-        for (int k = 0; k <= antidiag; ++k){
+        for (int k = 0; k <= antidiag; k++) {
             int a = i + k;
             int b = j - k;
 
@@ -240,7 +232,6 @@ void diagonal_LCS_thread (diag& a) {
 
         //wait for all threads to finish woring on current diagonal
         bar.arrive_and_wait();
-
     }
 }
 
@@ -301,20 +292,6 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         }
     }
 
-    /*cout<<"\nUpper triangle\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-    }*/
-
     //middle
     for(int i = column; i < row; i++) {
         for(int j = 1; j < column; j++) {
@@ -331,20 +308,6 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
         else
             arrMemory[row][j] = max(arrMemory[row-1][j+1], arrMemory[row-1][j]);
     }
-
-    /*    cout<<"\nMiddle\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-    }*/
     
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
@@ -355,20 +318,6 @@ int diagonal_LCS_memory_optimization(string str1, string str2, int row, int colu
                 arrMemory[i][j] = max(arrMemory[i-1][j+1], arrMemory[i-1][j]);
         }
     }
-
-       /* cout<<"\nLower\n";
-    for (int i = 0; i < newRow; i++) {
-        if(i < row) {
-            for(int j = 0; j < i+1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-        else {
-            for(int j = 0; j < row + column - i - 1; j++) 
-                cout<<arrMemory[i][j]<<" ";
-            cout<<"\n";
-        }
-    }*/
 
     return arrMemory[newRow-1][0]; 
 }
@@ -447,9 +396,6 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
     thread threads[n_threads];
     diag diag_structs[n_threads];
 
-    
-    
-
     for(int i = 0; i < n_threads; i++) {
         diag_structs[i].s1 = str1;
         diag_structs[i].s2 = str2;
@@ -461,17 +407,8 @@ int diagonal_LCS_memory_optimization_parallel(string str1, string str2, int row,
         threads[i] = thread(diagonal_LCS_memory_optimization_thread, ref(diag_structs[i]));
     }
 
-    
-
-    
-
-    for(int i = 0; i < n_threads; i++) {
-        auto start = high_resolution_clock::now();
+    for(int i = 0; i < n_threads; i++) 
         threads[i].join();
-        auto finish = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(finish - start);
-        //cout << "\nThread: " << i<< " "<<duration.count() << "\n";
-    }
 
     return arrMemory[newRow-1][0]; 
 }
@@ -569,18 +506,6 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
 
     //upper triangle
     for(int i = 2; i < a.col; i++) {
-
-        //might not even be necessary here, TODO: verify
-        /*if(a.id == 1) {
-            diagTemp1[0] = 0;
-            diagTemp1[i-2] = 0;
-            diagTemp2[0] = 0;
-            diagTemp2[i-1] = 0;
-            diagCurrent[0] = 0;
-            diagCurrent[i] = 0;
-            
-        }*/
-
         bar.arrive_and_wait();
         for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) {
             if(a.s1[i-j-1] == a.s2[j-1])
@@ -692,17 +617,14 @@ int diagonal_LCS_parallel_openmp (string str1, string str2, int row, int column)
         arr[i] = new unsigned short int[column];
 
     //initialize zeros
-    for (int i = 0; i < row; i++){
-        for (int j = 0; j < column; j++) {
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++) 
             arr[i][j] = 0;
-        }
-    }
 
     int i = 0;
     int j = 0;
     //iterate through diagonals
     while(i <= row-1 && j <= column-1) {
-
         int antidiag = min(j, row-i-1);
 
         //parallel calculation of all elements on current diagonal
@@ -813,8 +735,6 @@ void bottomHalf_LCS_space_optimization (args& a) {
     //in case there's nothing for this thread to do
     if(nrows == 1)
         return;
-    
-    int actualTotal = 0;
 
     for(int i = nrows+1; i > a.row; i--) {
         for(int j = a.col; j > 0; j--)  
@@ -825,22 +745,10 @@ void bottomHalf_LCS_space_optimization (args& a) {
             else 
                 currentBottom[j] = max(currentBottom[j+1], temp1Bottom[j]);
 
-
-        auto start = high_resolution_clock::now();
         //rewrite data
         for(int j = 0; j < a.col; j++) 
             temp1Bottom[j] = currentBottom[j];
-
-        auto finish = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(finish - start);
-
-        //cout << "bottom rewrite: " << duration.count() << "\n";
-
-
-        actualTotal += (int)duration.count();
     }
-
-    cout<<"Rewrites (bottom): "<<actualTotal<<"\n";
 }
 
 //merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
@@ -860,7 +768,6 @@ int merge_LCS_space_optimization(int column) {
 
 //forward-backward approach with two threads
 int fb_LCS (string str1, string str2, int row, int column) {
-    auto start = high_resolution_clock::now();
     //allocate
     arr = new unsigned short int*[row+1];
     for(int i = 0; i < row+1; i++)
@@ -871,11 +778,6 @@ int fb_LCS (string str1, string str2, int row, int column) {
         for (int j = 0; j < column+1; j++) 
             arr[i][j] = 0;
 
-    auto finish = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(finish - start);
-
-   // cout << "Allocation: " << duration.count() << "\n";
-
     int h = row / 2;
     struct args a; 
     a.s1 = str1;
@@ -883,35 +785,14 @@ int fb_LCS (string str1, string str2, int row, int column) {
     a.row = h;
     a.col = column;
 
-    start = high_resolution_clock::now();
-
     thread t1(topHalf_LCS, ref(a));
     thread t2(bottomHalf_LCS, ref(a));
-
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-   // cout << "thread creation: " << duration.count() << "\n";
-
-    start = high_resolution_clock::now();
     
     t1.join();
     t2.join();
 
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-    //cout << "sync: " << duration.count() << "\n";
-
-    start = high_resolution_clock::now();
-
     //merge results to find the actual distance
     int ret = merge_LCS(h, row, column);
-
-    finish = high_resolution_clock::now();
-    duration = duration_cast<microseconds>(finish - start);
-
-   // cout << "merge: " << duration.count() << "\n";
 
     return ret;
 }
@@ -925,17 +806,10 @@ int fb_LCS_space_optimization (string str1, string str2, int row, int column) {
     a.row = h;
     a.col = column;
 
-    auto start = high_resolution_clock::now();
-
     temp1Top = new int[column+1];
     temp1Bottom = new int[column+1];
     currentTop = new int[column+1];
     currentBottom = new int[column+1];
-
-    auto finish = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(finish - start);
-
-    cout << "Allocation: " << duration.count() << "\n";
 
     thread t1(topHalf_LCS_space_optimization, ref(a));
     thread t2(bottomHalf_LCS_space_optimization, ref(a));
