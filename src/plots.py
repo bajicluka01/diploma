@@ -51,7 +51,6 @@ nThreads11 = [1.669980, 3.346404, 5.933924,  9.661376,  17.336488]
 nThreads12 = [1.747410, 3.475634, 6.001397,  9.517540,  17.887280]
 
 #Levenshtein
-
 plt.figure(1)
 plt.plot(x, list(zip(forwardLevenshtein, backwardLevenshtein, fbLevenshtein, diagonalLevenshteinMemory, diagonalLevenshteinMemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (8 niti)'])
 plt.title('Primerjava algoritmov za računanje Levenshteinove razdalje')
@@ -99,7 +98,6 @@ plt.legend()
 
 
 # LCS
-
 plt.figure(6)
 plt.plot(x, list(zip(forwardLCS, backwardLCS, fbLCS, diagonalLCSmemory, diagonalLCSmemoryParallel)), label=['naprej', 'nazaj', 'naprej-nazaj (2 niti)', 'diagonalni', 'diagonalni vzporedni (6 niti)'])
 plt.title('Primerjava algoritmov za računanje LCS')

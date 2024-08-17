@@ -64,15 +64,16 @@ long long avgExecutionTime (int function, int n, string str1, string str2) {
     return total.count()/n;
 }
 
-//testing for every permutation of positive integers up to v1 and v2
+//testing for every permutation of dimensions for positive integers up to v1 and v2
+//the idea is primarily to find potential bugs/edge cases for smaller arrays
 void testLevenshteinForValues(int v1, int v2) {
-
     for(int i = 1; i <= v1; i++) {
         for(int j = 1; j <= v2; j++) {
 
             string str1 = randomStringGenerator(i, 42);
             string str2 = randomStringGenerator(j, 101);
 
+            //requirement for diagonal
             if(str2.length() > str1.length()) {
                 string tmp = str1;
                 str1 = str2;
