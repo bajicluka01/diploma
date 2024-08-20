@@ -95,34 +95,39 @@ void testLevenshteinForValues(int v1, int v2) {
 
             if (tmp1 != tmp2) {
                 cout<<"Error: forward space optimization ("<<i<<" "<<j<<")\n";
-                return;
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp2<<"\n";
+                //return;
             }
             if (tmp1 != tmp3) {
                 cout<<"Error: backward ("<<i<<" "<<j<<")\n";
-                return;
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp3<<"\n";
+                //return;
             }
             if (tmp1 != tmp4) {
                 cout<<"Error: backward space optimization ("<<i<<" "<<j<<")\n";
-                return;
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp4<<"\n";
+                //return;
             }
             if (tmp1 != tmp5) {
                 cout<<"Error: diagonal ("<<i<<" "<<j<<")\n";
-                return;
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp5<<"\n";
+                //return;
             }
             if (tmp1 != tmp6) {
                 cout<<"Error: forward-backward ("<<i<<" "<<j<<")\n";
-                return;
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp6<<"\n";
+                //return;
             }
             if (tmp1 != tmp7) {
                 cout<<"Error: forward-backward space optimization ("<<i<<" "<<j<<")\n";
-            }
-            if (tmp1 != tmp8) {
-                cout<<"Error: diagonal test ("<<i<<" "<<j<<")\n";
-                return;
-            }
-            if (tmp1 != tmp9) {
-                cout<<"Error: diagonal memory optimization ("<<i<<" "<<j<<")\n";
-                return;
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp7<<"\n";
+                //return;
             }
         }
     }
@@ -151,26 +156,38 @@ void testLCSforValues(int v1, int v2) {
 
             if (tmp1 != tmp2) {
                 cout<<"Error: forward space optimization ("<<i<<" "<<j<<")\n";
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp2<<"\n";
                 return;
             }
             if (tmp1 != tmp3) {
                 cout<<"Error: backward ("<<i<<" "<<j<<")\n";
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp3<<"\n";
                 return;
             }
             if (tmp1 != tmp4) {
                 cout<<"Error: backward space optimization ("<<i<<" "<<j<<")\n";
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp4<<"\n";
                 return;
             }
             if (tmp1 != tmp5) {
                 cout<<"Error: diagonal ("<<i<<" "<<j<<")\n";
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp5<<"\n";
                 return;
             }
             if (tmp1 != tmp6) {
                 cout<<"Error: forward-backward ("<<i<<" "<<j<<")\n";
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp6<<"\n";
                 return;
             }
             if (tmp1 != tmp7) {
                 cout<<"Error: forward-backward space optimization ("<<i<<" "<<j<<")\n";
+                cout<<"Strings: "<<str1<<" "<<str2<<"\n";
+                cout<<"Values: "<<tmp1<<" "<<tmp7<<"\n";
                 return;
             }
         }
@@ -221,7 +238,7 @@ int main (int argc, char* argv[]) {
 
     srand(time(NULL));
 
-    int strLen = 250000;
+    int strLen = 100000;
 
     str1 = randomStringGenerator(strLen, 42);
     str2 = randomStringGenerator(strLen, 101);
@@ -252,9 +269,12 @@ int main (int argc, char* argv[]) {
     column = str2.length()+1;
     cout << "\nSequential Levenshtein solution: " << forward_levenshtein(str1, str2, row, column)<<"\n";
     cout << "Sequential Levenshtein solution: " << fb_levenshtein(str1, str2, row, column);*/
+
+    //testLevenshteinForValues(55, 25);
+    //testLCSforValues(55, 25);
    
     auto start = high_resolution_clock::now();
-    cout << "Sequential Levenshtein solution: " << fb_LCS_space_optimization(str1, str2, row, column) << "\n";
+    cout << "Sequential Levenshtein solution: " << diagonal_LCS_memory_and_space_optimization(str1, str2, row, column) << "\n";
     auto finish = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(finish - start);
 
@@ -264,10 +284,10 @@ int main (int argc, char* argv[]) {
     str2 = "abcd";
     row = str1.length()+1;
     column = str2.length()+1;
-    forward_levenshtein(str1, str2, row, column);
+    forward_levenshtein(str1, str2, row, column);*/
 
-    start = high_resolution_clock::now();
-    cout << "Forward-backward Levenshtein solution: " << forward_levenshtein(str1, str2, row, column) << "\n";
+    /*start = high_resolution_clock::now();
+    cout << "Forward-backward Levenshtein solution: " << fb_levenshtein_space_optimization(str1, str2, row, column) << "\n";
     finish = high_resolution_clock::now();
     duration = duration_cast<microseconds>(finish - start);
 

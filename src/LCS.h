@@ -25,7 +25,7 @@ struct diag {
 };
 
 //TODO fix bug: infinite loop (?) for n_thr = 1
-int n_thr = 8;
+int n_thr = 6;
 barrier bar { n_thr };
 
 unsigned short int** arr;
@@ -39,6 +39,9 @@ int arrDiag;
 int* diagTemp1;
 int* diagTemp2;
 int* diagCurrent;
+int* diagTemp1Pointer;
+int* diagTemp2Pointer;
+int* diagCurrentPointer;
 
 //all of these variables could've been local, but for some reason I get segmentation fault for strLen = cca. 200000 or higher; making them global seems to fix the problem
 int* temp1MS;
@@ -88,22 +91,29 @@ int forward_LCS_space_optimization (string str1, string str2, int row, int colum
         current[i] = 0;
     }
 
+    int* temp1Pointer = temp1;
+    int* currentPointer = current;
+    bool b = false;
+    int currentSolution = 0;
+
     for(int i = 0; i < row; i++) {
         for(int j = 0; j < column; j++) {
             if (i == 0 || j == 0)
-                current[j] = 0;
+                currentPointer[j] = 0;
             else if (str1[i-1] == str2[j-1])
-                current[j] = 1 + temp1[j-1];
+                currentPointer[j] = 1 + temp1Pointer[j-1];
             else
-                current[j] = max(current[j-1], temp1[j]);
+                currentPointer[j] = max(currentPointer[j-1], temp1Pointer[j]);
         }
+        currentSolution = currentPointer[column-1];
 
         //rewrite data
-        for(int j = 0; j < column; j++) 
-            temp1[j] = current[j];
+        b = !b;
+        temp1Pointer = b ? temp1 : current;
+        currentPointer = b ? current : temp1;
     }
 
-    return current[column-1];
+    return currentSolution;
 }
 
 //basic dynamic programming solution backward
@@ -141,22 +151,29 @@ int backward_LCS_space_optimization (string str1, string str2, int row, int colu
         current[i] = 0;
     }
 
+    int* temp1Pointer = temp1;
+    int* currentPointer = current;
+    bool b = false;
+    int currentSolution = 0;
+
     for(int i = row-1; i >= 0; i--) {
         for(int j = column-1; j >= 0; j--) {
             if (i == row-1 || j == column-1)
-                current[j] = 0;
+                currentPointer[j] = 0;
             else if(str1[i] == str2[j])
-                current[j] = 1 + temp1[j+1];
+                currentPointer[j] = 1 + temp1Pointer[j+1];
             else
-                current[j] = max(current[j+1], temp1[j]);
+                currentPointer[j] = max(currentPointer[j+1], temp1Pointer[j]);
         }
+        currentSolution = currentPointer[0];
 
         //rewrite data
-        for(int j = 0; j < column; j++) 
-            temp1[j] = current[j];
+        b = !b;
+        temp1Pointer = b ? temp1 : current;
+        currentPointer = b ? current : temp1;
     }
 
-    return current[0];
+    return currentSolution;
 }
 
 //iterate through diagonals instead of rows
@@ -416,6 +433,11 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
         currentMS[i] = 0;
     }
 
+    int* temp1MSpointer = temp1MS;
+    int* temp2MSpointer = temp2MS;
+    int* currentMSpointer = currentMS;
+    int c = 0; 
+
     //upper triangle
     for(int i = 2; i < column; i++) {
         temp1MS[0] = 0;
@@ -427,14 +449,24 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
 
         for(int j = 1; j < i; j++) 
             if(str1[i-j-1] == str2[j-1])
-                currentMS[j] = 1 + temp1MS[j-1];
+                currentMSpointer[j] = 1 + temp1MSpointer[j-1];
             else
-                currentMS[j] = max(temp2MS[j-1], temp2MS[j]);
+                currentMSpointer[j] = max(temp2MSpointer[j-1], temp2MSpointer[j]);
 
         //rewrite data
-        for(int j = 0; j < column; j++) {
-            temp1MS[j] = temp2MS[j];
-            temp2MS[j] = currentMS[j];
+        c = (c+1) % 3;
+        if(c == 0) {
+            temp1MSpointer = temp1MS;
+            temp2MSpointer = temp2MS;
+            currentMSpointer = currentMS;
+        } else if (c == 1) {
+            temp1MSpointer = temp2MS;
+            temp2MSpointer = currentMS;
+            currentMSpointer = temp1MS;
+        } else {
+            temp1MSpointer = currentMS;
+            temp2MSpointer = temp1MS;
+            currentMSpointer = temp2MS;
         }
     }
 
@@ -442,45 +474,80 @@ int diagonal_LCS_memory_and_space_optimization(string str1, string str2, int row
     for(int i = column; i < row; i++) {
         for(int j = 1; j < column; j++) 
             if(str1[i-j-1] == str2[j-1])
-                currentMS[j] = 1 + temp1MS[j-1];
+                currentMSpointer[j] = 1 + temp1MSpointer[j-1];
             else
-                currentMS[j] = max(temp2MS[j], temp2MS[j-1]);
+                currentMSpointer[j] = max(temp2MSpointer[j], temp2MSpointer[j-1]);
 
         //rewrite data
-        for(int j = 0; j < column; j++) {
-            temp1MS[j] = temp2MS[j];
-            temp2MS[j] = currentMS[j];
+        c = (c+1) % 3;
+        if(c == 0) {
+            temp1MSpointer = temp1MS;
+            temp2MSpointer = temp2MS;
+            currentMSpointer = currentMS;
+        } else if (c == 1) {
+            temp1MSpointer = temp2MS;
+            temp2MSpointer = currentMS;
+            currentMSpointer = temp1MS;
+        } else {
+            temp1MSpointer = currentMS;
+            temp2MSpointer = temp1MS;
+            currentMSpointer = temp2MS;
         }
     }
 
     for(int j = 0; j < column - 1; j++) {
         if(str1[row-j-2] == str2[j])
-            currentMS[j] = 1 + temp1MS[j];
+            currentMSpointer[j] = 1 + temp1MSpointer[j];
         else
-            currentMS[j] = max(temp2MS[j+1], temp2MS[j]);
+            currentMSpointer[j] = max(temp2MSpointer[j+1], temp2MSpointer[j]);
     }
     //rewrite data
-    for(int j = 0; j < column; j++) {
-        temp1MS[j] = temp2MS[j];
-        temp2MS[j] = currentMS[j];
+    c = (c+1) % 3;
+    if(c == 0) {
+        temp1MSpointer = temp1MS;
+        temp2MSpointer = temp2MS;
+        currentMSpointer = currentMS;
+    } else if (c == 1) {
+        temp1MSpointer = temp2MS;
+        temp2MSpointer = currentMS;
+        currentMSpointer = temp1MS;
+    } else {
+        temp1MSpointer = currentMS;
+        temp2MSpointer = temp1MS;
+        currentMSpointer = temp2MS;
     }
     
     //lower triangle
     for(int i = row+1; i < newRow; i++) {
         for(int j = 0; j < newRow - i; j++) 
             if(str1[row-j-2] == str2[j+i-row])
-                currentMS[j] = 1 + temp1MS[j+1];
+                currentMSpointer[j] = 1 + temp1MSpointer[j+1];
             else
-                currentMS[j] = max(temp2MS[j+1], temp2MS[j]);
+                currentMSpointer[j] = max(temp2MSpointer[j+1], temp2MSpointer[j]);
 
         //rewrite data
-        for(int j = 0; j < column; j++) {
-            temp1MS[j] = temp2MS[j];
-            temp2MS[j] = currentMS[j];
+        c = (c+1) % 3;
+        if(c == 0) {
+            temp1MSpointer = temp1MS;
+            temp2MSpointer = temp2MS;
+            currentMSpointer = currentMS;
+        } else if (c == 1) {
+            temp1MSpointer = temp2MS;
+            temp2MSpointer = currentMS;
+            currentMSpointer = temp1MS;
+        } else {
+            temp1MSpointer = currentMS;
+            temp2MSpointer = temp1MS;
+            currentMSpointer = temp2MS;
         }
     }
 
-    return currentMS[0]; 
+    if(c == 0)
+        return currentMSpointer[0]; 
+    else if (c == 1)
+        return temp2MSpointer[0];
+    else
+        return temp1MSpointer[0];
 }
 
 //function for diagonal_LCS_memory_and_space_optimization_parallel
@@ -490,20 +557,37 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
     int chunkSize = ceil((double)(a.col)/a.n_total);
     int startIndex = a.id * chunkSize;
 
+    diagTemp1Pointer = diagTemp1;
+    diagTemp2Pointer = diagTemp2;
+    diagCurrentPointer = diagCurrent;
+    int c = 0; 
+
     //upper triangle
     for(int i = 2; i < a.col; i++) {
         bar.arrive_and_wait();
         for(int j = startIndex+1; j < i && j <= startIndex+chunkSize; j++) 
             if(a.s1[i-j-1] == a.s2[j-1])
-                diagCurrent[j] = 1 + diagTemp1[j-1];
+                diagCurrentPointer[j] = 1 + diagTemp1Pointer[j-1];
             else
-                diagCurrent[j] = max(diagTemp2[j-1], diagTemp2[j]);
+                diagCurrentPointer[j] = max(diagTemp2Pointer[j-1], diagTemp2Pointer[j]);
 
         bar.arrive_and_wait();
         //rewrite data
-        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
-            diagTemp1[j] = diagTemp2[j];
-            diagTemp2[j] = diagCurrent[j];
+        if(a.id == 0) {
+            c = (c+1) % 3;
+            if(c == 0) {
+                diagTemp1Pointer = diagTemp1;
+                diagTemp2Pointer = diagTemp2;
+                diagCurrentPointer = diagCurrent;
+            } else if (c == 1) {
+                diagTemp1Pointer = diagTemp2;
+                diagTemp2Pointer = diagCurrent;
+                diagCurrentPointer = diagTemp1;
+            } else {
+                diagTemp1Pointer = diagCurrent;
+                diagTemp2Pointer = diagTemp1;
+                diagCurrentPointer = diagTemp2;
+            }
         }
     }
 
@@ -512,29 +596,53 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         bar.arrive_and_wait();
         for(int j = startIndex+1; j < a.col && j <= startIndex+chunkSize; j++) 
             if(a.s1[i-j-1] == a.s2[j-1])
-                diagCurrent[j] = 1 + diagTemp1[j-1];
+                diagCurrentPointer[j] = 1 + diagTemp1Pointer[j-1];
             else
-                diagCurrent[j] = max(diagTemp2[j], diagTemp2[j-1]);
+                diagCurrentPointer[j] = max(diagTemp2Pointer[j], diagTemp2Pointer[j-1]);
         
         bar.arrive_and_wait();
         //rewrite data
-        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
-            diagTemp1[j] = diagTemp2[j];
-            diagTemp2[j] = diagCurrent[j];
+        if(a.id == 0) {
+            c = (c+1) % 3;
+            if(c == 0) {
+                diagTemp1Pointer = diagTemp1;
+                diagTemp2Pointer = diagTemp2;
+                diagCurrentPointer = diagCurrent;
+            } else if (c == 1) {
+                diagTemp1Pointer = diagTemp2;
+                diagTemp2Pointer = diagCurrent;
+                diagCurrentPointer = diagTemp1;
+            } else {
+                diagTemp1Pointer = diagCurrent;
+                diagTemp2Pointer = diagTemp1;
+                diagCurrentPointer = diagTemp2;
+            }
         }
     }
 
     bar.arrive_and_wait();
     for(int j = startIndex; j < a.col - 1 && j < startIndex+chunkSize; j++) 
         if(a.s1[a.row-j-2] == a.s2[j])
-            diagCurrent[j] = 1 + diagTemp1[j];
+            diagCurrentPointer[j] = 1 + diagTemp1Pointer[j];
         else
-            diagCurrent[j] = max(diagTemp2[j+1], diagTemp2[j]);
+            diagCurrentPointer[j] = max(diagTemp2Pointer[j+1], diagTemp2Pointer[j]);
     bar.arrive_and_wait();
     //rewrite data
-    for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
-        diagTemp1[j] = diagTemp2[j];
-        diagTemp2[j] = diagCurrent[j];
+    if(a.id == 0) {
+        c = (c+1) % 3;
+        if(c == 0) {
+            diagTemp1Pointer = diagTemp1;
+            diagTemp2Pointer = diagTemp2;
+            diagCurrentPointer = diagCurrent;
+        } else if (c == 1) {
+            diagTemp1Pointer = diagTemp2;
+            diagTemp2Pointer = diagCurrent;
+            diagCurrentPointer = diagTemp1;
+        } else {
+            diagTemp1Pointer = diagCurrent;
+            diagTemp2Pointer = diagTemp1;
+            diagCurrentPointer = diagTemp2;
+        }
     }
     
     //lower triangle
@@ -542,20 +650,38 @@ void diagonal_LCS_memory_and_space_optimization_thread (diag& a) {
         bar.arrive_and_wait();
         for(int j = startIndex; j < newRow - i && j < startIndex+chunkSize; j++) 
             if(a.s1[a.row-j-2] == a.s2[j+i-a.row])
-                diagCurrent[j] = 1 + diagTemp1[j+1];
+                diagCurrentPointer[j] = 1 + diagTemp1Pointer[j+1];
             else
-                diagCurrent[j] = max(diagTemp2[j+1], diagTemp2[j]);
+                diagCurrentPointer[j] = max(diagTemp2Pointer[j+1], diagTemp2Pointer[j]);
 
         bar.arrive_and_wait();
         //rewrite data
-        for(int j = startIndex; j < a.col && j < startIndex+chunkSize; j++) {
-            diagTemp1[j] = diagTemp2[j];
-            diagTemp2[j] = diagCurrent[j];
+        if(a.id == 0) {
+            c = (c+1) % 3;
+            if(c == 0) {
+                diagTemp1Pointer = diagTemp1;
+                diagTemp2Pointer = diagTemp2;
+                diagCurrentPointer = diagCurrent;
+            } else if (c == 1) {
+                diagTemp1Pointer = diagTemp2;
+                diagTemp2Pointer = diagCurrent;
+                diagCurrentPointer = diagTemp1;
+            } else {
+                diagTemp1Pointer = diagCurrent;
+                diagTemp2Pointer = diagTemp1;
+                diagCurrentPointer = diagTemp2;
+            }
         }
     }
 
     bar.arrive_and_wait();
-    arrDiag = diagCurrent[0];
+    if(a.id == 0)
+        if(c == 0)
+            arrDiag = diagCurrentPointer[0]; 
+        else if (c == 1)
+            arrDiag = diagTemp2Pointer[0];
+        else
+            arrDiag = diagTemp1Pointer[0];
 }
 
 //memory optimization + parallelization
@@ -691,19 +817,34 @@ void topHalf_LCS_space_optimization (args& a) {
         currentTop[i] = 0;
     }
 
+    int* temp1TopPointer = temp1Top;
+    int* currentTopPointer = currentTop;
+    int c = 0;
+    int* currentSolution; 
+
     for(int i = 0; i <= a.row; i++) {
         for(int j = 0; j < a.col; j++) 
             if (i == 0 || j == 0)
-                currentTop[j] = 0;
+                currentTopPointer[j] = 0;
             else if (a.s1[i-1] == a.s2[j-1])
-                currentTop[j] = 1 + temp1Top[j-1];
+                currentTopPointer[j] = 1 + temp1TopPointer[j-1];
             else
-                currentTop[j] = max(currentTop[j-1], temp1Top[j]);
+                currentTopPointer[j] = max(currentTopPointer[j-1], temp1TopPointer[j]);
+        currentSolution = currentTopPointer;
 
         //rewrite data
-        for(int j = 0; j < a.col+1; j++) 
-            temp1Top[j] = currentTop[j];
+        c = (c+1) % 2;
+        if(c != 0) {
+            temp1TopPointer = currentTop;
+            currentTopPointer = temp1Top;
+        }
+        else {
+            temp1TopPointer = temp1Top;
+            currentTopPointer = currentTop;
+        }
     }
+
+    currentTop = currentSolution;
 }
 
 //space optimization: we only keep current two rows in memory
@@ -720,19 +861,34 @@ void bottomHalf_LCS_space_optimization (args& a) {
     if(nrows == 1)
         return;
 
+    int* temp1BottomPointer = temp1Bottom;
+    int* currentBottomPointer = currentBottom;
+    int c = 0;
+    int* currentSolution;
+
     for(int i = nrows+1; i > a.row; i--) {
         for(int j = a.col; j > 0; j--)  
             if (i == nrows+1 || j == a.col)
-                currentBottom[j] = 0;
+                currentBottomPointer[j] = 0;
             else if (a.s1[i-1] == a.s2[j-1])
-                currentBottom[j] = 1 + temp1Bottom[j+1];
+                currentBottomPointer[j] = 1 + temp1BottomPointer[j+1];
             else 
-                currentBottom[j] = max(currentBottom[j+1], temp1Bottom[j]);
+                currentBottomPointer[j] = max(currentBottomPointer[j+1], temp1BottomPointer[j]);
+        currentSolution = currentBottomPointer;
 
         //rewrite data
-        for(int j = 0; j < a.col; j++) 
-            temp1Bottom[j] = currentBottom[j];
+        c = (c+1) % 2;
+        if(c != 0) {
+            temp1BottomPointer = currentBottom;
+            currentBottomPointer = temp1Bottom;
+        }
+        else {
+            temp1BottomPointer = temp1Bottom;
+            currentBottomPointer = currentBottom;
+        }
     }
+
+    currentBottom = currentSolution;
 }
 
 //merges last rows of topHalf_LCS_space_optimization and bottomHalf_LCS_space_optimization
@@ -741,7 +897,7 @@ int merge_LCS_space_optimization(int column) {
     int currentMax = 0;
 
     for(int i = 1; i <= column; i++) {
-        temp = temp1Top[i-1] + temp1Bottom[i];
+        temp = currentTop[i-1] + currentBottom[i];
 
         if(temp > currentMax)
             currentMax = temp;
